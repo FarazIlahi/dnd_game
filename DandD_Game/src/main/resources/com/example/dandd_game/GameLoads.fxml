@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.GameLoadsController">
+   <children>
+      <Button layoutX="36.0" layoutY="25.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="289.0" text="Load 1" />
+      <Button layoutX="36.0" layoutY="114.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="289.0" text="Load 2" />
+      <Button layoutX="36.0" layoutY="208.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="289.0" text="Load 3" />
+      <Button layoutX="36.0" layoutY="304.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="289.0" text="Load 4" />
+   </children>
+</AnchorPane>
