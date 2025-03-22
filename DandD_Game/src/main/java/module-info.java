@@ -5,4 +5,6 @@ module com.example.dandd_game {
 
     opens com.example.dandd_game to javafx.fxml;
     exports com.example.dandd_game;
+    exports com.example.dandd_game.Controllers;
+    opens com.example.dandd_game.Controllers to javafx.fxml;
 }

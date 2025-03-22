@@ -1,10 +1,10 @@
-package com.example.dandd_game;
+package com.example.dandd_game.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.text.Text;
 
-public class OptionMenu {
+public class OptionMenuController {
     @FXML
     Slider audioSlider;
     @FXML

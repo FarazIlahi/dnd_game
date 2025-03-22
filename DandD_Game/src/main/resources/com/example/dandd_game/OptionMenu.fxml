@@ -5,10 +5,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.OptionMenu">
+<AnchorPane prefHeight="411.0" prefWidth="536.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.OptionMenuController">
    <children>
-      <Text layoutX="66.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Audio">
+      <Text layoutX="69.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Audio">
          <font>
             <Font size="39.0" />
          </font>
