@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 
-public class GameLoadsController implements GameMechanics {
+public class GameLoadsController extends BaseController implements GameMechanics {
 
     @FXML
     Button go_button;
@@ -17,18 +17,7 @@ public class GameLoadsController implements GameMechanics {
     AnchorPane rootPane;
     @FXML
     private void initialize() {
-        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
-
-            if (newScene != null) {
-                newScene.setOnKeyPressed(event -> {
-                    try {
-                        handleKeyPress(event, rootPane);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-        });
+        super.init(rootPane);
     }
 
 

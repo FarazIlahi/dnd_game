@@ -28,7 +28,6 @@ import java.lang.Math;
 
 public interface GameMechanics {
 
-    boolean is_on_settings = false;
     public default int rolld20(){
         return (int)(Math.random() * 20) + 1;
 
@@ -43,39 +42,6 @@ public interface GameMechanics {
         Parent root = loader.load();
         Scene newscene = new Scene(root);
         primaryStage.setScene(newscene);
-    }
-
-    default void handleKeyPress(KeyEvent event, AnchorPane rootpane) throws IOException {
-        if (event.getCode().toString().equals("ESCAPE")) {
-            if(is_on_settings){
-
-            }
-            else{
-
-                openPopupScene(rootpane);
-            }
-
-        }
-    }
-
-    default void openPopupScene(AnchorPane rootpane) throws IOException {
-        StackPane newRoot = new StackPane();
-        ImageView snapshhot = new ImageView(rootpane.snapshot(null, null));
-
-        BoxBlur blur = new BoxBlur(10,10,3);
-        snapshhot.setEffect(blur);
-
-        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("OptionMenu.fxml"));
-        Parent popupSettings = loader.load();
-
-
-
-        newRoot.getChildren().addAll(snapshhot, popupSettings);
-
-        StackPane.setAlignment(popupSettings, Pos.CENTER);
-
-        rootpane.getChildren().add(newRoot);
-
     }
 
 }
