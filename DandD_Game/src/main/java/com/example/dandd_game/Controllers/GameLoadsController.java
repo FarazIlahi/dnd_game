@@ -24,6 +24,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
 
 
     public void goToGame(ActionEvent event) throws IOException {
-        //switchScene(event, "OptionMenu");
+        switchScene(event, "OptionMenu");
     }
 }

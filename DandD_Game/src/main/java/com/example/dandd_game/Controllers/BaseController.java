@@ -14,9 +14,26 @@ import javafx.scene.transform.Scale;
 import java.io.IOException;
 
 public class BaseController {
-    private AnchorPane currentroot;
-    private StackPane stackPane;
-    private boolean is_on_settings = true;
+    private static AnchorPane currentroot;
+
+    private static AnchorPane settings;
+    private StackPane stackPane = new StackPane();
+
+    private static boolean is_on_settings;
+
+    public void setSettings(AnchorPane root){
+        settings = root;
+    }
+    public void disableSettings(){
+        settings.setVisible(false);
+    }
+    public void enableSettings(){
+        settings.setVisible(true);
+    }
+
+    public boolean isIs_on_settings(){
+        return is_on_settings;
+    }
 
     public void setCurrentroot(AnchorPane root){
         currentroot = root;
@@ -26,7 +43,6 @@ public class BaseController {
     }
 
     public void createStackPane() throws IOException {
-        stackPane = new StackPane();
         ImageView snapshot = new ImageView(getCurrentroot().snapshot(null, null));
 
         BoxBlur blur = new BoxBlur(10,10,3);
@@ -35,34 +51,27 @@ public class BaseController {
         Parent popupSettings = loader.load();
         Scale scale = new Scale(0.5, 0.5);
         popupSettings.getTransforms().add(scale);
-
+        StackPane.setAlignment(popupSettings, Pos.CENTER);
 
         stackPane.getChildren().addAll(snapshot, popupSettings);
-        StackPane.setAlignment(popupSettings, Pos.CENTER);
+
     }
     public StackPane getStackPane() {
         return stackPane;
     }
 
-    public void flip_is_on_settings(){
-        if (is_on_settings){
-            System.out.println("1");
-            is_on_settings = false;
-        }
-        else {
-            System.out.println("2");
-            is_on_settings = true;
-            System.out.println(is_on_settings);
-        }
-    }
 
     protected void init(AnchorPane root) {
-        setCurrentroot(root);
+        if(!is_on_settings){
+            setCurrentroot(root);
+        }
+        System.out.println(getCurrentroot());
         getCurrentroot().sceneProperty().addListener((obs, oldScene, newScene) -> {
 
             if (newScene != null) {
                 newScene.setOnKeyPressed(event -> {
                     try {
+                        System.out.println(is_on_settings);
                         handleKeyPress(event);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -73,26 +82,27 @@ public class BaseController {
     }
     private void handleKeyPress(KeyEvent event) throws IOException {
         if (event.getCode().toString().equals("ESCAPE")) {
-            System.out.println(is_on_settings + "HEREEE");
             if(is_on_settings){
+                is_on_settings = false;
                 System.out.println("3");
                 closePopupScene();
+
             }
             else {
+                is_on_settings = true;
                 System.out.println("4");
                 openPopupScene();
+
             }
         }
     }
     private void openPopupScene() throws IOException {
-        flip_is_on_settings();
-        System.out.println("here");
         createStackPane();
+        System.out.println("here");
         getCurrentroot().getChildren().add(getStackPane());
+
     }
     private void closePopupScene(){
-        System.out.println("I AM RUNING");
-        flip_is_on_settings();
         getCurrentroot().getChildren().remove(getStackPane());
 
     }
