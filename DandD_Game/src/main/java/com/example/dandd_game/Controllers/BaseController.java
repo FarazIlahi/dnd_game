@@ -1,15 +1,19 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.MainApplication;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -105,4 +109,15 @@ public class BaseController {
         getCurrentroot().getChildren().remove(getStackPane());
 
     }
+    public void switchScene(ActionEvent event, String new_scene) throws IOException {
+        Node source = (Node) event.getSource();
+        Scene scene = source.getScene();
+        Stage primaryStage = (Stage) scene.getWindow();
+
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(new_scene + ".fxml"));
+        Parent root = loader.load();
+        Scene newscene = new Scene(root);
+        primaryStage.setScene(newscene);
+    }
+
 }

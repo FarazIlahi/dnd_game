@@ -33,15 +33,5 @@ public interface GameMechanics {
 
     }
 
-    default void switchScene(ActionEvent event, String new_scene) throws IOException {
-        Node source = (Node) event.getSource();
-        Scene scene = source.getScene();
-        Stage primaryStage = (Stage) scene.getWindow();
-
-        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(new_scene + ".fxml"));
-        Parent root = loader.load();
-        Scene newscene = new Scene(root);
-        primaryStage.setScene(newscene);
-    }
 
 }
