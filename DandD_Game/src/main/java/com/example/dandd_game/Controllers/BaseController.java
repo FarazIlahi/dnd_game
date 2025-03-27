@@ -52,7 +52,6 @@ public class BaseController {
         Scale scale = new Scale(0.5, 0.5);
         popupSettings.getTransforms().add(scale);
         StackPane.setAlignment(popupSettings, Pos.CENTER);
-
         stackPane.getChildren().addAll(snapshot, popupSettings);
 
     }

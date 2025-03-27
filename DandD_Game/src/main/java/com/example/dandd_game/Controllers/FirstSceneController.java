@@ -5,25 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
-
-public class GameLoadsController extends BaseController implements GameMechanics {
-
+public class FirstSceneController extends  BaseController implements GameMechanics {
     @FXML
-    Button go_button;
+    private AnchorPane rootPane;
     @FXML
-    AnchorPane rootPane;
+    private Button continueButton;
     @FXML
     private void initialize() {
         super.init(rootPane);
     }
-
-
-
-
-    public void goToGame(ActionEvent event) throws IOException {
-        switchScene(event, "FirstScene");
+    @FXML
+    private void goToGame(ActionEvent event) throws IOException {
+        switchScene(event, "SecondScene"); // GameScene would be the eventual gameplay screen added
     }
 }
