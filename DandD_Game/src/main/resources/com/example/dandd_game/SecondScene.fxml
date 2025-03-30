@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="450.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.SecondSceneController">
-
-    <Label fx:id="scoutText" layoutX="100" layoutY="150" maxWidth="600" style="-fx-font-size: 20px; -fx-text-fill: black; -fx-text-alignment: center;" text="Scout: &quot;An army is headed towards our castle, it looked to me as if they were orcs.&quot;" wrapText="true" />
-
-    <Button fx:id="prepareSiegeButton" layoutX="300.0" layoutY="283.0" onAction="#goToSiege" style="-fx-font-size: 16px;" text="Prepare for Siege" />
-
-    <Button fx:id="investigateButton" layoutX="300.0" layoutY="336.0" onAction="#goToInvestigate" style="-fx-font-size: 16px;" text="Leave and Investigate" />
-
-</AnchorPane>
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.SecondSceneController">
+    <children>
+        <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/OldPaper.jpg" />
+            </image>
+        </ImageView>
+        <HBox prefHeight="800.0" prefWidth="1600.0">
+            <children>
+                <Region prefHeight="800.0" prefWidth="350.0" />
+                <VBox prefHeight="800.0" prefWidth="900.0">
+                    <children>
+                        <ImageView fitHeight="400.0" fitWidth="900.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@images/pixelCastleSmall.png" />
+                            </image>
+                            <effect>
+                                <InnerShadow choke="0.5" />
+                            </effect>
+                        </ImageView>
+                        <Region prefHeight="50.0" prefWidth="900.0" />
+                        <Label alignment="TOP_CENTER" prefHeight="150.0" prefWidth="900.0" text="    Scout: An army is headed towards our castle, it looked to me as if they were orcs.&quot;" wrapText="true">
+                            <font>
+                                <Font name="URWGothic-Book" size="34.0" />
+                            </font>
+                        </Label>
+                  <HBox prefHeight="100.0" prefWidth="900.0">
+                     <children>
+                              <Button fx:id="prepareSiegeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToSiege" prefHeight="80.0" prefWidth="350.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Prepare for siege">
+                                  <font>
+                                      <Font size="32.0" />
+                                  </font>
+                              </Button>
+                        <Region prefHeight="100.0" prefWidth="200.0" />
+                        <Button fx:id="investigateButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="350.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="Investigate">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</Pane>

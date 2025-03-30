@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class newUserRegisterController extends BaseController {
+public class NewUserRegisterController extends BaseController {
     @FXML
     private TextField elUNTextField;
     @FXML
@@ -17,9 +17,13 @@ public class newUserRegisterController extends BaseController {
     private PasswordField elPWPasswordFieldtwo;
     @FXML
     private Button CSbutton;
+    @FXML
+    private Button back;
 
-    public void CreateUser(ActionEvent event) throws IOException {
-        // switchScene(event, "");
+    @FXML
+    public void createUser(ActionEvent event) throws IOException {
+        //switchScene(event, "login"); Original code
+        switchScene(event, "OptionMenu");//Test code
     }
 
 

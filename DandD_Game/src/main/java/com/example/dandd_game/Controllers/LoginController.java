@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +25,9 @@ public class LoginController extends BaseController {
     @FXML
     private PasswordField passWField;
 
+    @FXML
     public void loginErrorLabelOnAction(ActionEvent e) {
+
         if (userNField.getText().isBlank() == false && passWField.getText().isBlank() == false) {
             loginErrorLabel.setText("You tried to login");
         }
@@ -37,6 +40,7 @@ public class LoginController extends BaseController {
     public void goToUserRegistration(ActionEvent event) throws IOException {
         switchScene(event, "newUserRegister");
     }
+    @FXML
     public void leaveButtonOnAction(ActionEvent e) {
         Stage stage = (Stage) leaveButton.getScene().getWindow();
         stage.close();

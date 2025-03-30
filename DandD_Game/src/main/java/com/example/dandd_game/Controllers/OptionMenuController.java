@@ -7,8 +7,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
 
@@ -18,9 +20,9 @@ public class OptionMenuController extends BaseController implements GameMechanic
     @FXML
     Slider audioSlider;
     @FXML
-    Text audioNum;
+    Label audioNum;
     @FXML
-    AnchorPane rootPane;
+    Pane rootPane;
     @FXML
     Button back;
 

@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -18,14 +18,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BaseController {
-    private static AnchorPane currentroot;
+    private static Pane currentroot;
 
-    private static AnchorPane settings;
+    private static Pane settings;
     private StackPane stackPane = new StackPane();
 
     private static boolean is_on_settings;
 
-    public void setSettings(AnchorPane root){
+    public void setSettings(Pane root){
         settings = root;
     }
     public void disableSettings(){
@@ -39,10 +39,10 @@ public class BaseController {
         return is_on_settings;
     }
 
-    public void setCurrentroot(AnchorPane root){
+    public void setCurrentroot(Pane root){
         currentroot = root;
     }
-    public AnchorPane getCurrentroot(){
+    public Pane getCurrentroot(){
         return currentroot;
     }
 
@@ -64,7 +64,7 @@ public class BaseController {
     }
 
 
-    protected void init(AnchorPane root) {
+    protected void init(Pane root) {
         if(!is_on_settings){
             setCurrentroot(root);
         }

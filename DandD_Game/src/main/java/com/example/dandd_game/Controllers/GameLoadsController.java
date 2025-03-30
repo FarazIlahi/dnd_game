@@ -4,7 +4,7 @@ import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     Button go_button;
     @FXML
-    AnchorPane rootPane;
+    Pane rootPane;
     @FXML
     private void initialize() {
         super.init(rootPane);
