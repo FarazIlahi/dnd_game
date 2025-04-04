@@ -23,8 +23,6 @@ public class OptionMenuController extends BaseController implements GameMechanic
     Label audioNum;
     @FXML
     Pane rootPane;
-    @FXML
-    Button back;
 
     private int audio;
     private static boolean has_initialized = false;
@@ -40,10 +38,7 @@ public class OptionMenuController extends BaseController implements GameMechanic
     }
 
     private void one_time_initialize(){
-        System.out.println("YOLOOO");
         setSettings(rootPane);
-        //disableSettings();
-
 
         audioSlider.valueProperty().addListener(
                 new ChangeListener<Number>() {
@@ -57,11 +52,4 @@ public class OptionMenuController extends BaseController implements GameMechanic
         );
         has_initialized = true;
     }
-    @FXML
-    private void goBack(ActionEvent event) throws IOException {
-        switchScene(event, "GameLoads");
-    }
-
-
-
 }
