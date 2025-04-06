@@ -7,7 +7,7 @@ public class Knight extends Character {
     @Override
     public void specialMove(){
         //blocks attack for an ally for half the dmg
-        //Must be wihtin range
+        //Must be wihtin rangew
     }
 
 }

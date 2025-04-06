@@ -53,11 +53,7 @@ public class BaseController {
         snapshot.setEffect(blur);
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("OptionMenu.fxml"));
         Parent popupSettings = loader.load();
-        Scale scale = new Scale(0.5, 0.5);
-        popupSettings.getTransforms().add(scale);
-        popupSettings.setTranslateX(500);
-        popupSettings.setTranslateY(300);
-        StackPane.setAlignment(popupSettings, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(popupSettings, Pos.CENTER);
         stackPane.getChildren().addAll(snapshot, popupSettings);
 
     }
