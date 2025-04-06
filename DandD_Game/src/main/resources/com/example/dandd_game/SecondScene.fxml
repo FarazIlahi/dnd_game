@@ -40,7 +40,7 @@
                                   </font>
                               </Button>
                         <Region prefHeight="100.0" prefWidth="200.0" />
-                        <Button fx:id="investigateButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="350.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="Investigate">
+                        <Button fx:id="investigateButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="350.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="Investigate" onAction="#goToInvestigate">
                            <font>
                               <Font size="32.0" />
                            </font>
