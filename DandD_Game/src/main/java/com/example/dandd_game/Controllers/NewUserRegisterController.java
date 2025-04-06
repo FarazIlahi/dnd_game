@@ -22,8 +22,8 @@ public class NewUserRegisterController extends BaseController {
 
     @FXML
     public void createUser(ActionEvent event) throws IOException {
-        //switchScene(event, "login"); Original code
-        switchScene(event, "OptionMenu");//Test code
+        switchScene(event, "login");
+
     }
 
 

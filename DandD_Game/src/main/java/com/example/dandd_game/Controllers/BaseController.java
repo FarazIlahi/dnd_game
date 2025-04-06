@@ -48,17 +48,16 @@ public class BaseController {
 
     public void createStackPane() throws IOException {
         ImageView snapshot = new ImageView(getCurrentroot().snapshot(null, null));
-
         BoxBlur blur = new BoxBlur(10,10,3);
+
         snapshot.setEffect(blur);
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("OptionMenu.fxml"));
         Parent popupSettings = loader.load();
-        Scale scale = new Scale(0.5, 0.5);
-        popupSettings.getTransforms().add(scale);
         StackPane.setAlignment(popupSettings, Pos.CENTER);
         stackPane.getChildren().addAll(snapshot, popupSettings);
 
     }
+
     public StackPane getStackPane() {
         return stackPane;
     }
@@ -68,13 +67,11 @@ public class BaseController {
         if(!is_on_settings){
             setCurrentroot(root);
         }
-        System.out.println(getCurrentroot());
         getCurrentroot().sceneProperty().addListener((obs, oldScene, newScene) -> {
 
             if (newScene != null) {
                 newScene.setOnKeyPressed(event -> {
                     try {
-                        System.out.println(is_on_settings);
                         handleKeyPress(event);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -87,13 +84,11 @@ public class BaseController {
         if (event.getCode().toString().equals("ESCAPE")) {
             if(is_on_settings){
                 is_on_settings = false;
-                System.out.println("3");
                 closePopupScene();
 
             }
             else {
                 is_on_settings = true;
-                System.out.println("4");
                 openPopupScene();
 
             }
@@ -101,7 +96,6 @@ public class BaseController {
     }
     private void openPopupScene() throws IOException {
         createStackPane();
-        System.out.println("here");
         getCurrentroot().getChildren().add(getStackPane());
 
     }

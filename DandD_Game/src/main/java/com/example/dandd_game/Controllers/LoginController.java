@@ -26,22 +26,24 @@ public class LoginController extends BaseController {
     private PasswordField passWField;
 
     @FXML
-    public void loginErrorLabelOnAction(ActionEvent e) {
+    public void loginErrorLabelOnAction(ActionEvent event) throws IOException {
 
         if (userNField.getText().isBlank() == false && passWField.getText().isBlank() == false) {
             loginErrorLabel.setText("You tried to login");
+            switchScene(event, "GameLoads");
         }
         else {
             loginErrorLabel.setText("Please enter your username and password");
         }
 
     }
+
     @FXML
     public void goToUserRegistration(ActionEvent event) throws IOException {
         switchScene(event, "newUserRegister");
     }
     @FXML
-    public void leaveButtonOnAction(ActionEvent e) {
+    public void leaveButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) leaveButton.getScene().getWindow();
         stage.close();
     }
