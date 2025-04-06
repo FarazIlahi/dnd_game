@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.InfiltrateController">
+
+    <Label layoutX="300.0" layoutY="200.0" maxWidth="1000" style="-fx-font-size: 24px; -fx-text-fill: black;" text="You're inside the enemy castle. A patrol is approaching. What do you do?" wrapText="true" />
+
+    <Button layoutX="567.0" layoutY="365.0" onAction="#proceedInfiltration" prefHeight="70" prefWidth="300" style="-fx-font-size: 20px; -fx-background-color: #e6b800; -fx-border-color: #a38a00;" text="Proceed with Infiltration" />
+</AnchorPane>
