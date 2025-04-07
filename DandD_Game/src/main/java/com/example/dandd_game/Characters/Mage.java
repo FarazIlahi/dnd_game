@@ -2,9 +2,9 @@ package com.example.dandd_game.Characters;
 
 import javafx.scene.image.Image;
 
-public class Sorcerer extends Character {
-    public Sorcerer(){
-        super(new Image("com/example/dandd_game/images/pixelWitch.png"), 18, 10, 16, 30);
+public class Mage extends Character {
+    public Mage(){
+        super(18, 10, 16, 30, "Mage");
     }
     @Override
     public void specialMove(){

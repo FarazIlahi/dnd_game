@@ -20,7 +20,7 @@ public class InfiltrateController extends BaseController implements GameMechanic
 
     @FXML
     private void proceedInfiltration(ActionEvent event) throws IOException {
-        int roll= rolld20();
+        int roll= rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Infiltration");
         alert.setHeaderText("You infiltrate the enemy lines and find a weak spot.");

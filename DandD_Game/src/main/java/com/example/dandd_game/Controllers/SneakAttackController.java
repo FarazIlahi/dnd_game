@@ -13,7 +13,7 @@ public class SneakAttackController extends BaseController implements GameMechani
 
     @FXML
     private void attackFromBehind(ActionEvent event) throws IOException {
-        int roll = rolld20();
+        int roll = rollDice(20);
         if (roll >= 5) {
             switchScene(event, "ChapterTwoScene");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
