@@ -1,7 +1,10 @@
 package com.example.dandd_game.Characters;
+
+import javafx.scene.image.Image;
+
 public class King extends Character {
     public King(){
-        super(12, 8, 20,10);
+        super(new Image("com/example/dandd_game/images/pixelKing.png"),12, 8, 20,10);
     }
 
     @Override

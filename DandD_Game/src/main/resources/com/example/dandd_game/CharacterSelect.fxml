@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
@@ -13,33 +14,109 @@
       </ImageView>
       <VBox prefHeight="800.0" prefWidth="1600.0">
          <children>
-            <Region prefHeight="100.0" prefWidth="1600.0" />
+            <Region prefHeight="50.0" prefWidth="1600.0" />
             <HBox prefHeight="600.0" prefWidth="1600.0">
                <children>
-                  <Region prefHeight="600.0" prefWidth="50.0" />
-                  <VBox prefHeight="600.0" prefWidth="275.0">
+                  <Region prefHeight="600.0" prefWidth="138.0" />
+                  <VBox fx:id="kingBox" prefHeight="600.0" prefWidth="275.0">
                      <children>
                         <ImageView fitHeight="267.0" fitWidth="273.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/pixelKing.png" />
                            </image>
                         </ImageView>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The King">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Ruler of the kingdom.  Has balanced stats.  The game ends if he is defeated." wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 12                                DEF: 8                                ATK: 18                             RNG: 10" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
-                  <Region prefHeight="600.0" prefWidth="50.0" />
-                  <VBox prefHeight="600.0" prefWidth="275.0">
+                  <Region prefHeight="600.0" prefWidth="75.0" />
+                  <VBox fx:id="knightBox" prefHeight="600.0" prefWidth="275.0">
                      <children>
                         <ImageView fitHeight="266.0" fitWidth="275.0" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelKnight.png" />
                            </image>
                         </ImageView>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Knight">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Loyal night of the king.  Has strong defense, but has low mobility." wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 40                                DEF: 18                                ATK: 12                             RNG: 5" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
-                  <Region prefHeight="200.0" prefWidth="200.0" />
-                  <VBox prefHeight="200.0" prefWidth="100.0" />
-                  <Region prefHeight="200.0" prefWidth="200.0" />
-                  <VBox prefHeight="200.0" prefWidth="100.0" />
+                  <Region prefHeight="600.0" prefWidth="75.0" />
+                  <VBox fx:id="clericBox" prefHeight="600.0" prefWidth="275.0">
+                     <children>
+                        <ImageView fitHeight="266.0" fitWidth="275.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/pixelCleric.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Cleric">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Priest of the kingdom.  Heals others with divine powers." wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 22                                DEF: 12                                ATK: 10                             RNG: 15" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Region prefHeight="600.0" prefWidth="75.0" />
+                  <VBox fx:id="mageBox" prefHeight="600.0" prefWidth="275.0">
+                     <children>
+                        <ImageView fitHeight="266.0" fitWidth="275.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/pixelWitch.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Mage">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Witch from the forest aiding the king.  Powerful magic user, but has poor defense." wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 18                                DEF: 10                                ATK: 16                             RNG: 30" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
