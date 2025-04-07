@@ -18,5 +18,11 @@
             <Font size="34.0" />
          </font>
       </TextField>
+      <TextField layoutX="1003.0" layoutY="35.0" prefHeight="121.0" prefWidth="374.0" text="Select Difficulty">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="difficulty" layoutX="1074.0" layoutY="190.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
