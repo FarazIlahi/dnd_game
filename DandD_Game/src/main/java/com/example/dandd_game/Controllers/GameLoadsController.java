@@ -77,7 +77,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
 
     public void onLoadClicked(ActionEvent event) throws IOException {
         if(creatingFile){
-            switchScene(event,"CharacterSelect");
+            switchScene(event,"playerCount");
         }
         else{
             Button clickedButton = (Button) event.getSource();

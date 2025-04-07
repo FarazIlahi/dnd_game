@@ -24,7 +24,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
 
     @FXML
     private void holdWalls(ActionEvent event) throws IOException {
-        int roll = rolld20();
+        int roll = rollDice(20);
         if (roll >= 10) {
             switchScene(event, "ChapterTwoScene");
         } else {
@@ -35,7 +35,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
 
     @FXML
     private void flankEnemy(ActionEvent event) throws IOException {
-        int roll = rolld20();
+        int roll = rollDice(20);
         if (roll >= 5) {
             switchScene(event, "SneakAttackScene");
         } else {
