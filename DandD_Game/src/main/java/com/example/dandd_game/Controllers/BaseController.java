@@ -2,6 +2,7 @@ package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.MainApplication;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -92,7 +93,7 @@ public class BaseController {
         getCurrentroot().getChildren().remove(getStackPane());
 
     }
-    public void switchScene(ActionEvent event, String new_scene) throws IOException {
+    public void switchScene(Event event, String new_scene) throws IOException {
         Node source = (Node) event.getSource();
         Scene scene = source.getScene();
         Stage primaryStage = (Stage) scene.getWindow();

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 public class Cleric extends Character {
     public  Cleric(){
-        super(new Image("com/example/dandd_game/images/pixelCleric.png"),22, 12, 10, 15);
+        super(22, 12, 10, 15, "Cleric");
     }
     @Override
     public void specialMove(){

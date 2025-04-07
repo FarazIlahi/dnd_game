@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
+
 
 public class PlayerCountController extends BaseController{
     @FXML
@@ -27,9 +29,10 @@ public class PlayerCountController extends BaseController{
     }
 
     @FXML
-    public void goToCharSelect(ActionEvent event) {
+    public void goToCharSelect(ActionEvent event) throws IOException {
         gameState.setPlayerCount(numPlayers.getValue());
         gameState.setDifficulty(difficulty.getValue());
+        switchScene(event, "CharacterSelect");
     }
 
 }

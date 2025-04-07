@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class Knight extends Character {
 
     public Knight(){
-        super(new Image("com/example/dandd_game/images/pixelKnight.png"), 40, 18, 12, 5);
+        super(40, 18, 12, 5, "Knight");
     }
     @Override
     public void specialMove(){

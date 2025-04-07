@@ -63,18 +63,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
 
     }
 
-    public void highlight(Button button){
-        Scale scale = new Scale(1.25, 1.25);
-        button.getTransforms().add(scale);
-        button.setEffect(new DropShadow(30, Color.BLACK));
-    }
-    public void unhighlight(Button button){
-        Scale scale = new Scale(.8, .8);
-        button.getTransforms().add(scale);
-        button.setEffect(null);
-    }
-
-
     public void onLoadClicked(ActionEvent event) throws IOException {
         if(creatingFile){
             switchScene(event,"playerCount");

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 public class King extends Character {
     public King(){
-        super(new Image("com/example/dandd_game/images/pixelKing.png"),12, 8, 20,10);
+        super(12, 8, 20,10, "King");
     }
 
     @Override
