@@ -1,16 +1,18 @@
 package com.example.dandd_game.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
 public class CharacterSelectController {
     @FXML
-    private ComboBox numPlayers;
+    private HBox kingBox;
     @FXML
-    public void initialize() {
-        numPlayers.getItems().addAll("1", "2", "3", "4");
-        numPlayers.setValue("1");
-    }
-
-    
+    private HBox knightBox;
+    @FXML
+    private HBox clericBox;
+    @FXML
+    private HBox mageBox;
+    @FXML
+    private Button selectBtn;
 }

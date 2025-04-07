@@ -28,17 +28,7 @@ public class BaseController {
     public void setSettings(Pane root){
         settings = root;
     }
-    public void disableSettings(){
-        settings.setVisible(false);
-    }
-    public void enableSettings(){
-        settings.setVisible(true);
-    }
-
-    public boolean isIs_on_settings(){
-        return is_on_settings;
-    }
-
+    
     public void setCurrentroot(Pane root){
         currentroot = root;
     }
@@ -55,7 +45,6 @@ public class BaseController {
         Parent popupSettings = loader.load();
         StackPane.setAlignment(popupSettings, Pos.CENTER);
         stackPane.getChildren().addAll(snapshot, popupSettings);
-
     }
 
     public StackPane getStackPane() {

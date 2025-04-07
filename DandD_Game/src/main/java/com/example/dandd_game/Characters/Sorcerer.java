@@ -1,8 +1,10 @@
 package com.example.dandd_game.Characters;
 
+import javafx.scene.image.Image;
+
 public class Sorcerer extends Character {
     public Sorcerer(){
-        super(18, 10, 16, 30);
+        super(new Image("com/example/dandd_game/images/pixelWitch.png"), 18, 10, 16, 30);
     }
     @Override
     public void specialMove(){

@@ -81,7 +81,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
         }
         else{
             Button clickedButton = (Button) event.getSource();
-            System.out.println("Would go to " + clickedButton.getId());
             //switchScene("");
         }
     }
