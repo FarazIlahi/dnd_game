@@ -35,7 +35,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
     @FXML
     private void attackSorcerer(ActionEvent event) throws IOException {
-        int roll= rollDice(20);
+        int roll=rolld20();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Attack Sorcerer");
         alert.setHeaderText("You attack the sorcerer!");

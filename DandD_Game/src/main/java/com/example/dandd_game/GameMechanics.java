@@ -28,8 +28,8 @@ import java.lang.Math;
 
 public interface GameMechanics {
 
-    public default int rollDice(int numDice){
-        return (int)(Math.random() * numDice) + 1;
+    public default int rollDice(){
+        return (int)(Math.random() * 20) + 1;
 
     }
 
