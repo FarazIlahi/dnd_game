@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -22,7 +24,8 @@ public class StatRollController extends BaseController implements GameMechanics 
     private Label taskLabel;
     @FXML
     private TextArea rollInfo;
-
+    @FXML
+    private ImageView dice;
     @FXML
     private Button roll_btn;
     @FXML
@@ -146,13 +149,23 @@ public class StatRollController extends BaseController implements GameMechanics 
     @FXML
     private void rollStat(){
         if ((order.get(order.indexOf(currentStat) + 1)).equals("End")){
-            roll_btn.setDisable(true);
             back_btn.setDisable(false);
+            disableImage(dice);
         }
         updateCharacterStat();
         updateInfo();
         updateCurrentStat();
         updateTaskLabel();
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        ImageView clickedImage = (ImageView) event.getSource();
+        highlight(clickedImage);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        ImageView clickedImage = (ImageView) event.getSource();
+        unhighlight(clickedImage);
     }
 
     @FXML

@@ -25,6 +25,10 @@ public interface GameMechanics {
         e.getTransforms().add(scale);
         e.setEffect(null);
     }
+    public default void disableImage(ImageView image){
+        image.setOpacity(.5);
+        image.setDisable(true);
+    }
 
 
 }

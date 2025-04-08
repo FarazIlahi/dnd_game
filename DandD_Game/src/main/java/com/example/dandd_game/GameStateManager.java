@@ -80,6 +80,9 @@ public class GameStateManager {
     public void removeFromParty(Character character){
         this.party.remove(character);
     }
+    public ArrayList<Character> getParty(){
+        return this.party;
+    }
 
     public static GameStateManager getInstance() {
         if (instance == null) {

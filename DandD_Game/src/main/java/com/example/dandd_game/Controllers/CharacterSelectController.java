@@ -1,5 +1,6 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.Characters.Character;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
@@ -39,10 +40,33 @@ public class CharacterSelectController extends BaseController implements GameMec
         if(gameState.getPlayerCount() == 1){
             only1Player();
         }
+        alreadySelectedCheck();
     }
 
     public void only1Player(){
+        disableImage(knight);
+        disableImage(cleric);
+        disableImage(mage);
+    }
 
+    public void alreadySelectedCheck(){
+        for (Character character : gameState.getParty()) {
+            String characterName = character.getName();
+            switch (characterName){
+                case "King":
+                    disableImage(king);
+                    break;
+                case "Knight":
+                    disableImage(knight);
+                    break;
+                case "Cleric":
+                    disableImage(cleric);
+                    break;
+                case "Mage":
+                    disableImage(mage);
+                    break;
+            }
+        }
     }
 
     @FXML
@@ -56,18 +80,23 @@ public class CharacterSelectController extends BaseController implements GameMec
             case "king":
                 gameState.createKing();
                 gameState.setCurrentCharacter(gameState.getKing());
+                gameState.addToParty(gameState.getCurrentCharacter());
+
                 break;
             case "knight":
                 gameState.createKnight();
                 gameState.setCurrentCharacter(gameState.getKnight());
+                gameState.addToParty(gameState.getCurrentCharacter());
                 break;
             case "cleric":
                 gameState.createCleric();
                 gameState.setCurrentCharacter(gameState.getCleric());
+                gameState.addToParty(gameState.getCurrentCharacter());
                 break;
             case "mage":
                 gameState.createMage();
                 gameState.setCurrentCharacter(gameState.getMage());
+                gameState.addToParty(gameState.getCurrentCharacter());
                 break;
         }
         switchScene(event,"StatRoll");
