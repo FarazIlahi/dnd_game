@@ -51,6 +51,9 @@ public abstract class Character{
     public void setDef(int def) {
         this.def = def;
     }
+    public void setRange(int range){
+        this.range = range;
+    }
     public void setMax_hp(int max_hp) {
         this.max_hp = max_hp;
     }
