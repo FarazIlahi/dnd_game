@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -27,7 +28,9 @@ public class StatRollController extends BaseController implements GameMechanics 
     @FXML
     private ImageView dice;
     @FXML
-    private Button roll_btn;
+    private TextField nameField;
+    @FXML
+    private Label nameErrorLabel;
     @FXML
     private Button back_btn;
 
@@ -42,6 +45,7 @@ public class StatRollController extends BaseController implements GameMechanics 
         updateInfo();
         displayRollInfo();
         currentStat = "HP";
+        nameErrorLabel.setVisible(false);
         setStatOrder();
         updateTaskLabel();
     }
@@ -50,6 +54,9 @@ public class StatRollController extends BaseController implements GameMechanics 
 
     public void updateInfo(){
         String name = workingCharacter.getName();
+        if(name.length() == 0){
+            name = workingCharacter.getID();
+        }
         int hp = workingCharacter.getHp();
         int def = workingCharacter.getDef();
         int basic_atk = workingCharacter.getBasic_attack();
@@ -76,6 +83,9 @@ public class StatRollController extends BaseController implements GameMechanics 
         if(!((order.get(order.indexOf(currentStat))).equals("End"))){
             taskLabel.setText("Roll for " + currentStat);
         }
+        else {
+            taskLabel.setText("");
+        }
 
     }
     public void setStatOrder(){
@@ -87,8 +97,7 @@ public class StatRollController extends BaseController implements GameMechanics 
 
     }
     public void updateCurrentStat(){
-
-        if(!((order.get(order.indexOf(currentStat) + 1)).equals(null))){
+        if((order.get(order.indexOf(currentStat) + 1)) != null){
             currentStat = order.get(order.indexOf(currentStat) + 1);
         }
 
@@ -96,8 +105,6 @@ public class StatRollController extends BaseController implements GameMechanics 
     public void updateCharacterStat(){
         int roll = rollDice(20);
         int statChange = convertRollToStat(roll);
-        System.out.println(roll);
-        System.out.println(statChange + "\n\n");
         switch (currentStat){
             case "HP":
                 workingCharacter.setHp(workingCharacter.getHp() + statChange);
@@ -145,17 +152,49 @@ public class StatRollController extends BaseController implements GameMechanics 
         }
         return stat;
     }
+    public void nameCheck(boolean intentionallyClicked){
+        String name = nameField.getText();
+        if(name.length() > 12){
+            nameErrorLabel.setVisible(true);
+            setNameTooLong();
+        }
+        else if ((name.length() == 0) && (intentionallyClicked)) {
+            nameErrorLabel.setVisible(true);
+            setNoName();
+        }
+        else {
+            nameErrorLabel.setVisible(false);
+            workingCharacter.setName(name);
+        }
+    }
+    public void setNameTooLong(){
+        nameErrorLabel.setText("Name is too long");
+    }
+    public void setNoName(){
+        nameErrorLabel.setText("Enter a valid name");
+    }
 
     @FXML
     private void rollStat(){
-        if ((order.get(order.indexOf(currentStat) + 1)).equals("End")){
-            back_btn.setDisable(false);
-            disableImage(dice);
+        nameCheck(false);
+        if(nameErrorLabel.isVisible() == false){
+            if ((order.get(order.indexOf(currentStat) + 1)).equals("End")){
+                back_btn.setDisable(false);
+                disableNode(dice);
+            }
+            updateCharacterStat();
+            updateInfo();
+            updateCurrentStat();
+            updateTaskLabel();
         }
-        updateCharacterStat();
-        updateInfo();
-        updateCurrentStat();
-        updateTaskLabel();
+    }
+    @FXML
+    private void backgroundClicked(){
+        nameCheck(false);
+    }
+    @FXML
+    private void setName(ActionEvent event){
+        nameCheck(false);
     }
     @FXML
     public void hovered(MouseEvent event){
@@ -167,9 +206,12 @@ public class StatRollController extends BaseController implements GameMechanics 
         ImageView clickedImage = (ImageView) event.getSource();
         unhighlight(clickedImage);
     }
-
     @FXML
     private void goBack(ActionEvent event) throws IOException{
-        switchScene(event, "CharacterSelect");
+        nameCheck(true);
+        if(nameErrorLabel.isVisible() == false){
+            switchScene(event, "CharacterSelect");
+        }
+
     }
 }

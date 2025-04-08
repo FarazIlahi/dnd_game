@@ -10,6 +10,7 @@ public abstract class Character{
     private int basic_attack;
     private int range;
     private String name;
+    private String iD;
 
 
     public Character(int hp, int def, int basic_attack, int range, String name){
@@ -20,6 +21,7 @@ public abstract class Character{
         this.basic_attack = basic_attack;
         this.range = range;
         this.name = name;
+        this.iD = name;
     }
     public Image getProfile(){return profile;}
     public int getHp(){
@@ -37,10 +39,10 @@ public abstract class Character{
     public int getRange(){
         return this.range;
     }
-
     public String getName() {
         return name;
     }
+    public String getID(){return this.iD;}
 
     public void setBasic_attack(int basic_attack) {
         this.basic_attack = basic_attack;
@@ -60,6 +62,10 @@ public abstract class Character{
     public void setProfile(Image profile) {
         this.profile = profile;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+
 
     public abstract void specialMove();
 

@@ -27,10 +27,10 @@ public class LoginController extends BaseController {
 
     @FXML
     public void loginErrorLabelOnAction(ActionEvent event) throws IOException {
-
+        switchScene(event, "GameLoads");
         if (userNField.getText().isBlank() == false && passWField.getText().isBlank() == false) {
             loginErrorLabel.setText("You tried to login");
-            switchScene(event, "GameLoads");
+
         }
         else {
             loginErrorLabel.setText("Please enter your username and password");

@@ -7,15 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CharacterSelectController extends BaseController implements GameMechanics {
     @FXML
@@ -25,56 +22,145 @@ public class CharacterSelectController extends BaseController implements GameMec
     @FXML
     private ImageView king;
     @FXML
+    private Label kingStats;
+    @FXML
+    private Label kingName;
+    @FXML
     private ImageView knight;
+    @FXML
+    private Label knightStats;
+    @FXML
+    private Label knightName;
     @FXML
     private ImageView cleric;
     @FXML
+    private Label clericStats;
+    @FXML
+    private Label clericName;
+    @FXML
     private ImageView mage;
+    @FXML
+    private Label mageStats;
+    @FXML
+    private Label mageName;
+    @FXML
+    private Button ready_btn;
+
     private GameStateManager gameState = GameStateManager.getInstance();
 
 
     @FXML
     private void initialize(){
         super.init(rootPane);
-        infoLabel.setText("Player 1, choose your character.");
-        if(gameState.getPlayerCount() == 1){
-            only1Player();
-        }
+        only1PlayerLeft();
+        disableNode(ready_btn);
+        updateInfoLabel();
+        updateAllCharacterInfo();
         alreadySelectedCheck();
-    }
 
-    public void only1Player(){
-        disableImage(knight);
-        disableImage(cleric);
-        disableImage(mage);
     }
+    public void updateInfoLabel(){
+        int num = gameState.getParty().size();
+        if(num == gameState.getPlayerCount()){
+            infoLabel.setText("Ready Up!");
+            unDisableNode(ready_btn);
+            disableAllNodes();
+        }
+        else {
+            String whichPlayer = "Player 1";
+            if(num == 1){
+                whichPlayer = "Player 2";
+            }
+            else if (num == 2) {
+                whichPlayer = "Player 3";
+            }
+            else if (num == 3) {
+                whichPlayer = "Player 4";
+            }
+            infoLabel.setText(whichPlayer + ", choose your character.");
+        }
+    }
+    public void disableAllNodes(){
+        if(knight != null){
+            disableNode(knight);
+            knightStats.setText("");
+            knightName.setText("");
+        }
+        if(cleric != null){
+            disableNode(cleric);
+            clericStats.setText("");
+            clericName.setText("");
+        }
+        if(mage != null){
+            disableNode(mage);
+            mageStats.setText("");
+            mageName.setText("");
+        }
+    }
+    public void updateAllCharacterInfo(){
+        updateSpecificStats(kingStats, gameState.getKing());
+        updateSpecificName(kingName, gameState.getKing());
 
+        updateSpecificStats(knightStats, gameState.getKnight());
+        updateSpecificName(knightName, gameState.getKnight());
+
+        updateSpecificStats(clericStats, gameState.getCleric());
+        updateSpecificName(clericName, gameState.getCleric());
+
+        updateSpecificStats(mageStats, gameState.getMage());
+        updateSpecificName(mageName, gameState.getMage());
+    }
+    public void updateSpecificStats(Label label, Character character){
+        if(character != null){
+            int hp = character.getHp();
+            int def = character.getDef();
+            int basic_atk = character.getBasic_attack();
+            int range = character.getRange();
+            label.setText("\t" + "New Stats" +
+                    "\nHP: " + hp +
+                    "\nDef: " + def +
+                    "\nBasic Attack: " + basic_atk +
+                    "\nRange: " + range);
+        }
+    }
+    public void updateSpecificName(Label label, Character character){
+        if(character != null){
+            String name = character.getName();
+            label.setText(name);
+        }
+    }
+    public void only1PlayerLeft(){
+        ArrayList<Character> party = gameState.getParty();
+        boolean kingInParty = party.indexOf(gameState.getKing()) == -1;
+        boolean onePlayerLeft = (gameState.getPlayerCount() - party.size() == 1);
+        if(onePlayerLeft && kingInParty){
+            disableNode(knight);
+            disableNode(cleric);
+            disableNode(mage);
+        }
+    }
     public void alreadySelectedCheck(){
         for (Character character : gameState.getParty()) {
-            String characterName = character.getName();
-            switch (characterName){
+            String characterID = character.getID();
+            switch (characterID){
                 case "King":
-                    disableImage(king);
+                    disableNode(king);
                     break;
                 case "Knight":
-                    disableImage(knight);
+                    disableNode(knight);
                     break;
                 case "Cleric":
-                    disableImage(cleric);
+                    disableNode(cleric);
                     break;
                 case "Mage":
-                    disableImage(mage);
+                    disableNode(mage);
                     break;
             }
         }
     }
-
-    @FXML
-    private void dosmth(ActionEvent event){
-
-    }
     @FXML
     private void goToStatRoll(MouseEvent  event) throws IOException {
+        updateInfoLabel();
         ImageView clickedImage = (ImageView) event.getSource();
         switch (clickedImage.getId()){
             case "king":
@@ -110,6 +196,10 @@ public class CharacterSelectController extends BaseController implements GameMec
     public void unHovered(MouseEvent event){
         ImageView clickedImage = (ImageView) event.getSource();
         unhighlight(clickedImage);
+    }
+    @FXML
+    public void ready(ActionEvent event) throws IOException {
+        switchScene(event, "FirstScene");
     }
 
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CharacterSelectController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CharacterSelectController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
@@ -40,7 +40,7 @@
                               <Image url="@images/pixelKing.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The King">
+                        <Label fx:id="kingName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The King">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
@@ -50,7 +50,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 12                                DEF: 8                                ATK: 18                             RNG: 10" wrapText="true">
+                        <Label fx:id="kingStats" alignment="TOP_LEFT" prefHeight="192.0" prefWidth="275.0" text="HP: 12                                DEF: 8                                ATK: 18                             RNG: 10" wrapText="true">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -65,7 +65,7 @@
                               <Image url="@images/pixelKnight.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Knight">
+                        <Label fx:id="knightName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Knight">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
@@ -75,7 +75,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 40                                DEF: 18                                ATK: 12                             RNG: 5" wrapText="true">
+                        <Label fx:id="knightStats" alignment="TOP_LEFT" prefHeight="189.0" prefWidth="275.0" text="HP: 40                                DEF: 18                                ATK: 12                             RNG: 5" wrapText="true">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -90,7 +90,7 @@
                               <Image url="@images/pixelCleric.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Cleric">
+                        <Label fx:id="clericName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Cleric">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
@@ -100,7 +100,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 22                                DEF: 12                                ATK: 10                             RNG: 15" wrapText="true">
+                        <Label fx:id="clericStats" alignment="TOP_LEFT" prefHeight="192.0" prefWidth="275.0" text="HP: 22                                DEF: 12                                ATK: 10                             RNG: 15" wrapText="true">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -115,7 +115,7 @@
                               <Image url="@images/pixelWitch.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Mage">
+                        <Label fx:id="mageName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Mage">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
@@ -125,7 +125,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="125.0" prefWidth="275.0" text="HP: 18                                DEF: 10                                ATK: 16                             RNG: 30" wrapText="true">
+                        <Label fx:id="mageStats" alignment="TOP_LEFT" prefHeight="192.0" prefWidth="275.0" text="HP: 18                                DEF: 10                                ATK: 16                             RNG: 30" wrapText="true">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
@@ -138,7 +138,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Region prefHeight="100.0" prefWidth="725.0" />
-                  <Button fx:id="selectBtn" mnemonicParsing="false" onAction="#dosmth" prefHeight="50.0" prefWidth="150.0" text="Select">
+                  <Button fx:id="ready_btn" mnemonicParsing="false" onAction="#ready" prefHeight="50.0" prefWidth="150.0" text="Ready">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
