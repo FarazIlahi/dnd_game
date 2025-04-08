@@ -11,35 +11,40 @@
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#backgroundClicked" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.StatRollController">
    <children>
-      <TextArea fx:id="info_area" editable="false" layoutX="201.0" layoutY="84.0" prefHeight="326.0" prefWidth="368.0">
+      <TextArea fx:id="info_area" editable="false" layoutX="43.0" layoutY="416.0" prefHeight="326.0" prefWidth="368.0">
          <font>
             <Font size="30.0" />
          </font></TextArea>
-      <Label fx:id="taskLabel" layoutX="619.0" layoutY="84.0" prefHeight="97.0" prefWidth="866.0">
+      <Label fx:id="taskLabel" layoutX="29.0" layoutY="30.0" prefHeight="97.0" prefWidth="866.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TextArea fx:id="rollInfo" layoutX="1104.0" layoutY="200.0" prefHeight="326.0" prefWidth="328.0">
+      <TextArea fx:id="rollInfo" layoutX="1104.0" layoutY="37.0" prefHeight="326.0" prefWidth="328.0">
          <font>
             <Font size="20.0" />
          </font>
       </TextArea>
-      <Button fx:id="back_btn" disable="true" layoutX="170.0" layoutY="598.0" mnemonicParsing="false" onAction="#goBack" prefHeight="43.0" prefWidth="63.0" text="Back" />
-      <ImageView fx:id="dice" fitHeight="68.0" fitWidth="63.0" layoutX="790.0" layoutY="307.0" onMouseClicked="#rollStat" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="back_btn" disable="true" layoutX="1205.0" layoutY="442.0" mnemonicParsing="false" onAction="#goBack" prefHeight="43.0" prefWidth="63.0" text="Back" />
+      <ImageView fx:id="dice" fitHeight="68.0" fitWidth="63.0" layoutX="600.0" layoutY="429.0" onMouseClicked="#rollStat" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/dice.png" />
          </image>
       </ImageView>
-      <TextField fx:id="nameField" layoutX="561.0" layoutY="585.0" onAction="#setName" promptText="Enter Name">
+      <TextField fx:id="nameField" layoutX="537.0" layoutY="664.0" onAction="#setName" promptText="Enter Name">
          <font>
             <Font size="32.0" />
          </font>
       </TextField>
-      <Label fx:id="nameErrorLabel" layoutX="631.0" layoutY="526.0" prefHeight="53.0" prefWidth="271.0" text="Name too long" textFill="RED">
+      <Label fx:id="nameErrorLabel" layoutX="631.0" layoutY="526.0" prefHeight="53.0" prefWidth="271.0" textFill="RED">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <TextArea fx:id="statChange_area" layoutX="37.0" layoutY="267.0" prefHeight="110.0" prefWidth="343.0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>

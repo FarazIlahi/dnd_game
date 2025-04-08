@@ -30,14 +30,18 @@ public class StatRollController extends BaseController implements GameMechanics 
     @FXML
     private TextField nameField;
     @FXML
+    private TextArea statChange_area;
+    @FXML
     private Label nameErrorLabel;
     @FXML
     private Button back_btn;
+
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private ArrayList<String> order = new ArrayList<>(4);
     private String currentStat;
     private Character workingCharacter = gameState.getCurrentCharacter();
+    private boolean isSpinning = false;
 
     @FXML
     private void initialize(){
@@ -94,7 +98,6 @@ public class StatRollController extends BaseController implements GameMechanics 
         order.add("Basic Attack");
         order.add("Range");
         order.add("End");
-
     }
     public void updateCurrentStat(){
         if((order.get(order.indexOf(currentStat) + 1)) != null){
@@ -108,17 +111,28 @@ public class StatRollController extends BaseController implements GameMechanics 
         switch (currentStat){
             case "HP":
                 workingCharacter.setHp(workingCharacter.getHp() + statChange);
+                upDateStatChange("HP", statChange);
                 break;
             case "Def":
                 workingCharacter.setDef(workingCharacter.getDef() + statChange);
+                upDateStatChange("Def", statChange);
                 break;
             case "Basic Attack":
                 workingCharacter.setBasic_attack(workingCharacter.getBasic_attack() + statChange);
+                upDateStatChange("Basic Attack", statChange);
                 break;
             case "Range":
                 workingCharacter.setRange(workingCharacter.getRange() + statChange);
+                upDateStatChange("Range", statChange);
                 break;
-
+        }
+    }
+    public void upDateStatChange(String stat, int change){
+        if(change > 0){
+            statChange_area.setText("You gained " + change + " points for " + stat);
+        }
+        else{
+            statChange_area.setText("You lost " + change + " points for " + stat);
         }
     }
     public int convertRollToStat(int roll){
@@ -174,6 +188,16 @@ public class StatRollController extends BaseController implements GameMechanics 
         nameErrorLabel.setText("Enter a valid name");
     }
 
+    public void updateRoll(){
+        spinDice(dice);
+        unhighlight(dice);
+        isSpinning = true;
+        updateCharacterStat();
+        updateInfo();
+        updateCurrentStat();
+        updateTaskLabel();
+    }
+
     @FXML
     private void rollStat(){
         nameCheck(false);
@@ -182,12 +206,10 @@ public class StatRollController extends BaseController implements GameMechanics 
                 back_btn.setDisable(false);
                 disableNode(dice);
             }
-            updateCharacterStat();
-            updateInfo();
-            updateCurrentStat();
-            updateTaskLabel();
+            updateRoll();
         }
     }
+
     @FXML
     private void backgroundClicked(){
         nameCheck(false);
@@ -198,13 +220,21 @@ public class StatRollController extends BaseController implements GameMechanics 
     }
     @FXML
     public void hovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        highlight(clickedImage);
+        if(!isSpinning){
+            ImageView clickedImage = (ImageView) event.getSource();
+            highlight(clickedImage);
+            isSpinning = false;
+        }
+
     }
     @FXML
     public void unHovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        unhighlight(clickedImage);
+        if(!isSpinning){
+            ImageView clickedImage = (ImageView) event.getSource();
+            unhighlight(clickedImage);
+            isSpinning = false;
+        }
+
     }
     @FXML
     private void goBack(ActionEvent event) throws IOException{

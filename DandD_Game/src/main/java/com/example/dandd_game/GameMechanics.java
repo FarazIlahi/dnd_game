@@ -1,35 +1,45 @@
 package com.example.dandd_game;
 
-
+import javafx.scene.image.ImageView;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
-
+import javafx.util.Duration;
 import java.lang.Math;
 
 public interface GameMechanics {
 
-    public default int rollDice(int i){
+    default int rollDice(int i){
         return (int)(Math.random() * 20) + 1;
-
     }
-    public default void highlight(Node e){
+    default void spinDice(ImageView image){
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(image);
+        rotateTransition.setCycleCount(4);
+        rotateTransition.setInterpolator(Interpolator.LINEAR);
+        rotateTransition.setDuration(Duration.seconds(.5));
+        rotateTransition.setFromAngle(0);
+        rotateTransition.setToAngle(360);
+        rotateTransition.play();
+    }
+    default void highlight(Node e){
         Scale scale = new Scale(1.25, 1.25);
         e.getTransforms().add(scale);
         e.setEffect(new DropShadow(30, Color.BLACK));
     }
-    public default void unhighlight(Node e){
+    default void unhighlight(Node e){
         Scale scale = new Scale(.8, .8);
         e.getTransforms().add(scale);
         e.setEffect(null);
     }
-    public default void disableNode(Node node){
+    default void disableNode(Node node){
         node.setOpacity(.5);
         node.setDisable(true);
     }
-    public default void unDisableNode(Node node){
+    default void unDisableNode(Node node){
         node.setOpacity(1);
         node.setDisable(false);
     }
