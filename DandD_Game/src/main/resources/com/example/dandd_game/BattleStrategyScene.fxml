@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.BattleStrategyController">
+
+    <Label layoutX="300" layoutY="200" maxWidth="1000" style="-fx-font-size: 26px;" text="The enemy is regrouping for an assault. What should be prioritized?" wrapText="true" />
+
+    <Button layoutX="335.0" layoutY="340.0" onAction="#reinforceWalls" prefHeight="60" prefWidth="300" style="-fx-background-color: #ffd700;" text="Reinforce Castle Walls" />
+
+    <Button layoutX="800.0" layoutY="340.0" onAction="#trainSoldiers" prefHeight="60" prefWidth="300" style="-fx-background-color: #ffd700;" text="Train Party" />
+</AnchorPane>

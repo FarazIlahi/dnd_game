@@ -18,9 +18,12 @@ public class ChapterTwoController extends BaseController implements GameMechanic
     }
 
     @FXML
-    private void continueChapter(ActionEvent event) throws IOException {
-        System.out.println("continuing"); // tesing line
-        // switchScene(event, ""); *Switch to next scene*
+    private void goToPrepareBattle(ActionEvent event) throws IOException {
+        switchScene(event, "PrepareBattleScene");
     }
 
+    @FXML
+    private void goToUncoverThreat(ActionEvent event) throws IOException {
+        switchScene(event, "UncoverThreatScene");
+    }
 }
