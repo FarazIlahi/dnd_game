@@ -53,7 +53,9 @@ public class StatRollController extends BaseController implements GameMechanics 
         setStatOrder();
         updateTaskLabel();
     }
-
+    public void setIsSpinningFalse(){
+        isSpinning = false;
+    }
 
 
     public void updateInfo(){
@@ -111,28 +113,28 @@ public class StatRollController extends BaseController implements GameMechanics 
         switch (currentStat){
             case "HP":
                 workingCharacter.setHp(workingCharacter.getHp() + statChange);
-                upDateStatChange("HP", statChange);
+                upDateStatChange("HP", statChange, roll);
                 break;
             case "Def":
                 workingCharacter.setDef(workingCharacter.getDef() + statChange);
-                upDateStatChange("Def", statChange);
+                upDateStatChange("Def", statChange, roll);
                 break;
             case "Basic Attack":
                 workingCharacter.setBasic_attack(workingCharacter.getBasic_attack() + statChange);
-                upDateStatChange("Basic Attack", statChange);
+                upDateStatChange("Basic Attack", statChange, roll);
                 break;
             case "Range":
                 workingCharacter.setRange(workingCharacter.getRange() + statChange);
-                upDateStatChange("Range", statChange);
+                upDateStatChange("Range", statChange, roll);
                 break;
         }
     }
-    public void upDateStatChange(String stat, int change){
+    public void upDateStatChange(String stat, int change, int roll){
         if(change > 0){
-            statChange_area.setText("You gained " + change + " points for " + stat);
+            statChange_area.setText("You rolled a " + roll + "\nYou gained " + change + " points for " + stat);
         }
         else{
-            statChange_area.setText("You lost " + change + " points for " + stat);
+            statChange_area.setText("You rolled a " + roll + "\nYou lost " + change + " points for " + stat);
         }
     }
     public int convertRollToStat(int roll){
@@ -188,10 +190,15 @@ public class StatRollController extends BaseController implements GameMechanics 
         nameErrorLabel.setText("Enter a valid name");
     }
 
-    public void updateRoll(){
-        spinDice(dice);
-        unhighlight(dice);
+    public void updateRoll() throws InterruptedException {
         isSpinning = true;
+        Double seconds = spin(dice);
+        unhighlight(dice);
+        pauseMethod(seconds, this::upDateAll);
+        pauseMethod(seconds, this::setIsSpinningFalse);
+    }
+
+    public void upDateAll(){
         updateCharacterStat();
         updateInfo();
         updateCurrentStat();
@@ -199,9 +206,9 @@ public class StatRollController extends BaseController implements GameMechanics 
     }
 
     @FXML
-    private void rollStat(){
+    private void rollStat() throws InterruptedException {
         nameCheck(false);
-        if(nameErrorLabel.isVisible() == false){
+        if((nameErrorLabel.isVisible() == false) && !isSpinning){
             if ((order.get(order.indexOf(currentStat) + 1)).equals("End")){
                 back_btn.setDisable(false);
                 disableNode(dice);
