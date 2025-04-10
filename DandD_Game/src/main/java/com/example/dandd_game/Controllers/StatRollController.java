@@ -42,6 +42,7 @@ public class StatRollController extends BaseController implements GameMechanics 
     private String currentStat;
     private Character workingCharacter = gameState.getCurrentCharacter();
     private boolean isSpinning = false;
+    private double spinDuration;
 
     @FXML
     private void initialize(){
@@ -192,10 +193,10 @@ public class StatRollController extends BaseController implements GameMechanics 
 
     public void updateRoll() throws InterruptedException {
         isSpinning = true;
-        Double seconds = spin(dice);
+        spinDuration = spin(dice);
         unhighlight(dice);
-        pauseMethod(seconds, this::upDateAll);
-        pauseMethod(seconds, this::setIsSpinningFalse);
+        pauseMethod(spinDuration, this::upDateAll);
+        pauseMethod(spinDuration, this::setIsSpinningFalse);
     }
 
     public void upDateAll(){
@@ -204,14 +205,17 @@ public class StatRollController extends BaseController implements GameMechanics 
         updateCurrentStat();
         updateTaskLabel();
     }
+    public void disableLastRoll(){
+        back_btn.setDisable(false);
+        disableNode(dice);
+    }
 
     @FXML
     private void rollStat() throws InterruptedException {
         nameCheck(false);
         if((nameErrorLabel.isVisible() == false) && !isSpinning){
             if ((order.get(order.indexOf(currentStat) + 1)).equals("End")){
-                back_btn.setDisable(false);
-                disableNode(dice);
+                pauseMethod(spinDuration, this::disableLastRoll);
             }
             updateRoll();
         }
