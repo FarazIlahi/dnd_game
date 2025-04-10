@@ -199,7 +199,7 @@ public class CharacterSelectController extends BaseController implements GameMec
     }
     @FXML
     public void ready(ActionEvent event) throws IOException {
-        switchScene(event, "FirstScene");
+        switchScene(event, "Chapter1/FirstScene");
     }
 
 }
