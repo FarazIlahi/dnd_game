@@ -30,7 +30,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
         alert.setHeaderText("You sneak around the army behind enemy lines");
         alert.setContentText("You gather intel and prepare your next move");
         alert.showAndWait();
-        switchScene(event, "ChapterOne/InfiltrateScene");
+        switchScene(event, "Chapter1/InfiltrateScene");
 
     }
 
