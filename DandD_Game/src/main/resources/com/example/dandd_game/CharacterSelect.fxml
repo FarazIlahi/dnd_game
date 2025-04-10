@@ -112,7 +112,7 @@
                      <children>
                         <ImageView fx:id="mage" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
-                              <Image url="@images/pixelWitch.png" />
+                              <Image url="@images/pixelMage.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="mageName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Mage">
