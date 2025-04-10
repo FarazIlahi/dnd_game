@@ -2,6 +2,7 @@ module com.example.dandd_game {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.base;
+    requires javafx.graphics;
 
 
     opens com.example.dandd_game to javafx.fxml;

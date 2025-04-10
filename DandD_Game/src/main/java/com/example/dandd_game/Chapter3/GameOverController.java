@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter3;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

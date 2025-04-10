@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter2;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +19,12 @@ public class ChapterTwoController extends BaseController implements GameMechanic
     }
 
     @FXML
-    private void continueChapter(ActionEvent event) throws IOException {
-        System.out.println("continuing"); // tesing line
-        // switchScene(event, ""); *Switch to next scene*
+    private void goToPrepareBattle(ActionEvent event) throws IOException {
+        switchScene(event, "Chapter2/PrepareBattleScene");
     }
 
+    @FXML
+    private void goToUncoverThreat(ActionEvent event) throws IOException {
+        switchScene(event, "Chapter2/UncoverThreatScene");
+    }
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.InfiltrateController">
+<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.InfiltrateController">
 
     <Label layoutX="300.0" layoutY="200.0" maxWidth="1000" style="-fx-font-size: 24px; -fx-text-fill: black;" text="You're inside the enemy castle. A patrol is approaching. What do you do?" wrapText="true" />
 

@@ -9,7 +9,7 @@
 <AnchorPane fx:id="rootPane"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.dandd_game.Controllers.GameOverController">
+            fx:controller="com.example.dandd_game.Chapter3.GameOverController">
 
     <Label layoutX="400" layoutY="200" text="The sorcerer has taken control of your mind..."
            style="-fx-font-size: 28px; -fx-text-fill: red;" wrapText="true" maxWidth="800" />

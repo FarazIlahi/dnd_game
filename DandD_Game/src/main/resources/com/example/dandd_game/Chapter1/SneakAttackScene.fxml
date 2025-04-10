@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.SneakAttackController">
+<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.SneakAttackController">
 
     <children>
         <Label layoutX="300.0" layoutY="150.0" maxWidth="1000" style="-fx-font-size: 26px; -fx-text-fill: black;" text="You've successfully flanked the enemy! Time to strike." wrapText="true" />

@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,11 +29,11 @@ public class InfiltrateController extends BaseController implements GameMechanic
         if (roll >=10) {
             alert.setContentText("You rolled a " + roll + "\nSuccess! You infiltrate the enemy lines and took advantage.");
             alert.showAndWait();
-            switchScene(event, "ChapterTwoScene");
+            switchScene(event, "Chapter2/ChapterTwoScene");
         } else {
             alert.setContentText("You rolled a " + roll + "\nFailed! You are caught.");
             alert.showAndWait();
-            switchScene(event, "GameOverScene");
+            switchScene(event, "Chapter3/GameOverScene");
         }
     }
 }

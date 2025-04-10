@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -29,7 +30,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
         alert.setHeaderText("You sneak around the army behind enemy lines");
         alert.setContentText("You gather intel and prepare your next move");
         alert.showAndWait();
-        switchScene(event, "InfiltrateScene");
+        switchScene(event, "ChapterOne/InfiltrateScene");
 
     }
 
@@ -43,12 +44,12 @@ public class InvestigateSceneController extends BaseController implements GameMe
             alert.setContentText("You rolled a " + roll + "\nSuccess! You defeat the sorcerer and take control.");
             // next scene: game win
             alert.showAndWait();
-            switchScene(event, "GameWinScene");
+            switchScene(event, "Chapter3/GameWinScene");
         } else {
             alert.setContentText("You rolled a " + roll + "\nFailed! The sorcerer takes control of your mind...");
             // next scene: game over
             alert.showAndWait();
-            switchScene(event, "GameOverScene");
+            switchScene(event, "Chapter3/GameOverScene");
         }
     }
 }
