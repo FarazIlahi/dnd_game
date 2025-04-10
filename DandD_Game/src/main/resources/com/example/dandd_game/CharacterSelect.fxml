@@ -20,7 +20,7 @@
                   <Region prefHeight="600.0" prefWidth="138.0" />
                   <VBox fx:id="kingBox" prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fitHeight="267.0" fitWidth="273.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="339.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/pixelKing.png" />
                            </image>

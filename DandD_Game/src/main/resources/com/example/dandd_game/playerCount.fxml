@@ -1,12 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <ComboBox fx:id="numPlayers" layoutX="646.0" layoutY="190.0" prefHeight="26.0" prefWidth="205.0" promptText="Select Number of Players" />
-        <ComboBox fx:id="difficulty" layoutX="1012.0" layoutY="190.0" prefWidth="150.0" promptText="Select Difficulty" />
-      <Button fx:id="go_btn" layoutX="248.0" layoutY="99.0" mnemonicParsing="false" onAction="#goToCharSelect" prefHeight="91.0" prefWidth="118.0" text="Button" />
-    </children>
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/OldPaper.jpg" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="800.0" prefWidth="1600.0">
+         <children>
+            <Region prefHeight="800.0" prefWidth="300.0" />
+            <VBox prefHeight="800.0" prefWidth="1000.0">
+               <children>
+                  <Region prefHeight="50.0" prefWidth="1000.0" />
+                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="1000.0" text="How many players will there be on this quest?">
+                     <font>
+                        <Font name="URWGothic-Book" size="32.0" />
+                     </font>
+                  </Label>
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Select Player Number">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="1 Player" />
+                      <MenuItem mnemonicParsing="false" text="2 Players" />
+                        <MenuItem mnemonicParsing="false" text="3 Players" />
+                        <MenuItem mnemonicParsing="false" text="4 Players" />
+                    </items>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </MenuButton>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1000.0" text="How difficult would you like this quest?">
+                     <font>
+                        <Font name="URWGothic-Book" size="32.0" />
+                     </font>
+                  </Label>
+                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Select Difficulty">
+                       <items>
+                           <MenuItem mnemonicParsing="false" text="Easy - Ideal for 1 Player" />
+                           <MenuItem mnemonicParsing="false" text="Medium - Ideal for 2 Players" />
+                           <MenuItem mnemonicParsing="false" text="Hard - Ideal for 3 Players" />
+                           <MenuItem mnemonicParsing="false" text="Hardest - Ideal for 4 Players" />
+                       </items>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                   </MenuButton>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="235.0" prefHeight="100.0" prefWidth="1000.0" text="Who will be going on this quest?">
+                     <font>
+                        <Font name="URWGothic-Book" size="32.0" />
+                     </font>
+                  </Label>
+                   <TextField promptText="Player 1 name" />
+                   <TextField promptText="Player 2 name" />
+                   <TextField promptText="Player 3 name" />
+                   <TextField promptText="Player 4 name" />
+                  <Region prefHeight="100.0" prefWidth="1000.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                         <Region prefHeight="100.0" prefWidth="325.0" />
+                         <Button fx:id="selectBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Next">
+                             <font>
+                                 <Font name="System Bold" size="18.0" />
+                             </font>
+                         </Button>
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</Pane>
