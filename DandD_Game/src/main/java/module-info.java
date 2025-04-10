@@ -3,7 +3,6 @@ module com.example.dandd_game {
     requires javafx.fxml;
     requires javafx.base;
     requires javafx.graphics;
-    requires java.desktop;
 
 
     opens com.example.dandd_game to javafx.fxml;
