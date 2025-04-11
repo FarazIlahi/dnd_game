@@ -37,14 +37,23 @@ public class TitleScreenController extends BaseController {
     @FXML
     private void tutorial(ActionEvent event) throws IOException {gameState.setCurrentCharacter(gameState.getKing());
         gameState.createKing();
-        gameState.setCurrentCharacter(gameState.getKing());
-        gameState.addToParty(gameState.getCurrentCharacter());
         gameState.createKnight();
-        gameState.addToParty(gameState.getKnight());
         gameState.createCleric();
-        gameState.addToParty(gameState.getCleric());
         gameState.createMage();
+        gameState.addToParty(gameState.getKing());
+        gameState.addToParty(gameState.getKnight());
+        gameState.addToParty(gameState.getCleric());
         gameState.addToParty(gameState.getMage());
+        gameState.setCurrentCharacter(gameState.getKing());
+
+        gameState.createGoblin();
+        gameState.createOrc();
+        gameState.createSorcerer();
+        gameState.addToEnemys(gameState.getGoblin());
+        gameState.addToEnemys(gameState.getOrc());
+        gameState.addToEnemys(gameState.getSorcerer());
+
+
         switchScene(event,"Combat");
     }
 }

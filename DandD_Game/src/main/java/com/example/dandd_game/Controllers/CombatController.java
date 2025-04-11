@@ -38,11 +38,14 @@ public class CombatController {
                 combatGrid.add(cell, c, r);
             }
         }
-        loadPlayers();
+        loadCharacter();
     }
 
-    public void loadPlayers(){
+    public void loadCharacter(){
         for (Character character : gameState.getParty()) {
+            displayProfiles(character);
+        }
+        for (Character character : gameState.getEnemies()) {
             displayProfiles(character);
         }
     }
