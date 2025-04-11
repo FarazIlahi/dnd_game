@@ -1,6 +1,7 @@
 package com.example.dandd_game.Characters;
 
 import com.example.dandd_game.LocalImages;
+import com.example.dandd_game.Position;
 import javafx.scene.image.Image;
 
 public abstract class Character{
@@ -11,11 +12,10 @@ public abstract class Character{
     private int range;
     private String name;
     private String iD;
+    private Position position;
 
-    private LocalImages localImages = LocalImages.getInstance();
 
-
-    public Character(int hp, int def, int basic_attack, int range, String name){
+    public Character(int hp, int def, int basic_attack, int range, String name, Position position){
         this.hp = hp;
         this.max_hp = hp;
         this.def = def;
@@ -23,6 +23,7 @@ public abstract class Character{
         this.range = range;
         this.name = name;
         this.iD = name;
+        this.position = position;
     }
     public int getHp(){
         return this.hp;
@@ -43,6 +44,9 @@ public abstract class Character{
         return name;
     }
     public String getID(){return this.iD;}
+    public Position getPosition(){
+        return this.position;
+    }
 
     public void setBasic_attack(int basic_attack) {
         this.basic_attack = basic_attack;
@@ -59,19 +63,15 @@ public abstract class Character{
     public void setMax_hp(int max_hp) {
         this.max_hp = max_hp;
     }
-//    public void setProfile(String profileURL) {
-//        this.profile = new Image(profileURL);
-//    }
     public void setName(String name){
         this.name = name;
     }
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
 
 
 
     public abstract void specialMove();
-
-    @Override
-    public String toString(){
-        return ("" + range);
-    }
 }

@@ -29,16 +29,21 @@ public class LocalImages {
     public void setMageURL(String mageURL) {
         this.mageURL = mageURL;
     }
-    public Image getKingImage(){
-        return new Image(this.kingURL);
-    }
-    public Image getKnightImage(){
-        return new Image(this.knightURL);
-    }
-    public Image getClericImage(){
-        return  new Image(this.clericURL);
-    }
-    public Image getMageImage(){
-        return new Image(this.mageURL);
+    public Image getImage(String image){
+        if(image.equals("King")){
+            return new Image(this.kingURL);
+        }
+        else if (image.equals("Knight")) {
+            return new Image(this.knightURL);
+        }
+        else if (image.equals("Cleric")) {
+            return new Image(this.clericURL);
+        }
+        else if (image.equals("Mage")) {
+            return new Image(this.mageURL);
+        }
+        else {
+            return null;
+        }
     }
 }

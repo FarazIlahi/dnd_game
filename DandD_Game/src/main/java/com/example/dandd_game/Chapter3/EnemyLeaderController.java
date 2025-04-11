@@ -3,6 +3,7 @@ package com.example.dandd_game.Chapter3;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.Characters.Character;
+import com.example.dandd_game.Position;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,7 +22,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
     private void initialize() {
         super.init(rootPane);
         // example character also for testing, can be deleted
-        player = new Character(21, 5 ,10,2, "Knight") {
+        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
             @Override
             public void specialMove() {
                 System.out.println("Big hit");
