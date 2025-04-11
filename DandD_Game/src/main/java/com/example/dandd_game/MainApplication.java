@@ -1,5 +1,7 @@
 package com.example.dandd_game;
 
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,14 +11,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application implements GameMechanics {
+    public static Firestore fstore;
+    public static FirebaseAuth fauth;
+    private final FirebaseService contxtFirebase = new FirebaseService();
     @Override
     public void start(Stage stage) throws IOException {
+        fstore = contxtFirebase.firebase();
+        fauth = FirebaseAuth.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 800);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
+
+
 
 
     public static void main(String[] args) {
