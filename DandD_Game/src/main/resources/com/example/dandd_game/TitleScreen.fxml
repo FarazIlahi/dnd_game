@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" onMouseClicked="#goNext" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/pixelCastleRS.png" />
+         </image>
+      </ImageView>
+      <ImageView id="king" fx:id="king" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-129.0" layoutY="461.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/pixelKing.png" />
+         </image>
+      </ImageView>
+      <ImageView id="knight" fx:id="knight" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/pixelKnight.png" />
+         </image>
+      </ImageView>
+      <ImageView id="cleric" fx:id="cleric" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/pixelCleric.png" />
+         </image>
+      </ImageView>
+      <ImageView id="mage" fx:id="mage" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/pixelMage.png" />
+         </image>
+      </ImageView>
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" layoutX="524.0" layoutY="580.0" onMouseClicked="#goNext" stroke="BLACK" strokeType="INSIDE" width="453.0" />
+      <Label layoutX="531.0" layoutY="580.0" onMouseClicked="#goNext" prefHeight="93.0" prefWidth="422.0" text="Click anywhere to continue">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

@@ -22,6 +22,12 @@ public class GameStateManager {
     private Mage mage;
     private Character currentCharacter;
     private ArrayList<Character> party = new ArrayList<Character>();
+    public static GameStateManager getInstance() {
+        if (instance == null) {
+            instance = new GameStateManager();
+        }
+        return instance;
+    }
 
     public void setPlayerCount(int playerCount) {
         this.playerCount = playerCount;
@@ -83,12 +89,4 @@ public class GameStateManager {
     public ArrayList<Character> getParty(){
         return this.party;
     }
-
-    public static GameStateManager getInstance() {
-        if (instance == null) {
-            instance = new GameStateManager();
-        }
-        return instance;
-    }
-
 }

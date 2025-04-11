@@ -1,9 +1,9 @@
 package com.example.dandd_game.Characters;
 
+import com.example.dandd_game.LocalImages;
 import javafx.scene.image.Image;
 
 public abstract class Character{
-    private Image profile;
     private int hp;
     private int max_hp;
     private int def;
@@ -12,9 +12,10 @@ public abstract class Character{
     private String name;
     private String iD;
 
+    private LocalImages localImages = LocalImages.getInstance();
+
 
     public Character(int hp, int def, int basic_attack, int range, String name){
-        //this.profile = profile;
         this.hp = hp;
         this.max_hp = hp;
         this.def = def;
@@ -23,7 +24,6 @@ public abstract class Character{
         this.name = name;
         this.iD = name;
     }
-    public Image getProfile(){return profile;}
     public int getHp(){
         return this.hp;
     }
@@ -59,12 +59,13 @@ public abstract class Character{
     public void setMax_hp(int max_hp) {
         this.max_hp = max_hp;
     }
-    public void setProfile(Image profile) {
-        this.profile = profile;
-    }
+//    public void setProfile(String profileURL) {
+//        this.profile = new Image(profileURL);
+//    }
     public void setName(String name){
         this.name = name;
     }
+
 
 
     public abstract void specialMove();

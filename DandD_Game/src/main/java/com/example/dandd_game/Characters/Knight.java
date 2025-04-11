@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class Knight extends Character {
 
     public Knight(){
-        super(40, 18, 12, 5, "Knight");
+        super(40, 18, 12, 3, "Knight");
     }
     @Override
     public void specialMove(){
