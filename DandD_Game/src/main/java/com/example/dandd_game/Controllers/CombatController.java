@@ -7,13 +7,12 @@ import com.example.dandd_game.LocalImages;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 
-public class CombatController implements GameMechanics {
+public class CombatController extends BaseController implements GameMechanics {
 
+    @FXML
+    private Pane root;
     @FXML
     private GridPane combatGrid;
     @FXML
@@ -24,6 +23,7 @@ public class CombatController implements GameMechanics {
 
     @FXML
     private void initialize() {
+        super.init(root);
         combatGrid.getColumnConstraints().clear();
         combatGrid.getRowConstraints().clear();
         ColumnConstraints column = new ColumnConstraints();
@@ -44,6 +44,10 @@ public class CombatController implements GameMechanics {
         }
         loadCharacter();
         updateTurnOrder();
+        keyManager.addKeyBinding("W", this::moveUp);
+        keyManager.addKeyBinding("A", this::moveRight);
+        keyManager.addKeyBinding("S", this::moveDown);
+        keyManager.addKeyBinding("D", this::moveRight);
     }
 
     public void loadCharacter(){
@@ -70,6 +74,18 @@ public class CombatController implements GameMechanics {
             turnOrderArea.setText(turnOrderArea.getText() + character.getName() + "\n");
         }
         gameState.setCurrentCharacter(gameState.getTurnOrder().get(0));
+    }
+    public void moveUp(){
+        System.out.println("up");
+    }
+    public void moveDown(){
+        System.out.println("down");
+    }
+    public void moveRight(){
+        System.out.println("right");
+    }
+    public void moveLeft(){
+        System.out.println("left");
     }
 
 }
