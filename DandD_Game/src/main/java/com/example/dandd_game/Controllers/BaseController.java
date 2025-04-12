@@ -61,7 +61,6 @@ public class BaseController implements GameMechanics {
         if(!is_on_settings){
             setCurrentroot(root);
             keyManager = new KeyBindingManager(getCurrentroot());
-
         }
         keyManager = new KeyBindingManager(root);
         keyManager.addKeyBinding("ESCAPE", this::handleKeyPress);

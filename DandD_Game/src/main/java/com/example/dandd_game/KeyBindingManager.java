@@ -12,12 +12,12 @@ public class KeyBindingManager {
 
     public KeyBindingManager(Pane root) {
         this.root = root;
+
         root.setOnKeyPressed(this::handleKeyPress);
     }
 
     public void addKeyBinding(String key, ThrowingRunnable method) {
         KeyCode keyCode = KeyCode.valueOf(key.toUpperCase());
-        System.out.println(keyCode);
         keyBindings.put(keyCode, method);
     }
 

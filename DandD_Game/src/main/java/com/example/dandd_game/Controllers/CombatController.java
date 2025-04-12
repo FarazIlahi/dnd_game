@@ -4,10 +4,13 @@ import com.example.dandd_game.Characters.Character;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.LocalImages;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.io.IOException;
 
 public class CombatController extends BaseController implements GameMechanics {
 
@@ -23,6 +26,10 @@ public class CombatController extends BaseController implements GameMechanics {
 
     @FXML
     private void initialize() {
+        Platform.runLater(() -> {
+            root.setFocusTraversable(true);
+            root.requestFocus();
+        });
         super.init(root);
         combatGrid.getColumnConstraints().clear();
         combatGrid.getRowConstraints().clear();
