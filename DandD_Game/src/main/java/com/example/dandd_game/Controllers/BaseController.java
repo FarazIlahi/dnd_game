@@ -1,5 +1,6 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.MainApplication;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class BaseController {
+public class BaseController implements GameMechanics {
     private static Pane currentroot;
 
     private static Pane settings;
@@ -29,7 +30,7 @@ public class BaseController {
     public void setSettings(Pane root){
         settings = root;
     }
-    
+
     public void setCurrentroot(Pane root){
         currentroot = root;
     }

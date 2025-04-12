@@ -35,6 +35,11 @@
             <Image url="@images/pixelMage.png" />
          </image>
       </ImageView>
+      <ImageView id="sorcerer" fx:id="sorcerer" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/evilEyes.png" />
+         </image>
+      </ImageView>
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
@@ -44,10 +49,5 @@
             <Font size="34.0" />
          </font>
       </Label>
-      <Button layoutX="1229.0" layoutY="76.0" mnemonicParsing="false" onAction="#tutorial" prefHeight="86.0" prefWidth="155.0" text="Tutorial">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Button>
    </children>
 </Pane>

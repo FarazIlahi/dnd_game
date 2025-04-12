@@ -9,6 +9,9 @@ public class LocalImages {
     private String knightURL;
     private String clericURL;
     private String mageURL;
+    private String goblinURL;
+    private String orcURL;
+    private String sorcererURL;
 
     private static LocalImages instance;
     public static LocalImages getInstance() {
@@ -29,6 +32,19 @@ public class LocalImages {
     public void setMageURL(String mageURL) {
         this.mageURL = mageURL;
     }
+
+    public void setGoblinURL(String goblinURL) {
+        this.goblinURL = goblinURL;
+    }
+
+    public void setOrcURL(String orcURL) {
+        this.orcURL = orcURL;
+    }
+
+    public void setSorcererURL(String sorcererURL) {
+        this.sorcererURL = sorcererURL;
+    }
+
     public Image getImage(String image){
         if(image.equals("King")){
             return new Image(this.kingURL);
@@ -42,6 +58,16 @@ public class LocalImages {
         else if (image.equals("Mage")) {
             return new Image(this.mageURL);
         }
+        else if (image.equals("Goblin")) {
+            return new Image(this.goblinURL);
+        }
+        else if (image.equals("orc")) {
+            return new Image(this.orcURL);
+        }
+        else if (image.equals("Sorcerer")) {
+            return new Image(this.sorcererURL);
+        }
+
         else {
             return null;
         }

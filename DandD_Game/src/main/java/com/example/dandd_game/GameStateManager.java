@@ -65,23 +65,23 @@ public class GameStateManager {
     public King getKing(){
         return this.king;
     }
-    public Knight getKnight(){
-        return this.knight;
-    }
-    public Cleric getCleric(){
-        return this.cleric;
-    }
-    public Mage getMage(){
-        return this.mage;
-    }
     public void createKnight(){
         this.knight = new Knight();
+    }
+    public Knight getKnight(){
+        return this.knight;
     }
     public void createCleric(){
         this.cleric = new Cleric();
     }
+    public Cleric getCleric(){
+        return this.cleric;
+    }
     public void createMage(){
         this.mage = new Mage();
+    }
+    public Mage getMage(){
+        return this.mage;
     }
     public void createGoblin(){
         this.goblin = new Goblin();
@@ -118,5 +118,17 @@ public class GameStateManager {
     }
     public ArrayList<Character> getEnemies(){
         return this.enemies;
+    }
+    public void addToTurn(Character character){
+        this.turnOrder.add(character);
+    }
+    public void removeFromTurnOrder(Character character){
+        this.turnOrder.remove(character);
+    }
+    public ArrayList<Character> getTurnOrder(){
+        return this.turnOrder;
+    }
+    public void clearTurnOrder(){
+        this.turnOrder.clear();
     }
 }

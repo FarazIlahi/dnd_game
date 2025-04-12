@@ -1,19 +1,23 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.Characters.Character;
+import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.LocalImages;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 
-public class CombatController {
+public class CombatController implements GameMechanics {
 
     @FXML
     private GridPane combatGrid;
+    @FXML
+    private TextArea turnOrderArea;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
@@ -39,17 +43,20 @@ public class CombatController {
             }
         }
         loadCharacter();
+        updateTurnOrder();
     }
 
     public void loadCharacter(){
         for (Character character : gameState.getParty()) {
+            gameState.addToTurn(character);
             displayProfiles(character);
         }
         for (Character character : gameState.getEnemies()) {
+            gameState.addToTurn(character);
             displayProfiles(character);
         }
+        shuffleTurnOrder(gameState.getTurnOrder());
     }
-
     public void displayProfiles(Character character){
         int x = character.getPosition().getX();
         int y = character.getPosition().getY();
@@ -57,6 +64,12 @@ public class CombatController {
         profile.setFitWidth(40);
         profile.setFitHeight(40);
         combatGrid.add(profile, x, y);
+    }
+    public void updateTurnOrder(){
+        for (Character character : gameState.getTurnOrder()) {
+            turnOrderArea.setText(turnOrderArea.getText() + character.getName() + "\n");
+        }
+        gameState.setCurrentCharacter(gameState.getTurnOrder().get(0));
     }
 
 }
