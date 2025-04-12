@@ -42,6 +42,11 @@
                      </font>
                   </Button>
                   <Region prefHeight="100.0" prefWidth="1000.0" />
+                  <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#openAchievements" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="Achievements">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
                   <HBox prefHeight="150.0" prefWidth="1000.0">
                      <children>
                         <Region prefHeight="113.0" prefWidth="203.0" />

@@ -4,7 +4,9 @@ import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GameStateManager {
     private static GameStateManager instance;
@@ -130,5 +132,13 @@ public class GameStateManager {
     }
     public void clearTurnOrder(){
         this.turnOrder.clear();
+    }
+    private Set<String> achievements = new LinkedHashSet<>();
+
+    public void unlockAchievement(String achievement) {
+        achievements.add(achievement);
+    }
+    public List<String> getAchievements() {
+        return new ArrayList<>(achievements);
     }
 }

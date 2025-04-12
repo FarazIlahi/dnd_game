@@ -25,7 +25,7 @@ public class ThreatDecisionController extends BaseController implements GameMech
         alert.setHeaderText("You explore the ruins...");
         alert.setContentText("You discover a powerful artifact, helping you become stronger.");
         alert.showAndWait();
-        switchScene(event, "ChapterThreeScene");
+        switchScene(event, "Chapter3/ChapterThreeScene");
     }
 
     @FXML
