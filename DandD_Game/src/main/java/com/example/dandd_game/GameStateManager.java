@@ -1,10 +1,7 @@
 package com.example.dandd_game;
 
+import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
-import com.example.dandd_game.Characters.Cleric;
-import com.example.dandd_game.Characters.King;
-import com.example.dandd_game.Characters.Knight;
-import com.example.dandd_game.Characters.Mage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +12,25 @@ public class GameStateManager {
     private int playerCount;
     private String difficulty;
     private String campaignName;
-
     private King king;
     private Knight knight;
     private Cleric cleric;
     private Mage mage;
+    private Goblin goblin;
+    private Orc orc;
+    private Sorcerer sorcerer;
+
     private Character currentCharacter;
     private ArrayList<Character> party = new ArrayList<Character>();
+    private ArrayList<Character> enemies = new ArrayList<Character>();
+    private ArrayList<Character> turnOrder = new ArrayList<Character>();
+
+    public static GameStateManager getInstance() {
+        if (instance == null) {
+            instance = new GameStateManager();
+        }
+        return instance;
+    }
 
     public void setPlayerCount(int playerCount) {
         this.playerCount = playerCount;
@@ -56,23 +65,41 @@ public class GameStateManager {
     public King getKing(){
         return this.king;
     }
-    public Knight getKnight(){
-        return this.knight;
-    }
-    public Cleric getCleric(){
-        return this.cleric;
-    }
-    public Mage getMage(){
-        return this.mage;
-    }
     public void createKnight(){
         this.knight = new Knight();
+    }
+    public Knight getKnight(){
+        return this.knight;
     }
     public void createCleric(){
         this.cleric = new Cleric();
     }
+    public Cleric getCleric(){
+        return this.cleric;
+    }
     public void createMage(){
         this.mage = new Mage();
+    }
+    public Mage getMage(){
+        return this.mage;
+    }
+    public void createGoblin(){
+        this.goblin = new Goblin();
+    }
+    public Goblin getGoblin(){
+        return this.goblin;
+    }
+    public void createOrc(){
+        this.orc = new Orc();
+    }
+    public Orc getOrc(){
+        return this.orc;
+    }
+    public void createSorcerer(){
+        this.sorcerer = new Sorcerer();
+    }
+    public Sorcerer getSorcerer(){
+        return this.sorcerer;
     }
     public void addToParty(Character character){
         this.party.add(character);
@@ -83,12 +110,25 @@ public class GameStateManager {
     public ArrayList<Character> getParty(){
         return this.party;
     }
-
-    public static GameStateManager getInstance() {
-        if (instance == null) {
-            instance = new GameStateManager();
-        }
-        return instance;
+    public void addToEnemys(Character character){
+        this.enemies.add(character);
     }
-
+    public void removeFromEnemys(Character character){
+        this.enemies.remove(character);
+    }
+    public ArrayList<Character> getEnemies(){
+        return this.enemies;
+    }
+    public void addToTurn(Character character){
+        this.turnOrder.add(character);
+    }
+    public void removeFromTurnOrder(Character character){
+        this.turnOrder.remove(character);
+    }
+    public ArrayList<Character> getTurnOrder(){
+        return this.turnOrder;
+    }
+    public void clearTurnOrder(){
+        this.turnOrder.clear();
+    }
 }

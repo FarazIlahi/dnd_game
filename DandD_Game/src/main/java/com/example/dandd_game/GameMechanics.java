@@ -6,12 +6,36 @@ import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import com.example.dandd_game.Characters.Character;
 
 public interface GameMechanics {
+
+    default void setListener(Pane root, ThrowingRunnable method, String key){
+        root.sceneProperty().addListener((obs, oldScene, newScene) -> {
+
+            if (newScene != null) {
+                newScene.setOnKeyPressed(event -> {
+                    if(event.getCode().toString().equals(key)) {
+                        try {
+                            method.run();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+            }
+        });
+    }
 
     default int rollDice(int i){
         return (int)(Math.random() * 20) + 1;
@@ -57,6 +81,9 @@ public interface GameMechanics {
     default void unDisableNode(Node node){
         node.setOpacity(1);
         node.setDisable(false);
+    }
+    default void shuffleTurnOrder(ArrayList<Character> turnOrderList){
+        Collections.shuffle(turnOrderList);
     }
 
 

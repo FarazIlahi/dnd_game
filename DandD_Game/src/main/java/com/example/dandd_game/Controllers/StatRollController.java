@@ -38,7 +38,7 @@ public class StatRollController extends BaseController implements GameMechanics 
 
 
     private GameStateManager gameState = GameStateManager.getInstance();
-    private ArrayList<String> order = new ArrayList<>(4);
+    private ArrayList<String> order = new ArrayList<>(3);
     private String currentStat;
     private Character workingCharacter = gameState.getCurrentCharacter();
     private boolean isSpinning = false;
@@ -72,7 +72,7 @@ public class StatRollController extends BaseController implements GameMechanics 
                 "\n\nHP: " + hp +
                 "\nDef: " + def +
                 "\nBasic Attack: " + basic_atk +
-                "\nRange: " + range);
+                "\nRange: " + range + "\tWill not change");
     }
     public void displayRollInfo(){
         rollInfo.setText(
@@ -99,7 +99,6 @@ public class StatRollController extends BaseController implements GameMechanics 
         order.add("HP");
         order.add("Def");
         order.add("Basic Attack");
-        order.add("Range");
         order.add("End");
     }
     public void updateCurrentStat(){
@@ -114,6 +113,7 @@ public class StatRollController extends BaseController implements GameMechanics 
         switch (currentStat){
             case "HP":
                 workingCharacter.setHp(workingCharacter.getHp() + statChange);
+                workingCharacter.setMax_hp(workingCharacter.getHp());
                 upDateStatChange("HP", statChange, roll);
                 break;
             case "Def":
@@ -123,10 +123,6 @@ public class StatRollController extends BaseController implements GameMechanics 
             case "Basic Attack":
                 workingCharacter.setBasic_attack(workingCharacter.getBasic_attack() + statChange);
                 upDateStatChange("Basic Attack", statChange, roll);
-                break;
-            case "Range":
-                workingCharacter.setRange(workingCharacter.getRange() + statChange);
-                upDateStatChange("Range", statChange, roll);
                 break;
         }
     }

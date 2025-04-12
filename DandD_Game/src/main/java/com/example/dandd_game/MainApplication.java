@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MainApplication extends Application implements GameMechanics {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("TitleScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 800);
         stage.setResizable(false);
         stage.setScene(scene);
