@@ -21,8 +21,8 @@ public class GameStateManager {
     private Goblin goblin;
     private Orc orc;
     private Sorcerer sorcerer;
-
     private Character currentCharacter;
+    private int moveCount = 5;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
@@ -133,6 +133,11 @@ public class GameStateManager {
     public void clearTurnOrder(){
         this.turnOrder.clear();
     }
+    public void nextTurn(){
+        this.turnOrder.add(this.turnOrder.getFirst());
+        this.turnOrder.remove(0);
+        setCurrentCharacter(this.turnOrder.get(0));
+    }
     private Set<String> achievements = new LinkedHashSet<>();
 
     public void unlockAchievement(String achievement) {
@@ -140,5 +145,14 @@ public class GameStateManager {
     }
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);
+    }
+    public int getMoveCount() {
+        return this.moveCount;
+    }
+    public void decreaseMoveCount(){
+        this.moveCount--;
+    }
+    public void resetMoveCount(){
+        this.moveCount = 5;
     }
 }

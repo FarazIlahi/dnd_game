@@ -86,22 +86,28 @@ public class CombatController extends BaseController implements GameMechanics {
     public void removeImageViewFromCell(int row, int column, GridPane gridPane) {
         List<Node> toRemove = new ArrayList<>();
 
+        Node node = iterate(row,column,gridPane);
+        if(node != null){
+            toRemove.add(node);
+        }
+        gridPane.getChildren().removeAll(toRemove);
+    }
+    public Node  iterate(int row, int column, GridPane gridPane){
         for (Node node : gridPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer colIndex = GridPane.getColumnIndex(node);
 
-            // Defaults to 0 if not set
             rowIndex = (rowIndex == null) ? 0 : rowIndex;
             colIndex = (colIndex == null) ? 0 : colIndex;
 
             if (rowIndex == row && colIndex == column && node instanceof ImageView) {
-                toRemove.add(node);
+                return node;
             }
         }
-
-        gridPane.getChildren().removeAll(toRemove);
+        return null;
     }
     public void updateTurnOrder(){
+        turnOrderArea.clear();
         for (Character character : gameState.getTurnOrder()) {
             turnOrderArea.setText(turnOrderArea.getText() + character.getName() + "\n");
         }
@@ -110,34 +116,66 @@ public class CombatController extends BaseController implements GameMechanics {
     public void moveUp(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        clearProfiles(x, y);
-        y--;
-        gameState.getCurrentCharacter().getPosition().setY(y);
-        updateProfiles(gameState.getCurrentCharacter(), x , y);
+        if ((canMove(x, y - 1) && myTurn())){
+            clearProfiles(x, y);
+            y--;
+            gameState.getCurrentCharacter().getPosition().setY(y);
+            updateProfiles(gameState.getCurrentCharacter(), x , y);
+            gameState.decreaseMoveCount();
+        }
     }
     public void moveDown(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        clearProfiles(x, y);
-        y++;
-        gameState.getCurrentCharacter().getPosition().setY(y);
-        updateProfiles(gameState.getCurrentCharacter(), x, y);
+        if((canMove(x, y + 1) && myTurn())){
+            clearProfiles(x, y);
+            y++;
+            gameState.getCurrentCharacter().getPosition().setY(y);
+            updateProfiles(gameState.getCurrentCharacter(), x, y);
+            gameState.decreaseMoveCount();
+        }
     }
     public void moveRight(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        clearProfiles(x, y);
-        x++;
-        gameState.getCurrentCharacter().getPosition().setX(x);
-        updateProfiles(gameState.getCurrentCharacter(), x, y);
+        if ((canMove(x + 1, y) && myTurn())){
+            clearProfiles(x, y);
+            x++;
+            gameState.getCurrentCharacter().getPosition().setX(x);
+            updateProfiles(gameState.getCurrentCharacter(), x, y);
+            gameState.decreaseMoveCount();
+        }
     }
     public void moveLeft(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        clearProfiles(x, y);
-        x--;
-        gameState.getCurrentCharacter().getPosition().setX(x);
-        updateProfiles(gameState.getCurrentCharacter(), x, y);
+        if((canMove(x - 1, y) && myTurn())){
+            clearProfiles(x, y);
+            x--;
+            gameState.getCurrentCharacter().getPosition().setX(x);
+            updateProfiles(gameState.getCurrentCharacter(), x, y);
+            gameState.decreaseMoveCount();
+        }
+    }
+    public boolean canMove(int x, int y){
+        if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
+            Node node = iterate(y, x, combatGrid);
+            if(node == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean myTurn(){
+        if(gameState.getMoveCount() > 0){
+            return true;
+        }
+        gameState.nextTurn();
+        updateTurnOrder();
+        gameState.resetMoveCount();
+        return false;
     }
 
 }
