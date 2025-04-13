@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,22 +25,22 @@ public class SiegeSceneController extends BaseController implements GameMechanic
 
     @FXML
     private void holdWalls(ActionEvent event) throws IOException {
-        int roll = rollDice();
-        if (roll >= 10) {
-            switchScene(event, "ChapterTwoScene");
-        } else {
-            switchScene(event, "GameOverScene");
-        }
+        int roll = rollDice(20);
         showRollResult(roll, "Holding castle walls!");
+        if (roll >= 10) {
+            switchScene(event, "Chapter2/ChapterTwoScene");
+        } else {
+            switchScene(event, "Chapter3/GameOverScene");
+        }
     }
 
     @FXML
     private void flankEnemy(ActionEvent event) throws IOException {
-        int roll = rollDice();
+        int roll = rollDice(20);
         if (roll >= 5) {
-            switchScene(event, "SneakAttackScene");
+            switchScene(event, "Chapter1/SneakAttackScene");
         } else {
-            switchScene(event, "GameOverScene");
+            switchScene(event, "Chapter3/GameOverScene");
         }
         showRollResult(roll, "Flanking enemy!");
     }

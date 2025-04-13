@@ -1,7 +1,9 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.MainApplication;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,7 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class BaseController {
+public class BaseController implements GameMechanics {
     private static Pane currentroot;
 
     private static Pane settings;
@@ -28,7 +30,7 @@ public class BaseController {
     public void setSettings(Pane root){
         settings = root;
     }
-    
+
     public void setCurrentroot(Pane root){
         currentroot = root;
     }
@@ -92,7 +94,7 @@ public class BaseController {
         getCurrentroot().getChildren().remove(getStackPane());
 
     }
-    public void switchScene(ActionEvent event, String new_scene) throws IOException {
+    public void switchScene(Event event, String new_scene) throws IOException {
         Node source = (Node) event.getSource();
         Scene scene = source.getScene();
         Stage primaryStage = (Stage) scene.getWindow();

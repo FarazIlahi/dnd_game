@@ -1,5 +1,6 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,21 +9,17 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class GameWinController extends BaseController implements GameMechanics {
-
+public class FirstSceneController extends BaseController implements GameMechanics {
     @FXML
     private Pane rootPane;
-
     @FXML
-    private Button menuButton;
-
+    private Button continueButton;
     @FXML
     private void initialize() {
         super.init(rootPane);
     }
-
     @FXML
-    private void goToMenu(ActionEvent event) throws IOException {
-        switchScene(event, "GameLoads"); // returns to game load scene
+    private void goToGame(ActionEvent event) throws IOException {
+        switchScene(event, "Chapter1/SecondScene");
     }
 }

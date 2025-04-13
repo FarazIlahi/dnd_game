@@ -1,10 +1,11 @@
 package com.example.dandd_game.Characters;
 
+import com.example.dandd_game.Position;
 import javafx.scene.image.Image;
 
 public class Cleric extends Character {
     public  Cleric(){
-        super(new Image("com/example/dandd_game/images/pixelCleric.png"),22, 12, 10, 15);
+        super(22, 12, 10, 7, "Cleric", new Position(2,0));
     }
     @Override
     public void specialMove(){

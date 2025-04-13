@@ -1,4 +1,5 @@
-package com.example.dandd_game.Controllers;
+package com.example.dandd_game.Chapter1;
+import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,12 +25,12 @@ public class SecondSceneController extends BaseController implements GameMechani
 
     @FXML
     private void goToSiege(ActionEvent event) throws IOException {
-        switchScene(event, "SiegeScene"); // defend siege
+        switchScene(event, "Chapter1/SiegeScene"); // defend siege
     }
 
 
     @FXML
     private void goToInvestigate(ActionEvent event) throws IOException {
-        switchScene(event, "InvestigateScene"); // investigate
+        switchScene(event, "Chapter1/InvestigateScene"); // investigate
     }
 }

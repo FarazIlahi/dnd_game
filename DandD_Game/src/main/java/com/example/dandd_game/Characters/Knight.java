@@ -1,11 +1,12 @@
 package com.example.dandd_game.Characters;
 
+import com.example.dandd_game.Position;
 import javafx.scene.image.Image;
 
 public class Knight extends Character {
 
     public Knight(){
-        super(new Image("com/example/dandd_game/images/pixelKnight.png"), 40, 18, 12, 5);
+        super(40, 18, 12, 3, "Knight", new Position(1,0));
     }
     @Override
     public void specialMove(){

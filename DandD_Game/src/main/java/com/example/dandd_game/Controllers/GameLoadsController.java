@@ -3,6 +3,7 @@ package com.example.dandd_game.Controllers;
 import com.example.dandd_game.GameMechanics;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.effect.BoxBlur;
@@ -62,22 +63,20 @@ public class GameLoadsController extends BaseController implements GameMechanics
         unhighlight(clickedButton);
 
     }
+    @FXML
+    private void openAchievements(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/dandd_game/AchievementsScene.fxml"));
+        Parent root = loader.load();
 
-    public void highlight(Button button){
-        Scale scale = new Scale(1.25, 1.25);
-        button.getTransforms().add(scale);
-        button.setEffect(new DropShadow(30, Color.BLACK));
-    }
-    public void unhighlight(Button button){
-        Scale scale = new Scale(.8, .8);
-        button.getTransforms().add(scale);
-        button.setEffect(null);
+        AchievementsController controller = loader.getController();
+        controller.refreshAchievements();
+        rootPane.getScene().setRoot(root);
     }
 
 
     public void onLoadClicked(ActionEvent event) throws IOException {
         if(creatingFile){
-            switchScene(event,"CharacterSelect");
+            switchScene(event,"playerCount");
         }
         else{
             Button clickedButton = (Button) event.getSource();

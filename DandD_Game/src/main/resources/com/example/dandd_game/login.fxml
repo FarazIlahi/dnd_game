@@ -73,5 +73,10 @@
             <Region prefHeight="800.0" prefWidth="400.0" />
          </children>
       </HBox>
+      <Button layoutX="1229.0" layoutY="76.0" mnemonicParsing="false" onAction="#tutorial" prefHeight="86.0" prefWidth="155.0" text="Tutorial">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
