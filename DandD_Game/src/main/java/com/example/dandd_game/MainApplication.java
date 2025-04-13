@@ -21,5 +21,6 @@ public class MainApplication extends Application implements GameMechanics {
 
     public static void main(String[] args) {
         launch();
+
     }
 }
