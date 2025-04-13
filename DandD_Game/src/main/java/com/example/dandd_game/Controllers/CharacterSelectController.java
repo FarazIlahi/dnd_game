@@ -57,7 +57,6 @@ public class CharacterSelectController extends BaseController implements GameMec
         updateInfoLabel();
         updateAllCharacterInfo();
         alreadySelectedCheck();
-
     }
     public void updateInfoLabel(){
         int num = gameState.getParty().size();
