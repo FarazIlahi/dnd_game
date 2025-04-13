@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Mage extends Character {
     public Mage(){
-        super(18, 10, 16, 12, "Mage", new Position(3,0));
+        super(18, 10, 16, 12, "Mage", new Position(4,4));
     }
     @Override
     public void specialMove(){

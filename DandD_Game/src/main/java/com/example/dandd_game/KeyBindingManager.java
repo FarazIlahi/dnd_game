@@ -32,7 +32,6 @@ public class KeyBindingManager {
 
     private void handleKeyPress(KeyEvent event) {
         KeyCode code = event.getCode();
-        System.out.println(code);
 
         if (keyBindings.containsKey(code)) {
             try {

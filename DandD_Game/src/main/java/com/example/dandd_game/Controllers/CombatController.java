@@ -6,11 +6,14 @@ import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.LocalImages;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CombatController extends BaseController implements GameMechanics {
 
@@ -20,7 +23,6 @@ public class CombatController extends BaseController implements GameMechanics {
     private GridPane combatGrid;
     @FXML
     private TextArea turnOrderArea;
-
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
 
@@ -52,7 +54,7 @@ public class CombatController extends BaseController implements GameMechanics {
         loadCharacter();
         updateTurnOrder();
         keyManager.addKeyBinding("W", this::moveUp);
-        keyManager.addKeyBinding("A", this::moveRight);
+        keyManager.addKeyBinding("A", this::moveLeft);
         keyManager.addKeyBinding("S", this::moveDown);
         keyManager.addKeyBinding("D", this::moveRight);
     }
@@ -60,39 +62,82 @@ public class CombatController extends BaseController implements GameMechanics {
     public void loadCharacter(){
         for (Character character : gameState.getParty()) {
             gameState.addToTurn(character);
-            displayProfiles(character);
+            int x = character.getPosition().getX();
+            int y = character.getPosition().getY();
+            updateProfiles(character, x, y);
         }
         for (Character character : gameState.getEnemies()) {
             gameState.addToTurn(character);
-            displayProfiles(character);
+            int x = character.getPosition().getX();
+            int y = character.getPosition().getY();
+            updateProfiles(character, x, y);
         }
         shuffleTurnOrder(gameState.getTurnOrder());
     }
-    public void displayProfiles(Character character){
-        int x = character.getPosition().getX();
-        int y = character.getPosition().getY();
+    public void updateProfiles(Character character, int x, int y){
         ImageView profile = new ImageView(localImages.getImage(character.getID()));
         profile.setFitWidth(40);
         profile.setFitHeight(40);
         combatGrid.add(profile, x, y);
     }
+    public void clearProfiles(int x, int y){
+        removeImageViewFromCell(y, x, combatGrid);
+    }
+    public void removeImageViewFromCell(int row, int column, GridPane gridPane) {
+        List<Node> toRemove = new ArrayList<>();
+
+        for (Node node : gridPane.getChildren()) {
+            Integer rowIndex = GridPane.getRowIndex(node);
+            Integer colIndex = GridPane.getColumnIndex(node);
+
+            // Defaults to 0 if not set
+            rowIndex = (rowIndex == null) ? 0 : rowIndex;
+            colIndex = (colIndex == null) ? 0 : colIndex;
+
+            if (rowIndex == row && colIndex == column && node instanceof ImageView) {
+                toRemove.add(node);
+            }
+        }
+
+        gridPane.getChildren().removeAll(toRemove);
+    }
     public void updateTurnOrder(){
         for (Character character : gameState.getTurnOrder()) {
             turnOrderArea.setText(turnOrderArea.getText() + character.getName() + "\n");
         }
-        gameState.setCurrentCharacter(gameState.getTurnOrder().get(0));
+        gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
     }
     public void moveUp(){
-        System.out.println("up");
+        int x = gameState.getCurrentCharacter().getPosition().getX();
+        int y = gameState.getCurrentCharacter().getPosition().getY();
+        clearProfiles(x, y);
+        y--;
+        gameState.getCurrentCharacter().getPosition().setY(y);
+        updateProfiles(gameState.getCurrentCharacter(), x , y);
     }
     public void moveDown(){
-        System.out.println("down");
+        int x = gameState.getCurrentCharacter().getPosition().getX();
+        int y = gameState.getCurrentCharacter().getPosition().getY();
+        clearProfiles(x, y);
+        y++;
+        gameState.getCurrentCharacter().getPosition().setY(y);
+        updateProfiles(gameState.getCurrentCharacter(), x, y);
     }
     public void moveRight(){
-        System.out.println("right");
+        int x = gameState.getCurrentCharacter().getPosition().getX();
+        int y = gameState.getCurrentCharacter().getPosition().getY();
+        clearProfiles(x, y);
+        x++;
+        gameState.getCurrentCharacter().getPosition().setX(x);
+        updateProfiles(gameState.getCurrentCharacter(), x, y);
     }
     public void moveLeft(){
-        System.out.println("left");
+        int x = gameState.getCurrentCharacter().getPosition().getX();
+        int y = gameState.getCurrentCharacter().getPosition().getY();
+        clearProfiles(x, y);
+        x--;
+        gameState.getCurrentCharacter().getPosition().setX(x);
+        updateProfiles(gameState.getCurrentCharacter(), x, y);
     }
 
 }
