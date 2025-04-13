@@ -23,42 +23,13 @@
                         <Font name="URWGothic-Book" size="32.0" />
                      </font>
                   </Label>
-                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Select Player Number">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="1 Player" />
-                      <MenuItem mnemonicParsing="false" text="2 Players" />
-                        <MenuItem mnemonicParsing="false" text="3 Players" />
-                        <MenuItem mnemonicParsing="false" text="4 Players" />
-                    </items>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </MenuButton>
+                  <ComboBox fx:id="numPlayers" prefHeight="60.0" prefWidth="215.0" promptText="Select number of players" />
                   <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1000.0" text="How difficult would you like this quest?">
                      <font>
                         <Font name="URWGothic-Book" size="32.0" />
                      </font>
                   </Label>
-                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Select Difficulty">
-                       <items>
-                           <MenuItem mnemonicParsing="false" text="Easy - Ideal for 1 Player" />
-                           <MenuItem mnemonicParsing="false" text="Medium - Ideal for 2 Players" />
-                           <MenuItem mnemonicParsing="false" text="Hard - Ideal for 3 Players" />
-                           <MenuItem mnemonicParsing="false" text="Hardest - Ideal for 4 Players" />
-                       </items>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                   </MenuButton>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="235.0" prefHeight="100.0" prefWidth="1000.0" text="Who will be going on this quest?">
-                     <font>
-                        <Font name="URWGothic-Book" size="32.0" />
-                     </font>
-                  </Label>
-                   <TextField promptText="Player 1 name" />
-                   <TextField promptText="Player 2 name" />
-                   <TextField promptText="Player 3 name" />
-                   <TextField promptText="Player 4 name" />
+                  <ComboBox fx:id="difficulty" prefHeight="60.0" prefWidth="215.0" promptText="Select your Difficulty" />
                   <Region prefHeight="100.0" prefWidth="1000.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
