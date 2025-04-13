@@ -34,7 +34,7 @@ public interface GameMechanics {
     }
 
     default int rollDice(int i){
-        return (int)(Math.random() * 20) + 1;
+        return (int)(Math.random() * i) + 1;
     }
     default double spin(ImageView image) throws InterruptedException {
         RotateTransition rotateTransition = new RotateTransition();
