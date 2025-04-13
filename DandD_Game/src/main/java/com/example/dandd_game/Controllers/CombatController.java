@@ -1,10 +1,12 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.Characters.Character;
+import com.example.dandd_game.CombatMechanics;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.LocalImages;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
@@ -15,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CombatController extends BaseController implements GameMechanics {
+public class CombatController extends BaseController implements GameMechanics, CombatMechanics {
 
     @FXML
     private Pane root;
@@ -59,6 +61,12 @@ public class CombatController extends BaseController implements GameMechanics {
         keyManager.addKeyBinding("D", this::moveRight);
     }
 
+    @FXML
+    private void doSmth(ActionEvent event){
+        gameState.nextTurn();
+        updateTurnOrder();
+    }
+
     public void loadCharacter(){
         for (Character character : gameState.getParty()) {
             gameState.addToTurn(character);
@@ -72,7 +80,7 @@ public class CombatController extends BaseController implements GameMechanics {
             int y = character.getPosition().getY();
             updateProfiles(character, x, y);
         }
-        shuffleTurnOrder(gameState.getTurnOrder());
+        shuffleTurnOrder();
     }
     public void updateProfiles(Character character, int x, int y){
         ImageView profile = new ImageView(localImages.getImage(character.getID()));
@@ -117,44 +125,61 @@ public class CombatController extends BaseController implements GameMechanics {
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         if ((canMove(x, y - 1) && myTurn())){
-            clearProfiles(x, y);
-            y--;
-            gameState.getCurrentCharacter().getPosition().setY(y);
-            updateProfiles(gameState.getCurrentCharacter(), x , y);
-            gameState.decreaseMoveCount();
+            move("Up", x, y);
         }
     }
     public void moveDown(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         if((canMove(x, y + 1) && myTurn())){
-            clearProfiles(x, y);
-            y++;
-            gameState.getCurrentCharacter().getPosition().setY(y);
-            updateProfiles(gameState.getCurrentCharacter(), x, y);
-            gameState.decreaseMoveCount();
+            move("Down", x, y);
         }
     }
     public void moveRight(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         if ((canMove(x + 1, y) && myTurn())){
-            clearProfiles(x, y);
-            x++;
-            gameState.getCurrentCharacter().getPosition().setX(x);
-            updateProfiles(gameState.getCurrentCharacter(), x, y);
-            gameState.decreaseMoveCount();
+            move("Right", x, y);
         }
     }
     public void moveLeft(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         if((canMove(x - 1, y) && myTurn())){
-            clearProfiles(x, y);
-            x--;
-            gameState.getCurrentCharacter().getPosition().setX(x);
-            updateProfiles(gameState.getCurrentCharacter(), x, y);
-            gameState.decreaseMoveCount();
+            move("Left", x, y);
+        }
+    }
+
+    public void move(String direction, int x, int y){
+        switch (direction){
+            case "Up":
+                clearProfiles(x, y);
+                y--;
+                gameState.getCurrentCharacter().getPosition().setY(y);
+                updateProfiles(gameState.getCurrentCharacter(), x , y);
+                gameState.decreaseMoveCount();
+                break;
+            case "Down":
+                clearProfiles(x, y);
+                y++;
+                gameState.getCurrentCharacter().getPosition().setY(y);
+                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                gameState.decreaseMoveCount();
+                break;
+            case "Left":
+                clearProfiles(x, y);
+                x--;
+                gameState.getCurrentCharacter().getPosition().setX(x);
+                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                gameState.decreaseMoveCount();
+                break;
+            case "Right":
+                clearProfiles(x, y);
+                x++;
+                gameState.getCurrentCharacter().getPosition().setX(x);
+                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                gameState.decreaseMoveCount();
+                break;
         }
     }
     public boolean canMove(int x, int y){
@@ -174,7 +199,6 @@ public class CombatController extends BaseController implements GameMechanics {
         }
         gameState.nextTurn();
         updateTurnOrder();
-        gameState.resetMoveCount();
         return false;
     }
 

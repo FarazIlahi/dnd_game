@@ -137,6 +137,7 @@ public class GameStateManager {
         this.turnOrder.add(this.turnOrder.getFirst());
         this.turnOrder.remove(0);
         setCurrentCharacter(this.turnOrder.get(0));
+        resetMoveCount();
     }
     private Set<String> achievements = new LinkedHashSet<>();
 

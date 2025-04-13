@@ -19,6 +19,7 @@ import java.util.Collections;
 import com.example.dandd_game.Characters.Character;
 
 public interface GameMechanics {
+    GameStateManager gameState = GameStateManager.getInstance();
 
     default void setListener(Pane root, ThrowingRunnable method, String key){
         root.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -82,9 +83,5 @@ public interface GameMechanics {
         node.setOpacity(1);
         node.setDisable(false);
     }
-    default void shuffleTurnOrder(ArrayList<Character> turnOrderList){
-        Collections.shuffle(turnOrderList);
-    }
-
 
 }
