@@ -1,7 +1,6 @@
 package com.example.dandd_game;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class LocalImages {
     private LocalImages() {}

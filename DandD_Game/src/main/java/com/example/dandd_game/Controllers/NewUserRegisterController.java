@@ -1,7 +1,6 @@
 package com.example.dandd_game.Controllers;
-import com.example.dandd_game.MainApplication;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.Firestore;
@@ -13,8 +12,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 public class NewUserRegisterController extends BaseController {
     @FXML
     private TextField elEmailTextField;

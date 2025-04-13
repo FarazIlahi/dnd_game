@@ -1,4 +1,5 @@
 package com.example.dandd_game;
+
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;

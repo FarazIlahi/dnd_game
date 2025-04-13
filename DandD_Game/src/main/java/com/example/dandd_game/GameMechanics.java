@@ -10,13 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.lang.Math;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import com.example.dandd_game.Characters.Character;
 
 public interface GameMechanics {
     GameStateManager gameState = GameStateManager.getInstance();

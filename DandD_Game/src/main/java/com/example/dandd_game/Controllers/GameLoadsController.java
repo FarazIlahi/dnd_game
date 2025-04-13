@@ -6,15 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
-
 import java.io.IOException;
 
 
@@ -82,5 +76,29 @@ public class GameLoadsController extends BaseController implements GameMechanics
             Button clickedButton = (Button) event.getSource();
             //switchScene("");
         }
+    }
+
+    @FXML
+    private void tutorial(ActionEvent event) throws IOException {
+        gameState.resetInstance();
+        gameState.createKing();
+        gameState.createKnight();
+        gameState.createCleric();
+        gameState.createMage();
+        gameState.addToParty(gameState.getKing());
+        gameState.addToParty(gameState.getKnight());
+        gameState.addToParty(gameState.getCleric());
+        gameState.addToParty(gameState.getMage());
+        gameState.setCurrentCharacter(gameState.getKing());
+
+        //gameState.createGoblin();
+        //gameState.createOrc();
+        gameState.createSorcerer();
+        //gameState.addToEnemys(gameState.getGoblin());
+        //gameState.addToEnemys(gameState.getOrc());
+        gameState.addToEnemys(gameState.getSorcerer());
+
+
+        switchScene(event,"Combat");
     }
 }
