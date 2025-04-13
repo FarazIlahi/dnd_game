@@ -31,7 +31,6 @@ public class InvestigateSceneController extends BaseController implements GameMe
         alert.setContentText("You gather intel and prepare your next move");
         alert.showAndWait();
         switchScene(event, "Chapter1/InfiltrateScene");
-
     }
 
     @FXML
