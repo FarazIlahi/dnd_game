@@ -53,7 +53,11 @@ public class NewUserRegisterController extends BaseController {
             e.printStackTrace();
             System.out.println("Firebase user creation failed");
         }
+    }
 
+    @FXML
+    private void goBack(ActionEvent event) throws IOException{
+        switchScene(event,"Login");
     }
 }
 
