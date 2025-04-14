@@ -1,7 +1,6 @@
 package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

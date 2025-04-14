@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.InvestigateSceneController">
+<AnchorPane fx:id="rootPane" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.InvestigateSceneController">
 
     <Label fx:id="investigateText" layoutX="100" layoutY="100" maxWidth="600" style="-fx-font-size: 18px; -fx-text-fill: black;" text="The orcs are being controlled by an ancient sorcerer. What will you do?" wrapText="true" />
 

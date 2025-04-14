@@ -12,8 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,5 +199,4 @@ public class CombatController extends BaseController implements GameMechanics, C
         updateTurnOrder();
         return false;
     }
-
 }

@@ -7,10 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class LoginController extends BaseController {
@@ -53,31 +51,4 @@ public class LoginController extends BaseController {
         Stage stage = (Stage) leaveButton.getScene().getWindow();
         stage.close();
     }
-
-
-    @FXML
-    private void tutorial(ActionEvent event) throws IOException {gameState.setCurrentCharacter(gameState.getKing());
-        gameState.createKing();
-        gameState.createKnight();
-        gameState.createCleric();
-        gameState.createMage();
-        gameState.addToParty(gameState.getKing());
-        gameState.addToParty(gameState.getKnight());
-        gameState.addToParty(gameState.getCleric());
-        gameState.addToParty(gameState.getMage());
-        gameState.setCurrentCharacter(gameState.getKing());
-
-        //gameState.createGoblin();
-        //gameState.createOrc();
-        gameState.createSorcerer();
-        //gameState.addToEnemys(gameState.getGoblin());
-        //gameState.addToEnemys(gameState.getOrc());
-        gameState.addToEnemys(gameState.getSorcerer());
-
-
-        switchScene(event,"Combat");
-    }
-
-
-
 }

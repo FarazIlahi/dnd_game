@@ -3,7 +3,6 @@ package com.example.dandd_game.Controllers;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.KeyBindingManager;
 import com.example.dandd_game.MainApplication;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -12,13 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-
-import javax.crypto.spec.PSource;
 import java.io.IOException;
 
 public class BaseController implements GameMechanics {

@@ -1,13 +1,10 @@
 package com.example.dandd_game.Controllers;
 
-import com.example.dandd_game.GameStateManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import com.example.dandd_game.LocalImages;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
 import java.io.IOException;
 
 public class TitleScreenController extends BaseController {
