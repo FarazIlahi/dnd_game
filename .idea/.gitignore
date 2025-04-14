@@ -7,4 +7,4 @@
 /dataSources/
 /dataSources.local.xml
 target/
-/DandD_Game/src/main/resources/key.json
+DandD_Game/src/main/resources/key.json
