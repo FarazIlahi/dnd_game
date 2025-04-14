@@ -3,13 +3,13 @@ module com.example.dandd_game {
     requires javafx.fxml;
     requires javafx.base;
     requires javafx.graphics;
-    requires firebase.admin;
     requires com.google.auth;
     requires com.google.auth.oauth2;
     requires google.cloud.firestore;
     requires google.cloud.core;
     requires com.google.api.apicommon;
     requires java.logging;
+    requires firebase.admin;
 
 
     opens com.example.dandd_game to javafx.fxml;
