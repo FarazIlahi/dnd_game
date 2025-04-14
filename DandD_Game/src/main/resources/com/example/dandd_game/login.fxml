@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.LoginController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.LoginController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -73,10 +73,5 @@
             <Region prefHeight="800.0" prefWidth="400.0" />
          </children>
       </HBox>
-      <Button layoutX="1229.0" layoutY="76.0" mnemonicParsing="false" onAction="#tutorial" prefHeight="86.0" prefWidth="155.0" text="Tutorial">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Button>
    </children>
 </Pane>

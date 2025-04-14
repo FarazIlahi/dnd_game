@@ -6,4 +6,5 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-/DandD_Game/src/main/resources/key.json
+target/
+DandD_Game/src/main/resources/key.json

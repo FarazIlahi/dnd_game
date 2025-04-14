@@ -1,20 +1,12 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameMechanics;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.util.converter.NumberStringConverter;
-
-import java.io.IOException;
 
 public class OptionMenuController extends BaseController implements GameMechanics {
     @FXML

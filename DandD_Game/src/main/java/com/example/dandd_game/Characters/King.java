@@ -1,11 +1,10 @@
 package com.example.dandd_game.Characters;
 
 import com.example.dandd_game.Position;
-import javafx.scene.image.Image;
 
 public class King extends Character {
     public King(){
-        super(12, 8, 20,5, "King", new Position(0,0));
+        super(12, 8, 20,5, "King", new Position(1,1));
     }
 
     @Override

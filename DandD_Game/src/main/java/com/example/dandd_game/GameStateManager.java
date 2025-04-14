@@ -2,7 +2,6 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
-
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Set;
 public class GameStateManager {
     private static GameStateManager instance;
     private GameStateManager() {}
-    private int playerCount;
+    private Integer playerCount;
     private String difficulty;
     private String campaignName;
     private King king;
@@ -21,8 +20,8 @@ public class GameStateManager {
     private Goblin goblin;
     private Orc orc;
     private Sorcerer sorcerer;
-
     private Character currentCharacter;
+    private int moveCount = 5;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
@@ -32,6 +31,28 @@ public class GameStateManager {
             instance = new GameStateManager();
         }
         return instance;
+    }
+    public void resetInstance() {
+        playerCount = null;
+        difficulty = null;
+        campaignName = null;
+        king = null;
+        knight = null;
+        cleric = null;
+        mage = null;
+        goblin = null;
+        orc = null;
+        sorcerer = null;
+        currentCharacter = null;
+        moveCount = 5;
+        resetList(party);
+        resetList(enemies);
+        resetList(turnOrder);
+    }
+    public void resetList(ArrayList<Character> list){
+        for(int i = list.size() - 1; i >= 0; i--){
+            list.remove(i);
+        }
     }
 
     public void setPlayerCount(int playerCount) {
@@ -133,6 +154,13 @@ public class GameStateManager {
     public void clearTurnOrder(){
         this.turnOrder.clear();
     }
+    public void nextTurn(){
+        this.turnOrder.add(this.turnOrder.getFirst());
+        this.turnOrder.remove(0);
+        setCurrentCharacter(this.turnOrder.get(0));
+        resetMoveCount();
+
+    }
     private Set<String> achievements = new LinkedHashSet<>();
 
     public void unlockAchievement(String achievement) {
@@ -140,5 +168,14 @@ public class GameStateManager {
     }
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);
+    }
+    public int getMoveCount() {
+        return this.moveCount;
+    }
+    public void decreaseMoveCount(){
+        this.moveCount--;
+    }
+    public void resetMoveCount(){
+        this.moveCount = 5;
     }
 }

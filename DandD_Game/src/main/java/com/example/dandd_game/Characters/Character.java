@@ -1,8 +1,7 @@
 package com.example.dandd_game.Characters;
 
-import com.example.dandd_game.LocalImages;
 import com.example.dandd_game.Position;
-import javafx.scene.image.Image;
+
 
 public abstract class Character{
     private int hp;

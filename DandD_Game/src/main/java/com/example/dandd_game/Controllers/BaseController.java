@@ -1,8 +1,8 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.KeyBindingManager;
 import com.example.dandd_game.MainApplication;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,12 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class BaseController implements GameMechanics {
@@ -37,6 +34,7 @@ public class BaseController implements GameMechanics {
     public Pane getCurrentroot(){
         return currentroot;
     }
+    KeyBindingManager keyManager;
 
     public void createStackPane() throws IOException {
         ImageView snapshot = new ImageView(getCurrentroot().snapshot(null, null));
@@ -57,32 +55,19 @@ public class BaseController implements GameMechanics {
     protected void init(Pane root) {
         if(!is_on_settings){
             setCurrentroot(root);
+            keyManager = new KeyBindingManager(getCurrentroot());
         }
-        getCurrentroot().sceneProperty().addListener((obs, oldScene, newScene) -> {
-
-            if (newScene != null) {
-                newScene.setOnKeyPressed(event -> {
-                    try {
-                        handleKeyPress(event);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-        });
+        keyManager = new KeyBindingManager(root);
+        keyManager.addKeyBinding("ESCAPE", this::handleKeyPress);
     }
-    private void handleKeyPress(KeyEvent event) throws IOException {
-        if (event.getCode().toString().equals("ESCAPE")) {
-            if(is_on_settings){
-                is_on_settings = false;
-                closePopupScene();
-
-            }
-            else {
-                is_on_settings = true;
-                openPopupScene();
-
-            }
+    private void handleKeyPress() throws IOException {
+        if(is_on_settings){
+            is_on_settings = false;
+            closePopupScene();
+        }
+        else {
+            is_on_settings = true;
+            openPopupScene();
         }
     }
     private void openPopupScene() throws IOException {

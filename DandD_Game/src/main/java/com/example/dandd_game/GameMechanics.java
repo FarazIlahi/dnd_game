@@ -10,15 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.lang.Math;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import com.example.dandd_game.Characters.Character;
 
 public interface GameMechanics {
+    GameStateManager gameState = GameStateManager.getInstance();
 
     default void setListener(Pane root, ThrowingRunnable method, String key){
         root.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -38,7 +34,7 @@ public interface GameMechanics {
     }
 
     default int rollDice(int i){
-        return (int)(Math.random() * 20) + 1;
+        return (int)(Math.random() * i) + 1;
     }
     default double spin(ImageView image) throws InterruptedException {
         RotateTransition rotateTransition = new RotateTransition();
@@ -82,9 +78,5 @@ public interface GameMechanics {
         node.setOpacity(1);
         node.setDisable(false);
     }
-    default void shuffleTurnOrder(ArrayList<Character> turnOrderList){
-        Collections.shuffle(turnOrderList);
-    }
-
 
 }
