@@ -7,7 +7,7 @@ public class Knight extends Character {
     private final int maxSpecial;
 
     public Knight(){
-        super(40, 18, 12, 3, "Knight", new Position(2,2));
+        super(40, 18, 12, 3, "Knight", new Position(11,8));
         this.special = 25;
         this.maxSpecial = this.special;
     }

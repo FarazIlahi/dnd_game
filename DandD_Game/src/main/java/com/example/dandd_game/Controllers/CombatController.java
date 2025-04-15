@@ -111,6 +111,20 @@ public class CombatController extends BaseController implements GameMechanics, C
     private ArrayList<Button> p4_buttons = new ArrayList<Button>();
     private String p4ID;
 
+    @FXML
+    private ImageView e1_profile;
+    @FXML
+    private Label e1_name;
+    @FXML
+    private Label e1_hpInfo;
+    @FXML
+    private ProgressBar e1_hpBar;
+    private String e1ID;
+
+    private boolean moving = false;
+    private boolean attacking;
+    private boolean specialMove;
+
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
 
@@ -125,7 +139,16 @@ public class CombatController extends BaseController implements GameMechanics, C
         setupGrid();
         loadCharacter();
         setParty();
+        setEnemies();
         updateTurn();
+    }
+    @FXML
+    private void move(){
+        moving = !moving;
+        if(moving){
+            gameState.getCurrentCharacter().getID();
+        }
+        System.out.println(gameState.getCurrentCharacter().getID());
     }
 
     @FXML
@@ -287,6 +310,26 @@ public class CombatController extends BaseController implements GameMechanics, C
                 break;
         }
     }
+    public void setEnemies(){
+        int count = 1;
+        for(Character character : gameState.getEnemies()){
+            setEnemy(character, count);
+            count++;
+        }
+    }
+    public void setEnemy(Character character, int eNum){
+        String enemyNum = "" + eNum;
+        switch (enemyNum) {
+            case "1":
+                e1_profile.setImage(localImages.getImage(character.getID()));
+                e1_name.setText(character.getName());
+                e1_hpBar.setVisible(true);
+                e1_hpBar.setProgress(updateHp(character));
+                e1_hpInfo.setText(character.hpToString());
+                e1ID = character.getID();
+                break;
+        }
+    }
     public void setProgressBar(Character character, ProgressBar bar){
         switch (character.getID()){
             case "King":
@@ -333,28 +376,28 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveUp(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if ((canMove(x, y - 1) && myTurn())){
+        if (canMove(x, y - 1) && myTurn() && moving){
             move("Up", x, y);
         }
     }
     public void moveDown(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if((canMove(x, y + 1) && myTurn())){
+        if(canMove(x, y + 1) && myTurn() && moving){
             move("Down", x, y);
         }
     }
     public void moveRight(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if ((canMove(x + 1, y) && myTurn())){
+        if (canMove(x + 1, y) && myTurn() && moving){
             move("Right", x, y);
         }
     }
     public void moveLeft(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if((canMove(x - 1, y) && myTurn())){
+        if(canMove(x - 1, y) && myTurn() && moving){
             move("Left", x, y);
         }
     }

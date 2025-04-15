@@ -8,7 +8,7 @@ public class Mage extends Character {
     private final int maxMana;
 
     public Mage(){
-        super(18, 10, 16, 12, "Mage", new Position(4,4));
+        super(18, 10, 16, 12, "Mage", new Position(11,11));
         this.mana = 36;
         this.maxMana = this.mana;
     }

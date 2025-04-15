@@ -46,7 +46,7 @@
             <ProgressBar fx:id="p1_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p1_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p1_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p1_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
+            <Button fx:id="p1_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
             <Label fx:id="p1_hpInfo" layoutX="250.0" layoutY="66.0" styleClass="info-label">
                <font>
                   <Font size="15.0" />
@@ -71,7 +71,7 @@
             <ProgressBar fx:id="p2_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p2_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p2_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p2_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
+            <Button fx:id="p2_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
             <Label fx:id="p2_hpInfo" layoutX="250.0" layoutY="66.0" styleClass="info-label">
                <font>
                   <Font size="15.0" />
@@ -96,7 +96,7 @@
             <ProgressBar fx:id="p3_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p3_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p3_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p3_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
+            <Button fx:id="p3_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
             <Label fx:id="p3_hpInfo" layoutX="250.0" layoutY="66.0" styleClass="info-label">
                <font>
                   <Font size="15.0" />
@@ -121,7 +121,7 @@
             <ProgressBar fx:id="p4_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p4_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p4_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p4_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
+            <Button fx:id="p4_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
             <Label fx:id="p4_hpInfo" layoutX="250.0" layoutY="66.0" styleClass="info-label">
                <font>
                   <Font size="15.0" />
@@ -130,6 +130,22 @@
             <Label fx:id="p4_specialInfo" layoutX="250.0" layoutY="97.0" styleClass="info-label">
                <font>
                   <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1292.0" layoutY="18.0">
+         <children>
+            <ImageView fx:id="e1_profile" fitHeight="57.0" fitWidth="75.0" layoutX="230.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e1_hpBar" layoutX="70.0" layoutY="71.0" prefHeight="20.0" prefWidth="218.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e1_hpInfo" layoutX="22.0" layoutY="71.0" styleClass="info-label">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="e1_name" layoutX="116.0" layoutY="11.0" prefHeight="36.0" prefWidth="102.0">
+               <font>
+                  <Font size="25.0" />
                </font>
             </Label>
          </children>

@@ -1,6 +1,8 @@
 package com.example.dandd_game.Characters;
 
 import com.example.dandd_game.Position;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 
 public abstract class Character{
@@ -12,6 +14,9 @@ public abstract class Character{
     private String name;
     private String iD;
     private Position position;
+
+
+
 
 
     public Character(int hp, int def, int basic_attack, int range, String name, Position position){

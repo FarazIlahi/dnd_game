@@ -6,7 +6,7 @@ public class Cleric extends Character {
     private int mana;
     private final int maxMana;
     public  Cleric(){
-        super(22, 12, 10, 7, "Cleric", new Position(3,3));
+        super(22, 12, 10, 7, "Cleric", new Position(8,11));
         this.mana = 20;
         this.maxMana = this.mana;
     }
