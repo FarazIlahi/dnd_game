@@ -61,7 +61,7 @@ public class CharacterSelectController extends BaseController implements GameMec
         int num = gameState.getParty().size();
         if(num == gameState.getPlayerCount()){
             infoLabel.setText("Ready Up!");
-            unDisableNode(ready_btn);
+            enableNode(ready_btn);
             disableAllNodes();
         }
         else {
@@ -80,17 +80,17 @@ public class CharacterSelectController extends BaseController implements GameMec
     }
     public void disableAllNodes(){
         if(knight != null){
-            disableNode(knight);
+            enableNode(knight);
             knightStats.setText("");
             knightName.setText("");
         }
         if(cleric != null){
-            disableNode(cleric);
+            enableNode(cleric);
             clericStats.setText("");
             clericName.setText("");
         }
         if(mage != null){
-            disableNode(mage);
+            enableNode(mage);
             mageStats.setText("");
             mageName.setText("");
         }

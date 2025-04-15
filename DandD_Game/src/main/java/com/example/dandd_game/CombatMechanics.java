@@ -1,10 +1,12 @@
 package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
+import javafx.scene.control.Button;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-public interface CombatMechanics {
+public interface CombatMechanics extends GameMechanics{
     GameStateManager gameState = GameStateManager.getInstance();
 
     default void shuffleTurnOrder(){
@@ -26,6 +28,16 @@ public interface CombatMechanics {
     }
     default double updateHp(Character character){
         return (double) character.getHp() / character.getMaxHp();
+    }
+    default void disableButtons(ArrayList<Button> buttons){
+        for(Button button : buttons){
+            disableNode(button);
+        }
+    }
+    default void enableButtons(ArrayList<Button> buttons){
+        for(Button button : buttons){
+            enableNode(button);
+        }
     }
 
 

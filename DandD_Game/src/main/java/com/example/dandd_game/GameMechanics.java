@@ -74,7 +74,7 @@ public interface GameMechanics {
         node.setOpacity(.5);
         node.setDisable(true);
     }
-    default void unDisableNode(Node node){
+    default void enableNode(Node node){
         node.setOpacity(1);
         node.setDisable(false);
     }
