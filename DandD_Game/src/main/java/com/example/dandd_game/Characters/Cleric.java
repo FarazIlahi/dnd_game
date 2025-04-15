@@ -11,4 +11,9 @@ public class Cleric extends Character {
         //heals all for 15hp(Could change)
         //Must be wihtin range
     }
+
+    @Override
+    public void specialToSrting() {
+
+    }
 }

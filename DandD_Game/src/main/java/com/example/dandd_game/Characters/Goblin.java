@@ -11,4 +11,9 @@ public class Goblin extends Character {
     public void specialMove() {
 
     }
+
+    @Override
+    public void specialToSrting() {
+
+    }
 }

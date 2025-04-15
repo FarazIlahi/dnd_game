@@ -11,4 +11,8 @@ public class Mage extends Character {
         //AOE attack doing 15 ATk(Could change)
         //Must be within 15 range units
     }
+    @Override
+    public void specialToSrting() {
+
+    }
 }

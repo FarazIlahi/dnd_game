@@ -9,6 +9,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -23,6 +26,83 @@ public class CombatController extends BaseController implements GameMechanics, C
     private GridPane combatGrid;
     @FXML
     private TextArea turnOrderArea;
+
+    @FXML
+    private ImageView p1_profile;
+    @FXML
+    private Label p1_name;
+    @FXML
+    private Label p1_hpInfo;
+    @FXML
+    private Label p1_specialInfo;
+    @FXML
+    private ProgressBar p1_hpBar;
+    @FXML
+    private ProgressBar p1_specialBar;
+    @FXML
+    private Button p1_attack;
+    @FXML
+    private Button p1_special;
+    @FXML
+    private Button p1_move;
+
+    @FXML
+    private ImageView p2_profile;
+    @FXML
+    private Label p2_name;
+    @FXML
+    private Label p2_hpInfo;
+    @FXML
+    private Label p2_specialInfo;
+    @FXML
+    private ProgressBar p2_hpBar;
+    @FXML
+    private ProgressBar p2_specialBar;
+    @FXML
+    private Button p2_attack;
+    @FXML
+    private Button p2_special;
+    @FXML
+    private Button p2_move;
+
+    @FXML
+    private ImageView p3_profile;
+    @FXML
+    private Label p3_name;
+    @FXML
+    private Label p3_hpInfo;
+    @FXML
+    private Label p3_specialInfo;
+    @FXML
+    private ProgressBar p3_hpBar;
+    @FXML
+    private ProgressBar p3_specialBar;
+    @FXML
+    private Button p3_attack;
+    @FXML
+    private Button p3_special;
+    @FXML
+    private Button p3_move;
+
+    @FXML
+    private ImageView p4_profile;
+    @FXML
+    private Label p4_name;
+    @FXML
+    private Label p4_hpInfo;
+    @FXML
+    private Label p4_specialInfo;
+    @FXML
+    private ProgressBar p4_hpBar;
+    @FXML
+    private ProgressBar p4_specialBar;
+    @FXML
+    private Button p4_attack;
+    @FXML
+    private Button p4_special;
+    @FXML
+    private Button p4_move;
+
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
 
@@ -51,6 +131,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 combatGrid.add(cell, c, r);
             }
         }
+        setParty();
         loadCharacter();
         updateTurnOrder();
         keyManager.addKeyBinding("W", this::moveUp);
@@ -111,6 +192,62 @@ public class CombatController extends BaseController implements GameMechanics, C
             }
         }
         return null;
+    }
+    public void setParty(){
+        int count = 1;
+        for(Character character : gameState.getParty()){
+            setPlayer(character, count);
+            count++;
+        }
+    }
+    public void setPlayer(Character character, int pNum){
+        String playerNum = "" + pNum;
+        switch (playerNum){
+            case "1":
+                p1_profile.setImage(localImages.getImage(character.getID()));
+                p1_name.setText(character.getName());
+                p1_hpBar.setVisible(true);
+                p1_specialBar.setVisible(true);
+                p1_attack.setVisible(true);
+                p1_special.setVisible(true);
+                p1_move.setVisible(true);
+                p1_hpBar.setProgress(updateHp(character));
+                p1_hpInfo.setText(character.hpToString());
+                break;
+            case "2":
+                p2_profile.setImage(localImages.getImage(character.getID()));
+                p2_name.setText(character.getName());
+                p2_hpBar.setVisible(true);
+                p2_specialBar.setVisible(true);
+                p2_attack.setVisible(true);
+                p2_special.setVisible(true);
+                p2_move.setVisible(true);
+                p2_hpBar.setProgress(updateHp(character));
+                p2_hpInfo.setText(character.hpToString());
+                break;
+            case "3":
+                p3_profile.setImage(localImages.getImage(character.getID()));
+                p3_name.setText(character.getName());
+                p3_hpBar.setVisible(true);
+                p3_specialBar.setVisible(true);
+                p3_attack.setVisible(true);
+                p3_special.setVisible(true);
+                p3_move.setVisible(true);
+                p3_hpBar.setProgress(updateHp(character));
+                p3_hpInfo.setText(character.hpToString());
+                break;
+            case "4":
+                p4_profile.setImage(localImages.getImage(character.getID()));
+                p4_name.setText(character.getName());
+                p4_hpBar.setVisible(true);
+                p4_specialBar.setVisible(true);
+                p4_attack.setVisible(true);
+                p4_special.setVisible(true);
+                p4_move.setVisible(true);
+                p4_hpBar.setProgress(updateHp(character));
+                p4_hpInfo.setText(character.hpToString());
+                break;
+        }
     }
     public void updateTurnOrder(){
         turnOrderArea.clear();
@@ -190,13 +327,10 @@ public class CombatController extends BaseController implements GameMechanics, C
         return false;
     }
 
-
     public boolean myTurn(){
         if(gameState.getMoveCount() > 0){
             return true;
         }
-        gameState.nextTurn();
-        updateTurnOrder();
         return false;
     }
 }

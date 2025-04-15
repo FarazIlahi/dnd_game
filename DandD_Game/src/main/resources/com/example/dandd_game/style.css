@@ -1,0 +1,19 @@
+.health-progress-bar .track {
+    -fx-background-color: black;
+}
+.health-progress-bar .bar {
+    -fx-background-color: #3ae841;
+}
+
+.mana-progress-bar .track {
+    -fx-background-color: black;
+}
+.mana-progress-bar .bar {
+    -fx-background-color: #e82813;
+}
+
+
+
+.info-label {
+    -fx-font-weight: bold;
+}

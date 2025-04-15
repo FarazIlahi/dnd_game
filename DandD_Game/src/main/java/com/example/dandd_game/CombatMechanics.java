@@ -24,6 +24,9 @@ public interface CombatMechanics {
 
         }
     }
+    default double updateHp(Character character){
+        return (double) character.getHp() / character.getMaxHp();
+    }
 
 
 }

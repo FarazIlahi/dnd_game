@@ -46,6 +46,13 @@ public abstract class Character{
     public Position getPosition(){
         return this.position;
     }
+    public String hpToString(){
+        return this.hp + "/" + this.max_hp;
+    }
+    public abstract void specialToSrting();
+
+
+
 
     public void setBasic_attack(int basic_attack) {
         this.basic_attack = basic_attack;

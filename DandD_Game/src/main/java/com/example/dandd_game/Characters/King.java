@@ -7,12 +7,17 @@ public class King extends Character {
         super(12, 8, 20,5, "King", new Position(1,1));
     }
 
+
+
     @Override
     public void specialMove(){
         //does double the damage
         //Must be wihtin range
     }
 
+    @Override
+    public void specialToSrting() {
 
+    }
 
 }

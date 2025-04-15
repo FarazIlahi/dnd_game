@@ -11,4 +11,9 @@ public class Sorcerer extends Character {
     public void specialMove() {
 
     }
+
+    @Override
+    public void specialToSrting() {
+
+    }
 }
