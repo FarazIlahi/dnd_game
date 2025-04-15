@@ -127,8 +127,8 @@ public class CombatController extends BaseController implements GameMechanics, C
         });
         super.init(root);
         setKeybinds();
-        setupGrid();
-        loadCharacter();
+        setupGrid(combatGrid);
+        loadCharacter(combatGrid);
         setParty();
         setEnemies();
         updateTurn();
@@ -136,42 +136,33 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private void move(){
         moving = !moving;
+        updateMoveButton();
         if(moving){
             disableNode(gameState.getCurrentCharacter().getButtons().get(0));
             disableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
         else{
+            if(!canMoveCount()){
+                disableNode(gameState.getCurrentCharacter().getButtons().getLast());
+            }
             enableNode(gameState.getCurrentCharacter().getButtons().get(0));
             enableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
-        System.out.println(gameState.getCurrentCharacter().getID());
     }
 
     @FXML
-    private void doSmth(ActionEvent event){
-        gameState.nextTurn();
-        updateTurn();
+    private void attack(){
+        moving = false;
+        updateMoveButton();
+        doTurn(this::updateTurn);
     }
-    public void setupGrid(){
-        combatGrid.getColumnConstraints().clear();
-        combatGrid.getRowConstraints().clear();
-        ColumnConstraints column = new ColumnConstraints();
-        RowConstraints row = new RowConstraints();
-        column.setPercentWidth(100);
-        row.setPercentHeight(100);
-        for (int i = 0; i < 20; i++) {
-            combatGrid.getColumnConstraints().add(column);
-            combatGrid.getRowConstraints().add(row);
-        }
-        for (int r = 0; r < 20; r++) {
-            for (int c = 0; c < 20; c++) {
-                Region cell = new Region();
-                cell.setStyle("-fx-border-color: black; -fx-background-color: white;");
-                cell.setPrefSize(100, 100);
-                combatGrid.add(cell, c, r);
-            }
-        }
+    @FXML
+    private void special(){
+        moving = false;
+        updateMoveButton();
+        doTurn(this::updateTurn);
     }
+
     public void setKeybinds(){
         keyManager.addKeyBinding("W", this::moveUp);
         keyManager.addKeyBinding("A", this::moveLeft);
@@ -179,53 +170,6 @@ public class CombatController extends BaseController implements GameMechanics, C
         keyManager.addKeyBinding("D", this::moveRight);
     }
 
-    public void loadCharacter(){
-        for (Character character : gameState.getParty()) {
-            gameState.addToTurn(character);
-            int x = character.getPosition().getX();
-            int y = character.getPosition().getY();
-            updateProfiles(character, x, y);
-        }
-        for (Character character : gameState.getEnemies()) {
-            gameState.addToTurn(character);
-            int x = character.getPosition().getX();
-            int y = character.getPosition().getY();
-            updateProfiles(character, x, y);
-        }
-        shuffleTurnOrder();
-    }
-    public void updateProfiles(Character character, int x, int y){
-        ImageView profile = new ImageView(localImages.getImage(character.getID()));
-        profile.setFitWidth(40);
-        profile.setFitHeight(40);
-        combatGrid.add(profile, x, y);
-    }
-    public void clearProfiles(int x, int y){
-        removeImageViewFromCell(y, x, combatGrid);
-    }
-    public void removeImageViewFromCell(int row, int column, GridPane gridPane) {
-        List<Node> toRemove = new ArrayList<>();
-
-        Node node = iterate(row,column,gridPane);
-        if(node != null){
-            toRemove.add(node);
-        }
-        gridPane.getChildren().removeAll(toRemove);
-    }
-    public Node  iterate(int row, int column, GridPane gridPane){
-        for (Node node : gridPane.getChildren()) {
-            Integer rowIndex = GridPane.getRowIndex(node);
-            Integer colIndex = GridPane.getColumnIndex(node);
-
-            rowIndex = (rowIndex == null) ? 0 : rowIndex;
-            colIndex = (colIndex == null) ? 0 : colIndex;
-
-            if (rowIndex == row && colIndex == column && node instanceof ImageView) {
-                return node;
-            }
-        }
-        return null;
-    }
     public void setParty(){
         int count = 1;
         for(Character character : gameState.getParty()){
@@ -385,28 +329,28 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveUp(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if (canMove(x, y - 1) && myTurn() && moving){
+        if (canMoveOnGrid(x, y - 1) && canMoveCount() && moving){
             move("Up", x, y);
         }
     }
     public void moveDown(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if(canMove(x, y + 1) && myTurn() && moving){
+        if(canMoveOnGrid(x, y + 1) && canMoveCount() && moving){
             move("Down", x, y);
         }
     }
     public void moveRight(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if (canMove(x + 1, y) && myTurn() && moving){
+        if (canMoveOnGrid(x + 1, y) && canMoveCount() && moving){
             move("Right", x, y);
         }
     }
     public void moveLeft(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if(canMove(x - 1, y) && myTurn() && moving){
+        if(canMoveOnGrid(x - 1, y) && canMoveCount() && moving){
             move("Left", x, y);
         }
     }
@@ -414,36 +358,37 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void move(String direction, int x, int y){
         switch (direction){
             case "Up":
-                clearProfiles(x, y);
+                clearProfiles(x, y, combatGrid);
                 y--;
                 gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x , y);
+                updateProfiles(gameState.getCurrentCharacter(), x , y, combatGrid);
                 gameState.decreaseMoveCount();
                 break;
             case "Down":
-                clearProfiles(x, y);
+                clearProfiles(x, y, combatGrid);
                 y++;
                 gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
                 gameState.decreaseMoveCount();
                 break;
             case "Left":
-                clearProfiles(x, y);
+                clearProfiles(x, y, combatGrid);
                 x--;
                 gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
                 gameState.decreaseMoveCount();
                 break;
             case "Right":
-                clearProfiles(x, y);
+                clearProfiles(x, y, combatGrid);
                 x++;
                 gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
                 gameState.decreaseMoveCount();
                 break;
         }
+        updateMoveButton();
     }
-    public boolean canMove(int x, int y){
+    public boolean canMoveOnGrid(int x, int y){
         if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
             Node node = iterate(y, x, combatGrid);
             if(node == null){
@@ -452,8 +397,15 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
         return false;
     }
-
-    public boolean myTurn(){
+    public void updateMoveButton(){
+        if (moving){
+            gameState.getCurrentCharacter().getButtons().getLast().setText("Moves: " + gameState.getMoveCount());
+        }
+        else{
+            gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
+        }
+    }
+    public boolean canMoveCount(){
         if(gameState.getMoveCount() > 0){
             return true;
         }
