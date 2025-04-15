@@ -5,11 +5,32 @@
     -fx-background-color: #3ae841;
 }
 
-.mana-progress-bar .track {
+.king-progress-bar .track {
     -fx-background-color: black;
 }
-.mana-progress-bar .bar {
-    -fx-background-color: #e82813;
+.king-progress-bar .bar {
+    -fx-background-color: #fca903;
+}
+
+.knight-progress-bar .track {
+    -fx-background-color: black;
+}
+.knight-progress-bar .bar {
+    -fx-background-color: #f7070f;
+}
+
+.cleric-progress-bar .track {
+    -fx-background-color: black;
+}
+.cleric-progress-bar .bar {
+    -fx-background-color: #ffee00;
+}
+
+.mage-progress-bar .track {
+    -fx-background-color: black;
+}
+.mage-progress-bar .bar {
+    -fx-background-color: #0777f7;
 }
 
 

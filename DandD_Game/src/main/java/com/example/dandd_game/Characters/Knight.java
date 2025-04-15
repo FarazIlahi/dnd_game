@@ -3,17 +3,32 @@ package com.example.dandd_game.Characters;
 import com.example.dandd_game.Position;
 
 public class Knight extends Character {
+    private int special;
+    private final int maxSpecial;
 
     public Knight(){
         super(40, 18, 12, 3, "Knight", new Position(2,2));
+        this.special = 25;
+        this.maxSpecial = this.special;
     }
+    public int getSpecial(){
+        return this.special;
+    }
+    public void updateSpecial(int x){
+        this.special += x;
+    }
+
+
+
     @Override
     public void specialMove(){
+        updateSpecial(-5);
         //blocks attack for an ally for half the dmg
         //Must be wihtin rangew
     }
-    @Override
-    public void specialToSrting() {
 
+    @Override
+    public String specialToSrting() {
+        return this.special + "/" + this.maxSpecial;
     }
 }

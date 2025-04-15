@@ -43,7 +43,7 @@
                </font>
             </Label>
             <ProgressBar fx:id="p1_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
-            <ProgressBar fx:id="p1_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="mana-progress-bar" visible="false" />
+            <ProgressBar fx:id="p1_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p1_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p1_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
             <Button fx:id="p1_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
@@ -68,7 +68,7 @@
                </font>
             </Label>
             <ProgressBar fx:id="p2_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
-            <ProgressBar fx:id="p2_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="mana-progress-bar" visible="false" />
+            <ProgressBar fx:id="p2_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p2_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p2_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
             <Button fx:id="p2_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
@@ -93,7 +93,7 @@
                </font>
             </Label>
             <ProgressBar fx:id="p3_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
-            <ProgressBar fx:id="p3_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="mana-progress-bar" visible="false" />
+            <ProgressBar fx:id="p3_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p3_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p3_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
             <Button fx:id="p3_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />
@@ -118,7 +118,7 @@
                </font>
             </Label>
             <ProgressBar fx:id="p4_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
-            <ProgressBar fx:id="p4_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="mana-progress-bar" visible="false" />
+            <ProgressBar fx:id="p4_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
             <Button fx:id="p4_attack" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
             <Button fx:id="p4_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
             <Button fx:id="p4_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="70.0" text="Move" visible="false" />

@@ -213,6 +213,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p1_move.setVisible(true);
                 p1_hpBar.setProgress(updateHp(character));
                 p1_hpInfo.setText(character.hpToString());
+                p1_specialInfo.setText(character.specialToSrting());
+                setProgressBar(character, p1_specialBar);
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
@@ -224,6 +226,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p2_move.setVisible(true);
                 p2_hpBar.setProgress(updateHp(character));
                 p2_hpInfo.setText(character.hpToString());
+                p2_specialInfo.setText(character.specialToSrting());
+                setProgressBar(character, p2_specialBar);
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
@@ -235,6 +239,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p3_move.setVisible(true);
                 p3_hpBar.setProgress(updateHp(character));
                 p3_hpInfo.setText(character.hpToString());
+                p3_specialInfo.setText(character.specialToSrting());
+                setProgressBar(character, p3_specialBar);
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
@@ -246,6 +252,24 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p4_move.setVisible(true);
                 p4_hpBar.setProgress(updateHp(character));
                 p4_hpInfo.setText(character.hpToString());
+                p4_specialInfo.setText(character.specialToSrting());
+                setProgressBar(character, p4_specialBar);
+                break;
+        }
+    }
+    public void setProgressBar(Character character, ProgressBar bar){
+        switch (character.getID()){
+            case "King":
+                bar.getStyleClass().add("king-progress-bar");
+                break;
+            case "Knight":
+                bar.getStyleClass().add("knight-progress-bar");
+                break;
+            case "Cleric":
+                bar.getStyleClass().add("cleric-progress-bar");
+                break;
+            case "Mage":
+                bar.getStyleClass().add("mage-progress-bar");
                 break;
         }
     }

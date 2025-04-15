@@ -24,8 +24,9 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         // example character also for testing, can be deleted
         player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
             @Override
-            public void specialToSrting() {
+            public String specialToSrting() {
 
+                return null;
             }
 
             @Override

@@ -13,7 +13,8 @@ public class Sorcerer extends Character {
     }
 
     @Override
-    public void specialToSrting() {
+    public String specialToSrting() {
 
+        return null;
     }
 }

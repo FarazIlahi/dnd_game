@@ -49,7 +49,7 @@ public abstract class Character{
     public String hpToString(){
         return this.hp + "/" + this.max_hp;
     }
-    public abstract void specialToSrting();
+    public abstract String specialToSrting();
 
 
 
