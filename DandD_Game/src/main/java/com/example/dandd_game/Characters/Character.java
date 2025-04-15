@@ -1,8 +1,11 @@
 package com.example.dandd_game.Characters;
 
 import com.example.dandd_game.Position;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+
+import java.util.ArrayList;
 
 
 public abstract class Character{
@@ -15,8 +18,12 @@ public abstract class Character{
     private String iD;
     private Position position;
 
-
-
+    private Label nameLabel;
+    private ProgressBar hpBar;
+    private ProgressBar specialBar;
+    private Label hpInfo;
+    private Label specialInfo;
+    private ArrayList<Button> buttons = new ArrayList<Button>();
 
 
     public Character(int hp, int def, int basic_attack, int range, String name, Position position){
@@ -55,9 +62,25 @@ public abstract class Character{
         return this.hp + "/" + this.max_hp;
     }
     public abstract String specialToSrting();
+    public Label getNameLabel(){
+        return this.nameLabel;
+    }
+    public ProgressBar getHpBar() {
+        return hpBar;
+    }
+    public ProgressBar getSpecialBar() {
+        return specialBar;
+    }
+    public Label getHpInfo() {
+        return hpInfo;
+    }
+    public Label getSpecialInfo() {
+        return specialInfo;
+    }
 
-
-
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
 
     public void setBasic_attack(int basic_attack) {
         this.basic_attack = basic_attack;
@@ -80,9 +103,25 @@ public abstract class Character{
     public void setPosition(Position position) {
         this.position = position;
     }
+    public void setNameLabel(Label nameLabel) {
+        this.nameLabel = nameLabel;
+    }
+    public void setHpBar(ProgressBar hpBar) {
+        this.hpBar = hpBar;
+    }
+    public void setSpecialBar(ProgressBar specialBar) {
+        this.specialBar = specialBar;
+    }
+    public void setHpInfo(Label hpInfo) {
+        this.hpInfo = hpInfo;
+    }
+    public void setSpecialInfo(Label specialInfo) {
+        this.specialInfo = specialInfo;
+    }
 
-
-
+    public void addButton(Button button) {
+        this.buttons.add(button);
+    }
 
     public abstract void specialMove();
 }

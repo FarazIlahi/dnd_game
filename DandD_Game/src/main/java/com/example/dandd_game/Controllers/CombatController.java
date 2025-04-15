@@ -45,8 +45,6 @@ public class CombatController extends BaseController implements GameMechanics, C
     private Button p1_special;
     @FXML
     private Button p1_move;
-    private ArrayList<Button> p1_buttons = new ArrayList<Button>();
-    private String p1ID;
 
     @FXML
     private ImageView p2_profile;
@@ -66,8 +64,6 @@ public class CombatController extends BaseController implements GameMechanics, C
     private Button p2_special;
     @FXML
     private Button p2_move;
-    private ArrayList<Button> p2_buttons = new ArrayList<Button>();
-    private String p2ID;
 
     @FXML
     private ImageView p3_profile;
@@ -87,8 +83,6 @@ public class CombatController extends BaseController implements GameMechanics, C
     private Button p3_special;
     @FXML
     private Button p3_move;
-    private ArrayList<Button> p3_buttons = new ArrayList<Button>();
-    private String p3ID;
 
     @FXML
     private ImageView p4_profile;
@@ -108,8 +102,6 @@ public class CombatController extends BaseController implements GameMechanics, C
     private Button p4_special;
     @FXML
     private Button p4_move;
-    private ArrayList<Button> p4_buttons = new ArrayList<Button>();
-    private String p4ID;
 
     @FXML
     private ImageView e1_profile;
@@ -119,7 +111,6 @@ public class CombatController extends BaseController implements GameMechanics, C
     private Label e1_hpInfo;
     @FXML
     private ProgressBar e1_hpBar;
-    private String e1ID;
 
     private boolean moving = false;
     private boolean attacking;
@@ -146,7 +137,12 @@ public class CombatController extends BaseController implements GameMechanics, C
     private void move(){
         moving = !moving;
         if(moving){
-            gameState.getCurrentCharacter().getID();
+            disableNode(gameState.getCurrentCharacter().getButtons().get(0));
+            disableNode(gameState.getCurrentCharacter().getButtons().get(1));
+        }
+        else{
+            enableNode(gameState.getCurrentCharacter().getButtons().get(0));
+            enableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
         System.out.println(gameState.getCurrentCharacter().getID());
     }
@@ -252,10 +248,14 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p1_hpInfo.setText(character.hpToString());
                 p1_specialInfo.setText(character.specialToSrting());
                 setProgressBar(character, p1_specialBar);
-                p1_buttons.add(p1_attack);
-                p1_buttons.add(p1_special);
-                p1_buttons.add(p1_move);
-                p1ID = character.getID();
+                character.setNameLabel(p1_name);
+                character.setHpBar(p1_hpBar);
+                character.setSpecialBar(p1_specialBar);
+                character.setHpInfo(p1_hpInfo);
+                character.setSpecialInfo(p1_specialInfo);
+                character.addButton(p1_attack);
+                character.addButton(p1_special);
+                character.addButton(p1_move);
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
@@ -269,10 +269,14 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p2_hpInfo.setText(character.hpToString());
                 p2_specialInfo.setText(character.specialToSrting());
                 setProgressBar(character, p2_specialBar);
-                p2_buttons.add(p2_attack);
-                p2_buttons.add(p2_special);
-                p2_buttons.add(p2_move);
-                p2ID = character.getID();
+                character.setNameLabel(p2_name);
+                character.setHpBar(p2_hpBar);
+                character.setSpecialBar(p2_specialBar);
+                character.setHpInfo(p2_hpInfo);
+                character.setSpecialInfo(p2_specialInfo);
+                character.addButton(p2_attack);
+                character.addButton(p2_special);
+                character.addButton(p2_move);
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
@@ -286,10 +290,14 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p3_hpInfo.setText(character.hpToString());
                 p3_specialInfo.setText(character.specialToSrting());
                 setProgressBar(character, p3_specialBar);
-                p3_buttons.add(p3_attack);
-                p3_buttons.add(p3_special);
-                p3_buttons.add(p3_move);
-                p3ID = character.getID();
+                character.setNameLabel(p3_name);
+                character.setHpBar(p3_hpBar);
+                character.setSpecialBar(p3_specialBar);
+                character.setHpInfo(p3_hpInfo);
+                character.setSpecialInfo(p3_specialInfo);
+                character.addButton(p3_attack);
+                character.addButton(p3_special);
+                character.addButton(p3_move);
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
@@ -303,10 +311,14 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p4_hpInfo.setText(character.hpToString());
                 p4_specialInfo.setText(character.specialToSrting());
                 setProgressBar(character, p4_specialBar);
-                p4_buttons.add(p4_attack);
-                p4_buttons.add(p4_special);
-                p4_buttons.add(p4_move);
-                p4ID = character.getID();
+                character.setNameLabel(p4_name);
+                character.setHpBar(p4_hpBar);
+                character.setSpecialBar(p4_specialBar);
+                character.setHpInfo(p4_hpInfo);
+                character.setSpecialInfo(p4_specialInfo);
+                character.addButton(p4_attack);
+                character.addButton(p4_special);
+                character.addButton(p4_move);
                 break;
         }
     }
@@ -326,7 +338,10 @@ public class CombatController extends BaseController implements GameMechanics, C
                 e1_hpBar.setVisible(true);
                 e1_hpBar.setProgress(updateHp(character));
                 e1_hpInfo.setText(character.hpToString());
-                e1ID = character.getID();
+
+                character.setNameLabel(e1_name);
+                character.setHpBar(e1_hpBar);
+                character.setHpInfo(e1_hpInfo);
                 break;
         }
     }
@@ -347,24 +362,18 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
     }
     public void updateTurn(){
+        moving = false;
         updateTurnOrder();
-        String id = gameState.getCurrentCharacter().getID();
-        disableButtons(p1_buttons);
-        disableButtons(p2_buttons);
-        disableButtons(p3_buttons);
-        disableButtons(p4_buttons);
-        if(id.equals(p1ID)){
-            enableButtons(p1_buttons);
+        String targetID = gameState.getCurrentCharacter().getID();
+        for(Character character : gameState.getParty()){
+            disableButtons(character.getButtons());
         }
-        else if (id.equals(p2ID)) {
-            enableButtons(p2_buttons);
+        for(Character character : gameState.getParty()){
+            if(targetID.equals(character.getID())){
+                enableButtons(character.getButtons());
+            }
         }
-        else if (id.equals(p3ID)) {
-            enableButtons(p3_buttons);
-        }
-        else if (id.equals(p4ID)) {
-            enableButtons(p4_buttons);
-        }
+
     }
     public void updateTurnOrder(){
         turnOrderArea.clear();
