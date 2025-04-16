@@ -2,6 +2,7 @@ package com.example.dandd_game.Chapter1;
 
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +28,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
     private void holdWalls(ActionEvent event) throws IOException {
         int roll = rollDice(20);
         showRollResult(roll, "Holding castle walls!");
+        GameStateManager.getInstance().unlockAchievement("You chose to hold the castle walls!");
         if (roll >= 10) {
             switchScene(event, "Chapter2/ChapterTwoScene");
         } else {
@@ -37,6 +39,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
     @FXML
     private void flankEnemy(ActionEvent event) throws IOException {
         int roll = rollDice(20);
+        GameStateManager.getInstance().unlockAchievement("You chose to flank the enemy!");
         if (roll >= 5) {
             switchScene(event, "Chapter1/SneakAttackScene");
         } else {

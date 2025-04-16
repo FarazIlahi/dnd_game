@@ -1,6 +1,7 @@
 package com.example.dandd_game.Chapter1;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,12 +26,14 @@ public class SecondSceneController extends BaseController implements GameMechani
 
     @FXML
     private void goToSiege(ActionEvent event) throws IOException {
+        GameStateManager.getInstance().unlockAchievement("You decided to defend the siege!");
         switchScene(event, "Chapter1/SiegeScene"); // defend siege
     }
 
 
     @FXML
     private void goToInvestigate(ActionEvent event) throws IOException {
+        GameStateManager.getInstance().unlockAchievement("You decided to investigate!");
         switchScene(event, "Chapter1/InvestigateScene"); // investigate
     }
 }

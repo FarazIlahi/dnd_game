@@ -2,6 +2,7 @@ package com.example.dandd_game.Chapter1;
 
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ public class FirstSceneController extends BaseController implements GameMechanic
     }
     @FXML
     private void goToGame(ActionEvent event) throws IOException {
+        GameStateManager.getInstance().unlockAchievement("You have started the game!");
         switchScene(event, "Chapter1/SecondScene");
     }
 }
