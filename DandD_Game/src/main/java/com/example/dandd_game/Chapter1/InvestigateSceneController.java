@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -22,6 +23,10 @@ public class InvestigateSceneController extends BaseController implements GameMe
     @FXML
     private void initialize() {
         super.init(rootPane);
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
     }
 
     @FXML
@@ -31,7 +36,9 @@ public class InvestigateSceneController extends BaseController implements GameMe
         alert.setHeaderText("You sneak around the army behind enemy lines");
         alert.setContentText("You gather intel and prepare your next move");
         alert.showAndWait();
-        GameStateManager.getInstance().unlockAchievement("You infiltrated the enemy lines!");
+        if (GameStateManager.getInstance().unlockAchievement("You infiltrated the enemy lines!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You infiltrated the enemy lines!");
+        }
         switchScene(event, "Chapter1/InfiltrateScene");
     }
 
@@ -41,7 +48,9 @@ public class InvestigateSceneController extends BaseController implements GameMe
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Attack Sorcerer");
         alert.setHeaderText("You attack the sorcerer!");
-        GameStateManager.getInstance().unlockAchievement("You chose to attack The Sorcerer early!");
+        if (GameStateManager.getInstance().unlockAchievement("You chose to attack The Sorcerer early!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You chose to attack The Sorcerer early!");
+        }
         if (roll >= 17) {
             alert.setContentText("You rolled a " + roll + "\nSuccess! You defeat the sorcerer and take control.");
             // next scene: game win

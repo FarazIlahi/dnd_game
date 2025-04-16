@@ -186,4 +186,13 @@ public class GameStateManager {
     public void resetMoveCount(){
         this.moveCount = 5;
     }
+    public boolean nameExists(String name) {
+        for (Character c : party) {
+            if (c == getCurrentCharacter()) continue;
+            if (c.getName() != null && c.getName().equalsIgnoreCase(name.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
