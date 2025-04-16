@@ -18,6 +18,7 @@ public class MainApplication extends Application implements GameMechanics {
         fAuth = FirebaseAuth.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("TitleScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 800);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
