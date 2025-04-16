@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter3;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -18,6 +19,10 @@ public class ChapterThreeHardController extends BaseController implements GameMe
     @FXML
     private void initialize() {
         super.init(rootPane);
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
     }
 
     @FXML

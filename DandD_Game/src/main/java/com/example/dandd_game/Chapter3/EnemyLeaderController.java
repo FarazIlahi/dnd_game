@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter3;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.Characters.Character;
@@ -22,6 +23,12 @@ public class EnemyLeaderController extends BaseController implements GameMechani
     @FXML
     private void initialize() {
         super.init(rootPane);
+
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        } // leave this code in (its to check for queued achievements)
+
         // example character also for testing, can be deleted
         player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
             @Override
@@ -46,13 +53,17 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         if (roll >= 10) {
             alert.setHeaderText("Victory!");
             alert.setContentText("You defeated the enemy leader!");
-            GameStateManager.getInstance().unlockAchievement("You defeated the enemy leader in a duel!");
+            if (GameStateManager.getInstance().unlockAchievement("You defeated the enemy leader in a duel!")) {
+                GameStateManager.getInstance().queueAchievementPopup("You defeated the enemy leader in a duel!");
+            }
             alert.showAndWait();
             switchScene(event, "Chapter3/GameWinScene");
         } else {
             alert.setHeaderText("Defeat!");
             alert.setContentText("You were defeated by the enemy leader.");
-            GameStateManager.getInstance().unlockAchievement("You were defeated by the enemy leader in a duel!");
+            if (GameStateManager.getInstance().unlockAchievement("You were defeated by the enemy leader in a duel!")) {
+                GameStateManager.getInstance().queueAchievementPopup("You were defeated by the enemy leader in a duel!");
+            }
             alert.showAndWait();
             switchScene(event, "Chapter3/GameOverScene");
         }
@@ -64,7 +75,9 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         sabotageAlert.setTitle("Sabotage");
         sabotageAlert.setHeaderText("You destroy the enemy's supplies!");
         sabotageAlert.setContentText("The enemy is weakened and will be easier to defeat.");
-        GameStateManager.getInstance().unlockAchievement("You sabotaged the enemy's supplies!");
+        if (GameStateManager.getInstance().unlockAchievement("You sabotaged the enemy's supplies!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You sabotaged the enemy's supplies!");
+        }
         sabotageAlert.showAndWait();
 
         int roll1 = rollDice(20);
