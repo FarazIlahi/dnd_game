@@ -90,7 +90,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
         gameState.addToParty(gameState.getKnight());
         gameState.addToParty(gameState.getCleric());
         gameState.addToParty(gameState.getMage());
-        gameState.setCurrentCharacter(gameState.getKing());
 
         //gameState.createGoblin();
         //gameState.createOrc();

@@ -83,15 +83,27 @@ public interface CombatMechanics extends GameMechanics{
     }
 
     default void updateProfiles(Character character, int x, int y, GridPane combatGrid){
-        ImageView profile = new ImageView(localImages.getImage(character.getID()));
+        ImageView profile = character.getProfile();
+        profile.setFitWidth(40);
+        profile.setFitHeight(40);
+        combatGrid.add(profile, x, y);
+        profile.setUserData(character);
         profile.setOnMouseEntered(event -> {
             if(getIsAttacking() || getIsUsingSpecial()){
-                highlight(profile);
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                if(withinRange(owner)){
+                    highlight(profile);
+                }
             }
         });
         profile.setOnMouseExited(event -> {
             if(getIsAttacking() || getIsUsingSpecial()){
-                unhighlight(profile);
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                if(withinRange(owner)){
+                    unhighlight(profile);
+                }
             }
         });
         profile.setOnMouseClicked(event -> {
@@ -102,9 +114,17 @@ public interface CombatMechanics extends GameMechanics{
 
             }
         });
-        profile.setFitWidth(40);
-        profile.setFitHeight(40);
-        combatGrid.add(profile, x, y);
+    }
+    default boolean withinRange(Character character){
+        int x1 = gameState.getCurrentCharacter().getPosition().getX();
+        int y1 = gameState.getCurrentCharacter().getPosition().getY();
+        int range = gameState.getCurrentCharacter().getRange();
+        int x2 = character.getPosition().getX();
+        int y2 = character.getPosition().getY();
+        if (Math.abs(x1 - x2) + Math.abs(y1 - y2) <= range) {
+            return true;
+        }
+        return false;
     }
     default void clearProfiles(int x, int y, GridPane combatGrid){
         removeImageViewFromCell(y, x, combatGrid);

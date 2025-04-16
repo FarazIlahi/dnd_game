@@ -141,11 +141,13 @@ public class CombatController extends BaseController implements GameMechanics, C
         });
         super.init(root);
         setKeybinds();
-        setupGrid(combatGrid);
-        loadCharacter(combatGrid);
         setParty();
         setEnemies();
-        updateTurn();
+        setupGrid(combatGrid);
+        Platform.runLater(() -> {
+            loadCharacter(combatGrid);
+            updateTurn();
+        });
     }
     @FXML
     private void move(){
@@ -206,6 +208,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p1_hpInfo.setText(character.hpToString());
                 p1_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p1_specialBar);
+                character.setProfile(new ImageView(p1_profile.getImage()));
                 character.setNameLabel(p1_name);
                 character.setHpBar(p1_hpBar);
                 character.setSpecialBar(p1_specialBar);
@@ -227,6 +230,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p2_hpInfo.setText(character.hpToString());
                 p2_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p2_specialBar);
+                character.setProfile(new ImageView(p2_profile.getImage()));
                 character.setNameLabel(p2_name);
                 character.setHpBar(p2_hpBar);
                 character.setSpecialBar(p2_specialBar);
@@ -248,6 +252,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p3_hpInfo.setText(character.hpToString());
                 p3_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p3_specialBar);
+                character.setProfile(new ImageView(p3_profile.getImage()));
                 character.setNameLabel(p3_name);
                 character.setHpBar(p3_hpBar);
                 character.setSpecialBar(p3_specialBar);
@@ -269,6 +274,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p4_hpInfo.setText(character.hpToString());
                 p4_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p4_specialBar);
+                character.setProfile(new ImageView(p4_profile.getImage()));
                 character.setNameLabel(p4_name);
                 character.setHpBar(p4_hpBar);
                 character.setSpecialBar(p4_specialBar);
@@ -296,7 +302,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 e1_hpBar.setVisible(true);
                 e1_hpBar.setProgress(updateHp(character));
                 e1_hpInfo.setText(character.hpToString());
-
+                character.setProfile(new ImageView(e1_profile.getImage()));
                 character.setNameLabel(e1_name);
                 character.setHpBar(e1_hpBar);
                 character.setHpInfo(e1_hpInfo);
