@@ -39,7 +39,7 @@ public class PlayerCountController extends BaseController implements GameMechani
     }
     public void canMoveOn(){
         if((numPlayers.getValue() != null) && (difficulty.getValue() != null)){
-            unDisableNode(go_btn);
+            enableNode(go_btn);
         }
     }
 
