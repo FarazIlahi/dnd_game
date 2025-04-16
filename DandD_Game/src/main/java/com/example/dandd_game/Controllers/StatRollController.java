@@ -42,6 +42,11 @@ public class StatRollController extends BaseController implements GameMechanics 
     private Character workingCharacter = gameState.getCurrentCharacter();
     private boolean isSpinning = false;
     private double spinDuration;
+    private final List<String> defaultNames = Arrays.asList(
+            "Thalor", "Elyndra", "Branok", "Zalara", "Kael", "Nymeria", "Orin", "Luthien", "Draven", "Seraphine",
+            "Faelar", "Calista", "Jareth", "Mireille", "Tavion", "Rowan", "Isolde", "Alaric", "Ysolde", "Fenric"
+    );
+
 
     @FXML
     private void initialize(){
@@ -53,6 +58,14 @@ public class StatRollController extends BaseController implements GameMechanics 
         setStatOrder();
         updateTaskLabel();
     }
+
+    @FXML
+    private void generateRandomName(ActionEvent event){
+        String randomName = defaultNames.get(new Random().nextInt(defaultNames.size()));
+        nameField.setText(randomName);
+        nameCheck(false);
+    }
+
     public void setIsSpinningFalse(){
         isSpinning = false;
     }
