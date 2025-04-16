@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.Properties;
 import java.io.InputStream;
 
 public class LoginController extends BaseController {
@@ -36,7 +37,18 @@ public class LoginController extends BaseController {
 
     private GameStateManager gameState = GameStateManager.getInstance();
 
-    private static final String API_KEY = "AIzaSyDDNZsWr2crK5g6XuAPkm_clNzGZKIai5g";
+    private static final String API_KEY = loadApiKey();
+
+    private static String loadApiKey() {
+        try (InputStream input = LoginController.class.getClassLoader().getResourceAsStream("config.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+            return properties.getProperty("firebase.api.key");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @FXML
     public void loginErrorLabelOnAction(ActionEvent event) throws IOException {
