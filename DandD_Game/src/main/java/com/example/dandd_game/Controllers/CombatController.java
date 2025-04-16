@@ -6,7 +6,6 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.LocalImages;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -15,8 +14,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CombatController extends BaseController implements GameMechanics, CombatMechanics {
 
@@ -114,10 +111,27 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     private boolean moving = false;
     private boolean attacking;
-    private boolean specialMove;
+    private boolean usingSpecial;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
+
+    @Override
+    public void setAttacking(boolean bool){
+        this.attacking = bool;
+    }
+    @Override
+    public void setUsingSpecial(boolean bool){
+        this.usingSpecial = bool;
+    }
+    @Override
+    public boolean getIsAttacking(){
+        return this.attacking;
+    }
+    @Override
+    public boolean getIsUsingSpecial(){
+        return this.usingSpecial;
+    }
 
     @FXML
     private void initialize() {
@@ -154,13 +168,13 @@ public class CombatController extends BaseController implements GameMechanics, C
     private void attack(){
         moving = false;
         updateMoveButton();
-        doTurn(this::updateTurn);
+        doTurn(this::updateTurn, combatGrid);
     }
     @FXML
     private void special(){
         moving = false;
         updateMoveButton();
-        doTurn(this::updateTurn);
+        doTurn(this::updateTurn, combatGrid);
     }
 
     public void setKeybinds(){
@@ -191,7 +205,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p1_hpBar.setProgress(updateHp(character));
                 p1_hpInfo.setText(character.hpToString());
                 p1_specialInfo.setText(character.specialToSrting());
-                setProgressBar(character, p1_specialBar);
+                setSpecialBar(character, p1_specialBar);
                 character.setNameLabel(p1_name);
                 character.setHpBar(p1_hpBar);
                 character.setSpecialBar(p1_specialBar);
@@ -212,7 +226,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p2_hpBar.setProgress(updateHp(character));
                 p2_hpInfo.setText(character.hpToString());
                 p2_specialInfo.setText(character.specialToSrting());
-                setProgressBar(character, p2_specialBar);
+                setSpecialBar(character, p2_specialBar);
                 character.setNameLabel(p2_name);
                 character.setHpBar(p2_hpBar);
                 character.setSpecialBar(p2_specialBar);
@@ -233,7 +247,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p3_hpBar.setProgress(updateHp(character));
                 p3_hpInfo.setText(character.hpToString());
                 p3_specialInfo.setText(character.specialToSrting());
-                setProgressBar(character, p3_specialBar);
+                setSpecialBar(character, p3_specialBar);
                 character.setNameLabel(p3_name);
                 character.setHpBar(p3_hpBar);
                 character.setSpecialBar(p3_specialBar);
@@ -254,7 +268,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p4_hpBar.setProgress(updateHp(character));
                 p4_hpInfo.setText(character.hpToString());
                 p4_specialInfo.setText(character.specialToSrting());
-                setProgressBar(character, p4_specialBar);
+                setSpecialBar(character, p4_specialBar);
                 character.setNameLabel(p4_name);
                 character.setHpBar(p4_hpBar);
                 character.setSpecialBar(p4_specialBar);
@@ -289,22 +303,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 break;
         }
     }
-    public void setProgressBar(Character character, ProgressBar bar){
-        switch (character.getID()){
-            case "King":
-                bar.getStyleClass().add("king-progress-bar");
-                break;
-            case "Knight":
-                bar.getStyleClass().add("knight-progress-bar");
-                break;
-            case "Cleric":
-                bar.getStyleClass().add("cleric-progress-bar");
-                break;
-            case "Mage":
-                bar.getStyleClass().add("mage-progress-bar");
-                break;
-        }
-    }
+
     public void updateTurn(){
         moving = false;
         updateTurnOrder();
@@ -320,7 +319,7 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     }
     public void updateTurnOrder(){
-        turnOrderArea.clear();
+        turnOrderArea.setText("Turn Order\n");
         for (Character character : gameState.getTurnOrder()) {
             turnOrderArea.setText(turnOrderArea.getText() + character.getName() + "\n");
         }
@@ -404,11 +403,5 @@ public class CombatController extends BaseController implements GameMechanics, C
         else{
             gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
         }
-    }
-    public boolean canMoveCount(){
-        if(gameState.getMoveCount() > 0){
-            return true;
-        }
-        return false;
     }
 }

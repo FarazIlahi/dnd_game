@@ -61,7 +61,6 @@ public interface GameMechanics {
             e.getTransforms().add(scale);
             e.setEffect(new DropShadow(30, Color.BLACK));
         }
-
     }
     default void unhighlight(Node e){
         if(!(e.getEffect() == null)){

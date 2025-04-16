@@ -7,21 +7,28 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public interface CombatMechanics extends GameMechanics{
-
+    Node[][] cellNodes = new Node[20][20];
     GameStateManager gameState = GameStateManager.getInstance();
     LocalImages localImages = LocalImages.getInstance();
+
+    void setAttacking(boolean bool);
+
+    void setUsingSpecial(boolean bool);
+
+    boolean getIsAttacking();
+
+    boolean getIsUsingSpecial();
+
     default void setupGrid(GridPane combatGrid){
         combatGrid.getColumnConstraints().clear();
         combatGrid.getRowConstraints().clear();
@@ -39,9 +46,11 @@ public interface CombatMechanics extends GameMechanics{
                 cell.setStyle("-fx-border-color: black; -fx-background-color: white;");
                 cell.setPrefSize(100, 100);
                 combatGrid.add(cell, c, r);
+                cellNodes[c][r] = cell;
             }
         }
     }
+
 
     default Node iterate(int row, int column, GridPane gridPane){
         for (Node node : gridPane.getChildren()) {
@@ -75,6 +84,24 @@ public interface CombatMechanics extends GameMechanics{
 
     default void updateProfiles(Character character, int x, int y, GridPane combatGrid){
         ImageView profile = new ImageView(localImages.getImage(character.getID()));
+        profile.setOnMouseEntered(event -> {
+            if(getIsAttacking() || getIsUsingSpecial()){
+                highlight(profile);
+            }
+        });
+        profile.setOnMouseExited(event -> {
+            if(getIsAttacking() || getIsUsingSpecial()){
+                unhighlight(profile);
+            }
+        });
+        profile.setOnMouseClicked(event -> {
+            if(getIsAttacking()){
+
+            }
+            else if (getIsUsingSpecial()) {
+
+            }
+        });
         profile.setFitWidth(40);
         profile.setFitHeight(40);
         combatGrid.add(profile, x, y);
@@ -99,16 +126,45 @@ public interface CombatMechanics extends GameMechanics{
         }
     }
 
-    default void doTurn(Runnable method){
+    default void doTurn(Runnable method, GridPane combatGrid){
+        runPlayerAttack();
+
         gameState.nextTurn();
         method.run();
 
         if(gameState.getEnemies().contains(gameState.getTurnOrder().getFirst())){
             System.out.println("enemy turn here");
-            doTurn(method);
+            //doTurn(method, combatGrid);
         }
+    }
 
+    default void runPlayerAttack(){
+        updateShowRange(true);
+        setAttacking(true);
+    }
 
+    default void updateShowRange(boolean bool){
+        int x = gameState.getCurrentCharacter().getPosition().getX();
+        int y = gameState.getCurrentCharacter().getPosition().getY();
+        int range = gameState.getCurrentCharacter().getRange();
+        for (int i = x - range; i <= x + range; i++) {
+            for (int j = y - range; j <= y + range; j++) {
+                if (Math.abs(i - x) + Math.abs(j - y) <= range) {
+                    if (i >= 0 && i < cellNodes.length && j >= 0 && j < cellNodes[0].length) {
+                        toggleHighlightCell(cellNodes[i][j], bool);
+                    }
+                }
+            }
+        }
+    }
+    default void toggleHighlightCell(Node node, boolean highlight) {
+        if (node != null) {
+            if (highlight) {
+                node.setStyle("-fx-background-color: lightblue; -fx-border-color: gray;");
+            } else {
+                node.setStyle("-fx-border-color: black; -fx-background-color: white;");
+            }
+        }
     }
     default double updateHp(Character character){
         return (double) character.getHp() / character.getMaxHp();
@@ -123,5 +179,26 @@ public interface CombatMechanics extends GameMechanics{
             enableNode(button);
         }
     }
-
+    default void setSpecialBar(Character character, ProgressBar bar){
+        switch (character.getID()){
+            case "King":
+                bar.getStyleClass().add("king-progress-bar");
+                break;
+            case "Knight":
+                bar.getStyleClass().add("knight-progress-bar");
+                break;
+            case "Cleric":
+                bar.getStyleClass().add("cleric-progress-bar");
+                break;
+            case "Mage":
+                bar.getStyleClass().add("mage-progress-bar");
+                break;
+        }
+    }
+    default boolean canMoveCount(){
+        if(gameState.getMoveCount() > 0){
+            return true;
+        }
+        return false;
+    }
 }

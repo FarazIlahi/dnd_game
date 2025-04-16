@@ -7,7 +7,7 @@ public class King extends Character {
     private final int maxSpecial;
 
     public King(){
-        super(12, 8, 20,5, "King", new Position(8,8));
+        super(12, 8, 20,3, "King", new Position(8,8));
         this.special = 10;
         this.maxSpecial = this.special;
     }
