@@ -1,17 +1,12 @@
 package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
-import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,45 +61,78 @@ public interface CombatMechanics extends GameMechanics{
         }
         return null;
     }
-    default void loadCharacter(GridPane combatGrid){
+    default void loadCharacter(GridPane combatGrid, Runnable updateTurn){
         for (Character character : gameState.getParty()) {
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid);
+            updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         for (Character character : gameState.getEnemies()) {
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid);
+            updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         shuffleTurnOrder();
     }
 
-    default void updateProfiles(Character character, int x, int y, GridPane combatGrid){
-        ImageView profile = new ImageView(localImages.getImage(character.getID()));
+    default void updateProfiles(Character character, int x, int y, GridPane combatGrid, Runnable updateTurn){
+        ImageView profile = character.getProfile();
+        profile.setFitWidth(40);
+        profile.setFitHeight(40);
+        combatGrid.add(profile, x, y);
+        profile.setUserData(character);
         profile.setOnMouseEntered(event -> {
             if(getIsAttacking() || getIsUsingSpecial()){
-                highlight(profile);
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                if(withinRange(owner)) {
+                    if (owner != gameState.getCurrentCharacter()) {
+                        highlight(profile);
+                        owner.setHighlighted(true);
+                    }
+                }
             }
         });
         profile.setOnMouseExited(event -> {
             if(getIsAttacking() || getIsUsingSpecial()){
-                unhighlight(profile);
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                if(withinRange(owner)){
+                    if(owner != gameState.getCurrentCharacter()){
+                        unhighlight(profile);
+                        owner.setHighlighted(false);
+                    }
+                }
             }
         });
         profile.setOnMouseClicked(event -> {
-            if(getIsAttacking()){
-
+            ImageView iv = (ImageView) event.getSource();
+            Character owner = (Character) iv.getUserData();
+            if(owner.getHighlighted()){
+                if(getIsAttacking()){
+                    runPlayerAttackBackEnd(owner);
+                    updateTurn.run();
+                }
+                else if (getIsUsingSpecial()) {
+                    updateShowRange(false);
+                    runPlayerSpecialBackEnd();
+                }
             }
-            else if (getIsUsingSpecial()) {
 
-            }
         });
-        profile.setFitWidth(40);
-        profile.setFitHeight(40);
-        combatGrid.add(profile, x, y);
+    }
+    default boolean withinRange(Character character){
+        int x1 = gameState.getCurrentCharacter().getPosition().getX();
+        int y1 = gameState.getCurrentCharacter().getPosition().getY();
+        int range = gameState.getCurrentCharacter().getRange();
+        int x2 = character.getPosition().getX();
+        int y2 = character.getPosition().getY();
+        if (Math.abs(x1 - x2) + Math.abs(y1 - y2) <= range) {
+            return true;
+        }
+        return false;
     }
     default void clearProfiles(int x, int y, GridPane combatGrid){
         removeImageViewFromCell(y, x, combatGrid);
@@ -127,20 +155,33 @@ public interface CombatMechanics extends GameMechanics{
     }
 
     default void doTurn(Runnable method, GridPane combatGrid){
-        runPlayerAttack();
+        showPlayerAttack(true);
 
-        gameState.nextTurn();
-        method.run();
+        //gameState.nextTurn();
+        //method.run();
 
         if(gameState.getEnemies().contains(gameState.getTurnOrder().getFirst())){
             System.out.println("enemy turn here");
             //doTurn(method, combatGrid);
         }
     }
+    default void showPlayerAttack(Boolean bool){
+        updateShowRange(bool);
+        setAttacking(bool);
+    }
+    default void runPlayerAttackBackEnd(Character target){
+        updateShowRange(false);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
+        updateHp(target, target.getHpBar(), target.getHpInfo());
+    }
 
-    default void runPlayerAttack(){
-        updateShowRange(true);
-        setAttacking(true);
+    default void runPlayerSpecial(){
+
+    }
+    default void runPlayerSpecialBackEnd(){
+
     }
 
     default void updateShowRange(boolean bool){
@@ -166,8 +207,9 @@ public interface CombatMechanics extends GameMechanics{
             }
         }
     }
-    default double updateHp(Character character){
-        return (double) character.getHp() / character.getMaxHp();
+    default void updateHp(Character character, ProgressBar bar, Label label){
+        bar.setProgress((double) character.getHp() / character.getMaxHp());
+        label.setText(character.hpToString());
     }
     default void disableButtons(ArrayList<Button> buttons){
         for(Button button : buttons){
