@@ -3,6 +3,7 @@ package com.example.dandd_game;
 import com.example.dandd_game.Characters.Character;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -111,11 +112,7 @@ public interface CombatMechanics extends GameMechanics{
             Character owner = (Character) iv.getUserData();
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
-                    updateShowRange(false);
-                    unhighlight(profile);
-                    owner.setHighlighted(false);
-                    runPlayerAttackBackEnd();
-                    gameState.nextTurn();
+                    runPlayerAttackBackEnd(owner);
                     updateTurn.run();
                 }
                 else if (getIsUsingSpecial()) {
@@ -168,21 +165,19 @@ public interface CombatMechanics extends GameMechanics{
             //doTurn(method, combatGrid);
         }
     }
-    default void runPlayerAttack(Boolean bool){
-        showPlayerAttack(bool);
-
-    }
-    default void runPlayerSpecial(){
-
-    }
-
     default void showPlayerAttack(Boolean bool){
         updateShowRange(bool);
         setAttacking(bool);
     }
+    default void runPlayerAttackBackEnd(Character target){
+        updateShowRange(false);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
+        updateHp(target, target.getHpBar(), target.getHpInfo());
+    }
 
-    default void runPlayerAttackBackEnd(){
-        System.out.println("do attack here");
+    default void runPlayerSpecial(){
 
     }
     default void runPlayerSpecialBackEnd(){
@@ -212,8 +207,9 @@ public interface CombatMechanics extends GameMechanics{
             }
         }
     }
-    default double updateHp(Character character){
-        return (double) character.getHp() / character.getMaxHp();
+    default void updateHp(Character character, ProgressBar bar, Label label){
+        bar.setProgress((double) character.getHp() / character.getMaxHp());
+        label.setText(character.hpToString());
     }
     default void disableButtons(ArrayList<Button> buttons){
         for(Button button : buttons){

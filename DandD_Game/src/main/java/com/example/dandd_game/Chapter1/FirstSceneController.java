@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter1;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -21,7 +22,9 @@ public class FirstSceneController extends BaseController implements GameMechanic
     }
     @FXML
     private void goToGame(ActionEvent event) throws IOException {
-        GameStateManager.getInstance().unlockAchievement("You have started the game!");
+        if (GameStateManager.getInstance().unlockAchievement("You have started the game!")) {;
+            GameStateManager.getInstance().queueAchievementPopup("You have started the game!");
+        }
         switchScene(event, "Chapter1/SecondScene");
     }
 }

@@ -177,7 +177,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
         updateButtons(attacking,list.get(1), list.get(2));
-        runPlayerAttack(attacking);
+        showPlayerAttack(attacking);
         updateMoveButton();
         //doTurn(this::updateTurn, combatGrid);
     }
@@ -213,8 +213,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p1_attack.setVisible(true);
                 p1_special.setVisible(true);
                 p1_move.setVisible(true);
-                p1_hpBar.setProgress(updateHp(character));
-                p1_hpInfo.setText(character.hpToString());
+                updateHp(character, p1_hpBar, p1_hpInfo);
                 p1_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p1_specialBar);
                 character.setProfile(new ImageView(p1_profile.getImage()));
@@ -235,8 +234,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p2_attack.setVisible(true);
                 p2_special.setVisible(true);
                 p2_move.setVisible(true);
-                p2_hpBar.setProgress(updateHp(character));
-                p2_hpInfo.setText(character.hpToString());
+                updateHp(character, p2_hpBar, p2_hpInfo);
                 p2_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p2_specialBar);
                 character.setProfile(new ImageView(p2_profile.getImage()));
@@ -257,8 +255,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p3_attack.setVisible(true);
                 p3_special.setVisible(true);
                 p3_move.setVisible(true);
-                p3_hpBar.setProgress(updateHp(character));
-                p3_hpInfo.setText(character.hpToString());
+                updateHp(character, p3_hpBar, p3_hpInfo);
                 p3_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p3_specialBar);
                 character.setProfile(new ImageView(p3_profile.getImage()));
@@ -279,8 +276,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 p4_attack.setVisible(true);
                 p4_special.setVisible(true);
                 p4_move.setVisible(true);
-                p4_hpBar.setProgress(updateHp(character));
-                p4_hpInfo.setText(character.hpToString());
+                updateHp(character, p4_hpBar, p4_hpInfo);
                 p4_specialInfo.setText(character.specialToSrting());
                 setSpecialBar(character, p4_specialBar);
                 character.setProfile(new ImageView(p4_profile.getImage()));
@@ -309,8 +305,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 e1_profile.setImage(localImages.getImage(character.getID()));
                 e1_name.setText(character.getName());
                 e1_hpBar.setVisible(true);
-                e1_hpBar.setProgress(updateHp(character));
-                e1_hpInfo.setText(character.hpToString());
+                updateHp(character, e1_hpBar, e1_hpInfo);
                 character.setProfile(new ImageView(e1_profile.getImage()));
                 character.setNameLabel(e1_name);
                 character.setHpBar(e1_hpBar);
@@ -323,6 +318,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = false;
         attacking = false;
         usingSpecial = false;
+        gameState.nextTurn();
         updateTurnOrder();
         String targetID = gameState.getCurrentCharacter().getID();
         for(Character character : gameState.getParty()){
@@ -333,7 +329,6 @@ public class CombatController extends BaseController implements GameMechanics, C
                 enableButtons(character.getButtons());
             }
         }
-
     }
     public void updateTurnOrder(){
         turnOrderArea.setText("Turn Order\n");
