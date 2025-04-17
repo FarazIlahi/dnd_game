@@ -1,6 +1,8 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +33,10 @@ public class GameLoadsController extends BaseController implements GameMechanics
     private void initialize() {
         super.init(rootPane);
         creatingFile = false;
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
     }
     @FXML
     public void createNewFile(ActionEvent event) throws IOException{

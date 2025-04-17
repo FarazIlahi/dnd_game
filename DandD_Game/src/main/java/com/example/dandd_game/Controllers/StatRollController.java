@@ -42,6 +42,11 @@ public class StatRollController extends BaseController implements GameMechanics 
     private Character workingCharacter = gameState.getCurrentCharacter();
     private boolean isSpinning = false;
     private double spinDuration;
+    private final List<String> defaultNames = Arrays.asList(
+            "Thalor", "Elyndra", "Branok", "Zalara", "Kael", "Nymeria", "Orin", "Luthien", "Draven", "Seraphine",
+            "Faelar", "Calista", "Jareth", "Mireille", "Tavion", "Rowan", "Isolde", "Alaric", "Ysolde", "Fenric"
+    );
+
 
     @FXML
     private void initialize(){
@@ -53,6 +58,20 @@ public class StatRollController extends BaseController implements GameMechanics 
         setStatOrder();
         updateTaskLabel();
     }
+
+    @FXML
+    private void generateRandomName(ActionEvent event){
+        String randomName;
+        int safetyCounter = 0;
+        do {
+            randomName = defaultNames.get(new Random().nextInt(defaultNames.size()));
+            safetyCounter++;
+        } while (GameStateManager.getInstance().nameExists(randomName) && safetyCounter < 100);
+        nameField.setText(randomName);
+        nameCheck(false);
+
+    }
+
     public void setIsSpinningFalse(){
         isSpinning = false;
     }
@@ -165,16 +184,17 @@ public class StatRollController extends BaseController implements GameMechanics 
         return stat;
     }
     public void nameCheck(boolean intentionallyClicked){
-        String name = nameField.getText();
-        if(name.length() > 12){
+        String name = nameField.getText().trim();
+        if (name.length() > 12 ) {
             nameErrorLabel.setVisible(true);
             setNameTooLong();
-        }
-        else if ((name.length() == 0) && (intentionallyClicked)) {
+        } else if ((name.length() == 0) && (intentionallyClicked)) {
             nameErrorLabel.setVisible(true);
             setNoName();
-        }
-        else {
+        } else if (GameStateManager.getInstance().nameExists(name)) {
+            nameErrorLabel.setVisible(true);
+            setNameDuplicate();
+        } else {
             nameErrorLabel.setVisible(false);
             workingCharacter.setName(name);
         }
@@ -203,6 +223,10 @@ public class StatRollController extends BaseController implements GameMechanics 
     public void disableLastRoll(){
         back_btn.setDisable(false);
         disableNode(dice);
+    }
+
+    public void setNameDuplicate(){
+        nameErrorLabel.setText("Name already exists");
     }
 
     @FXML

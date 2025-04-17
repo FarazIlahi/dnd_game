@@ -8,8 +8,8 @@ module com.example.dandd_game {
     requires google.cloud.firestore;
     requires google.cloud.core;
     requires com.google.api.apicommon;
-    requires java.logging;
     requires firebase.admin;
+    requires com.google.gson;
 
 
     opens com.example.dandd_game to javafx.fxml;

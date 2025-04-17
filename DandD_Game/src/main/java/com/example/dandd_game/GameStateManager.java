@@ -162,11 +162,20 @@ public class GameStateManager {
     }
     private Set<String> achievements = new LinkedHashSet<>();
 
-    public void unlockAchievement(String achievement) {
-        achievements.add(achievement);
+    public boolean unlockAchievement(String achievement) {
+        return achievements.add(achievement);
     }
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);
+    }
+    private String pendingAchievement = null;
+    public void queueAchievementPopup(String achievement) {
+        pendingAchievement = achievement;
+    }
+    public String getPendingAchievement() {
+        String temp = pendingAchievement;
+        pendingAchievement = null;
+        return temp;
     }
     public int getMoveCount() {
         return this.moveCount;
@@ -176,5 +185,14 @@ public class GameStateManager {
     }
     public void resetMoveCount(){
         this.moveCount = 5;
+    }
+    public boolean nameExists(String name) {
+        for (Character c : party) {
+            if (c == getCurrentCharacter()) continue;
+            if (c.getName() != null && c.getName().equalsIgnoreCase(name.trim())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
