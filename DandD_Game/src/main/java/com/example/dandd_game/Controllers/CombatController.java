@@ -321,6 +321,8 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     public void updateTurn(){
         moving = false;
+        attacking = false;
+        usingSpecial = false;
         updateTurnOrder();
         String targetID = gameState.getCurrentCharacter().getID();
         for(Character character : gameState.getParty()){

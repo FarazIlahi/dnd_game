@@ -1,17 +1,11 @@
 package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
-import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,9 +86,11 @@ public interface CombatMechanics extends GameMechanics{
             if(getIsAttacking() || getIsUsingSpecial()){
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
-                if(withinRange(owner)){
-                    highlight(profile);
-                    owner.setHighlighted(true);
+                if(withinRange(owner)) {
+                    if (owner != gameState.getCurrentCharacter()) {
+                        highlight(profile);
+                        owner.setHighlighted(true);
+                    }
                 }
             }
         });
@@ -103,8 +99,10 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)){
-                    unhighlight(profile);
-                    owner.setHighlighted(false);
+                    if(owner != gameState.getCurrentCharacter()){
+                        unhighlight(profile);
+                        owner.setHighlighted(false);
+                    }
                 }
             }
         });
@@ -114,6 +112,8 @@ public interface CombatMechanics extends GameMechanics{
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
                     updateShowRange(false);
+                    unhighlight(profile);
+                    owner.setHighlighted(false);
                     runPlayerAttackBackEnd();
                     gameState.nextTurn();
                     updateTurn.run();
@@ -188,7 +188,6 @@ public interface CombatMechanics extends GameMechanics{
     default void runPlayerSpecialBackEnd(){
 
     }
-
 
     default void updateShowRange(boolean bool){
         int x = gameState.getCurrentCharacter().getPosition().getX();

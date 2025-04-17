@@ -16,23 +16,6 @@ import java.lang.Math;
 public interface GameMechanics {
     GameStateManager gameState = GameStateManager.getInstance();
 
-    default void setListener(Pane root, ThrowingRunnable method, String key){
-        root.sceneProperty().addListener((obs, oldScene, newScene) -> {
-
-            if (newScene != null) {
-                newScene.setOnKeyPressed(event -> {
-                    if(event.getCode().toString().equals(key)) {
-                        try {
-                            method.run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     default int rollDice(int i){
         return (int)(Math.random() * i) + 1;
     }
