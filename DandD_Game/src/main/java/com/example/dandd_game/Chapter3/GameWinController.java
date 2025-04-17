@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter3;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -21,11 +22,17 @@ public class GameWinController extends BaseController implements GameMechanics {
     @FXML
     private void initialize() {
         super.init(rootPane);
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
     }
 
     @FXML
     private void goToMenu(ActionEvent event) throws IOException {
-        GameStateManager.getInstance().unlockAchievement("You have won!");
+        if (GameStateManager.getInstance().unlockAchievement("You have won!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You have won!");
+        }
         switchScene(event, "GameLoads"); // returns to game load scene
     }
 }

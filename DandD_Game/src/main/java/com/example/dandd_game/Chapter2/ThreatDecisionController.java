@@ -25,7 +25,9 @@ public class ThreatDecisionController extends BaseController implements GameMech
         alert.setTitle("Ancient Ruins");
         alert.setHeaderText("You explore the ruins...");
         alert.setContentText("You discover a powerful artifact, helping you become stronger.");
-        GameStateManager.getInstance().unlockAchievement("You chose to explore the ruins!");
+        if (GameStateManager.getInstance().unlockAchievement("You chose to explore the ruins!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You chose to explore the ruins!");
+        }
         alert.showAndWait();
         switchScene(event, "Chapter3/ChapterThreeScene");
     }
@@ -35,18 +37,24 @@ public class ThreatDecisionController extends BaseController implements GameMech
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Forgotten Kingdom");
-        GameStateManager.getInstance().unlockAchievement("You seek the Forgotten Kingdom...High Risk, High Reward!");
+        if (GameStateManager.getInstance().unlockAchievement("You seek the Forgotten Kingdom...High Risk, High Reward!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You seek the Forgotten Kingdom...High Risk, High Reward!");
+        }
 
         if (roll >= 14) {
             alert.setHeaderText("Success!");
             alert.setContentText("You rolled a " + roll+ ". The Forgotten Kingdom offers to help you.");
-            GameStateManager.getInstance().unlockAchievement("You successfully seek the Forgotten Kingdom!");
+            if (GameStateManager.getInstance().unlockAchievement("You successfully seek the Forgotten Kingdom!")) {
+                GameStateManager.getInstance().queueAchievementPopup("You successfully seek the Forgotten Kingdom!");
+            }
             alert.showAndWait();
             switchScene(event, "Chapter3/ChapterThreeScene"); // i think something should be addded here to boost party stats
         } else {
             alert.setHeaderText("Failure!");
             alert.setContentText("You rolled a " + roll+ ". The Forgotten Kingdom refuses to help you.");
-            GameStateManager.getInstance().unlockAchievement("You failed to seek the Forgotten Kingdom!");
+            if (GameStateManager.getInstance().unlockAchievement("You failed to seek the Forgotten Kingdom!")) {
+                GameStateManager.getInstance().queueAchievementPopup("You failed to seek the Forgotten Kingdom!");
+            }
             alert.showAndWait();
             switchScene(event, "Chapter3/ChapterThreeHardScene");
         }

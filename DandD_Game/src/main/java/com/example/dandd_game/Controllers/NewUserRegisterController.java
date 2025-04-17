@@ -15,19 +15,19 @@ import java.util.Map;
 
 public class NewUserRegisterController extends BaseController {
     @FXML
-    private TextField elEmailTextField;
+    private TextField elUNTextField;
     @FXML
     private PasswordField elPWPasswordField;
     @FXML
-    private PasswordField elPWPasswordFieldtwo;
+    private PasswordField elPWPasswordFieldTwo;
     @FXML
     private Button CSbutton;
 
     @FXML
     public void createUser(ActionEvent event) throws IOException {
-        String email = elEmailTextField.getText();
+        String email = elUNTextField.getText();
         String password = elPWPasswordField.getText();
-        String password2 = elPWPasswordFieldtwo.getText();
+        String password2 = elPWPasswordFieldTwo.getText();
 
         if(!password.equals(password2)){
             System.out.println("Passwords do not match");

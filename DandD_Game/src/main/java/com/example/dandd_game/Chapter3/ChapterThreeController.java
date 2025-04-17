@@ -1,5 +1,6 @@
 package com.example.dandd_game.Chapter3;
 
+import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -16,17 +17,25 @@ public class ChapterThreeController extends BaseController implements GameMechan
     @FXML
     private void initialize() {
         super.init(rootPane);
+        String achievement = GameStateManager.getInstance().getPendingAchievement();
+        if (achievement != null) {
+            AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
     }
 
     @FXML
     private void goToFinalDefend(ActionEvent event) throws IOException {
-        GameStateManager.getInstance().unlockAchievement("You have reached the final defend scene!");
+        if (GameStateManager.getInstance().unlockAchievement("You have reached the final defend scene!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You have reached the final defend scene!");
+        }
         switchScene(event, "Chapter3/FinalDefendScene");
     }
 
     @FXML
     private void goToEnemyLeader(ActionEvent event) throws IOException {
-        GameStateManager.getInstance().unlockAchievement("You have reached the final enemy leader scene!");
+        if (GameStateManager.getInstance().unlockAchievement("You have reached the final enemy leader scene!")) {
+            GameStateManager.getInstance().queueAchievementPopup("You have reached the final enemy leader scene!");
+        }
         switchScene(event, "Chapter3/EnemyLeaderScene");
     }
 }
