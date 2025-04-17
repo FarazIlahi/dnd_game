@@ -66,23 +66,23 @@ public interface CombatMechanics extends GameMechanics{
         }
         return null;
     }
-    default void loadCharacter(GridPane combatGrid){
+    default void loadCharacter(GridPane combatGrid, Runnable updateTurn){
         for (Character character : gameState.getParty()) {
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid);
+            updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         for (Character character : gameState.getEnemies()) {
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid);
+            updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         shuffleTurnOrder();
     }
 
-    default void updateProfiles(Character character, int x, int y, GridPane combatGrid){
+    default void updateProfiles(Character character, int x, int y, GridPane combatGrid, Runnable updateTurn){
         ImageView profile = character.getProfile();
         profile.setFitWidth(40);
         profile.setFitHeight(40);
@@ -94,6 +94,7 @@ public interface CombatMechanics extends GameMechanics{
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)){
                     highlight(profile);
+                    owner.setHighlighted(true);
                 }
             }
         });
@@ -103,16 +104,26 @@ public interface CombatMechanics extends GameMechanics{
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)){
                     unhighlight(profile);
+                    owner.setHighlighted(false);
                 }
             }
         });
         profile.setOnMouseClicked(event -> {
-            if(getIsAttacking()){
-
+            ImageView iv = (ImageView) event.getSource();
+            Character owner = (Character) iv.getUserData();
+            if(owner.getHighlighted()){
+                if(getIsAttacking()){
+                    updateShowRange(false);
+                    runPlayerAttackBackEnd();
+                    gameState.nextTurn();
+                    updateTurn.run();
+                }
+                else if (getIsUsingSpecial()) {
+                    updateShowRange(false);
+                    runPlayerSpecialBackEnd();
+                }
             }
-            else if (getIsUsingSpecial()) {
 
-            }
         });
     }
     default boolean withinRange(Character character){
@@ -147,21 +158,37 @@ public interface CombatMechanics extends GameMechanics{
     }
 
     default void doTurn(Runnable method, GridPane combatGrid){
-        runPlayerAttack();
+        showPlayerAttack(true);
 
-        gameState.nextTurn();
-        method.run();
+        //gameState.nextTurn();
+        //method.run();
 
         if(gameState.getEnemies().contains(gameState.getTurnOrder().getFirst())){
             System.out.println("enemy turn here");
             //doTurn(method, combatGrid);
         }
     }
+    default void runPlayerAttack(Boolean bool){
+        showPlayerAttack(bool);
 
-    default void runPlayerAttack(){
-        updateShowRange(true);
-        setAttacking(true);
     }
+    default void runPlayerSpecial(){
+
+    }
+
+    default void showPlayerAttack(Boolean bool){
+        updateShowRange(bool);
+        setAttacking(bool);
+    }
+
+    default void runPlayerAttackBackEnd(){
+        System.out.println("do attack here");
+
+    }
+    default void runPlayerSpecialBackEnd(){
+
+    }
+
 
     default void updateShowRange(boolean bool){
         int x = gameState.getCurrentCharacter().getPosition().getX();

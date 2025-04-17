@@ -15,6 +15,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.util.ArrayList;
+
 public class CombatController extends BaseController implements GameMechanics, CombatMechanics {
 
     @FXML
@@ -145,7 +147,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         setEnemies();
         setupGrid(combatGrid);
         Platform.runLater(() -> {
-            loadCharacter(combatGrid);
+            loadCharacter(combatGrid, this::updateTurn);
             updateTurn();
         });
     }
@@ -153,30 +155,37 @@ public class CombatController extends BaseController implements GameMechanics, C
     private void move(){
         moving = !moving;
         updateMoveButton();
-        if(moving){
-            disableNode(gameState.getCurrentCharacter().getButtons().get(0));
-            disableNode(gameState.getCurrentCharacter().getButtons().get(1));
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(moving,list.get(0), list.get(1));
+    }
+    public void updateButtons(Boolean check,Button other1, Button other2){
+        if(check){
+            disableNode(other1);
+            disableNode(other2);
         }
         else{
+            enableNode(other1);
+            enableNode(other2);
             if(!canMoveCount()){
-                disableNode(gameState.getCurrentCharacter().getButtons().getLast());
+                disableNode(gameState.getCurrentCharacter().getButtons().get(2));
             }
-            enableNode(gameState.getCurrentCharacter().getButtons().get(0));
-            enableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
     }
-
     @FXML
     private void attack(){
         moving = false;
+        setAttacking(!attacking);
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(attacking,list.get(1), list.get(2));
+        runPlayerAttack(attacking);
         updateMoveButton();
-        doTurn(this::updateTurn, combatGrid);
+        //doTurn(this::updateTurn, combatGrid);
     }
     @FXML
     private void special(){
         moving = false;
         updateMoveButton();
-        doTurn(this::updateTurn, combatGrid);
+       // doTurn(this::updateTurn, combatGrid);
     }
 
     public void setKeybinds(){
@@ -366,28 +375,28 @@ public class CombatController extends BaseController implements GameMechanics, C
                 clearProfiles(x, y, combatGrid);
                 y--;
                 gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x , y, combatGrid);
+                updateProfiles(gameState.getCurrentCharacter(), x , y, combatGrid, this::updateTurn);
                 gameState.decreaseMoveCount();
                 break;
             case "Down":
                 clearProfiles(x, y, combatGrid);
                 y++;
                 gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, this::updateTurn);
                 gameState.decreaseMoveCount();
                 break;
             case "Left":
                 clearProfiles(x, y, combatGrid);
                 x--;
                 gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, this::updateTurn);
                 gameState.decreaseMoveCount();
                 break;
             case "Right":
                 clearProfiles(x, y, combatGrid);
                 x++;
                 gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid);
+                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, this::updateTurn);
                 gameState.decreaseMoveCount();
                 break;
         }

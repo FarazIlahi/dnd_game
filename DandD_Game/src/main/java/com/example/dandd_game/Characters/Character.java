@@ -27,6 +27,8 @@ public abstract class Character{
     private Label specialInfo;
     private ArrayList<Button> buttons = new ArrayList<Button>();
 
+    private boolean highlighted = false;
+
 
     public Character(int hp, int def, int basic_attack, int range, String name, Position position){
         this.hp = hp;
@@ -67,6 +69,10 @@ public abstract class Character{
 
     public ImageView getProfile() {
         return profile;
+    }
+
+    public boolean getHighlighted(){
+        return this.highlighted;
     }
 
     public Label getNameLabel(){
@@ -110,11 +116,9 @@ public abstract class Character{
     public void setPosition(Position position) {
         this.position = position;
     }
-
     public void setProfile(ImageView profile) {
         this.profile = profile;
     }
-
     public void setNameLabel(Label nameLabel) {
         this.nameLabel = nameLabel;
     }
@@ -133,6 +137,10 @@ public abstract class Character{
 
     public void addButton(Button button) {
         this.buttons.add(button);
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
     }
 
     public abstract void specialMove();
