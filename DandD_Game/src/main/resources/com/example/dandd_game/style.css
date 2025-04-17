@@ -1,0 +1,40 @@
+.health-progress-bar .track {
+    -fx-background-color: black;
+}
+.health-progress-bar .bar {
+    -fx-background-color: #3ae841;
+}
+
+.king-progress-bar .track {
+    -fx-background-color: black;
+}
+.king-progress-bar .bar {
+    -fx-background-color: #fca903;
+}
+
+.knight-progress-bar .track {
+    -fx-background-color: black;
+}
+.knight-progress-bar .bar {
+    -fx-background-color: #f7070f;
+}
+
+.cleric-progress-bar .track {
+    -fx-background-color: black;
+}
+.cleric-progress-bar .bar {
+    -fx-background-color: #ffee00;
+}
+
+.mage-progress-bar .track {
+    -fx-background-color: black;
+}
+.mage-progress-bar .bar {
+    -fx-background-color: #0777f7;
+}
+
+
+
+.info-label {
+    -fx-font-weight: bold;
+}

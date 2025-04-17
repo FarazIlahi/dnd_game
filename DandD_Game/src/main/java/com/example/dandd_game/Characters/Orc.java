@@ -11,4 +11,10 @@ public class Orc extends Character {
     public void specialMove() {
 
     }
+
+    @Override
+    public String specialToSrting() {
+
+        return null;
+    }
 }

@@ -24,7 +24,7 @@ public class GameOverController extends BaseController implements GameMechanics{
 
     @FXML
     private void goToMenu(ActionEvent event) throws IOException {
-        GameStateManager.getInstance().unlockAchievement("You have won!");
+        GameStateManager.getInstance().unlockAchievement("You have Lost!");
         switchScene(event, "GameLoads"); // returns to game laod scene
     }
 }

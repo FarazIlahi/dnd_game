@@ -81,6 +81,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     private void tutorial(ActionEvent event) throws IOException {
         gameState.resetInstance();
+        gameState.setPlayerCount(4);
         gameState.createKing();
         gameState.createKnight();
         gameState.createCleric();
@@ -89,7 +90,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
         gameState.addToParty(gameState.getKnight());
         gameState.addToParty(gameState.getCleric());
         gameState.addToParty(gameState.getMage());
-        gameState.setCurrentCharacter(gameState.getKing());
 
         //gameState.createGoblin();
         //gameState.createOrc();

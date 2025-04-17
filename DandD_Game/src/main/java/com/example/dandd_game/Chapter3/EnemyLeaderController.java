@@ -3,6 +3,7 @@ package com.example.dandd_game.Chapter3;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.Characters.Character;
+import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.Position;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,12 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         // example character also for testing, can be deleted
         player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
             @Override
+            public String specialToSrting() {
+
+                return null;
+            }
+
+            @Override
             public void specialMove() {
                 System.out.println("Big hit");
             }
@@ -39,11 +46,13 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         if (roll >= 10) {
             alert.setHeaderText("Victory!");
             alert.setContentText("You defeated the enemy leader!");
+            GameStateManager.getInstance().unlockAchievement("You defeated the enemy leader in a duel!");
             alert.showAndWait();
             switchScene(event, "Chapter3/GameWinScene");
         } else {
             alert.setHeaderText("Defeat!");
             alert.setContentText("You were defeated by the enemy leader.");
+            GameStateManager.getInstance().unlockAchievement("You were defeated by the enemy leader in a duel!");
             alert.showAndWait();
             switchScene(event, "Chapter3/GameOverScene");
         }
@@ -55,6 +64,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         sabotageAlert.setTitle("Sabotage");
         sabotageAlert.setHeaderText("You destroy the enemy's supplies!");
         sabotageAlert.setContentText("The enemy is weakened and will be easier to defeat.");
+        GameStateManager.getInstance().unlockAchievement("You sabotaged the enemy's supplies!");
         sabotageAlert.showAndWait();
 
         int roll1 = rollDice(20);

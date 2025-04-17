@@ -16,23 +16,6 @@ import java.lang.Math;
 public interface GameMechanics {
     GameStateManager gameState = GameStateManager.getInstance();
 
-    default void setListener(Pane root, ThrowingRunnable method, String key){
-        root.sceneProperty().addListener((obs, oldScene, newScene) -> {
-
-            if (newScene != null) {
-                newScene.setOnKeyPressed(event -> {
-                    if(event.getCode().toString().equals(key)) {
-                        try {
-                            method.run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     default int rollDice(int i){
         return (int)(Math.random() * i) + 1;
     }
@@ -61,7 +44,6 @@ public interface GameMechanics {
             e.getTransforms().add(scale);
             e.setEffect(new DropShadow(30, Color.BLACK));
         }
-
     }
     default void unhighlight(Node e){
         if(!(e.getEffect() == null)){
@@ -74,7 +56,7 @@ public interface GameMechanics {
         node.setOpacity(.5);
         node.setDisable(true);
     }
-    default void unDisableNode(Node node){
+    default void enableNode(Node node){
         node.setOpacity(1);
         node.setDisable(false);
     }

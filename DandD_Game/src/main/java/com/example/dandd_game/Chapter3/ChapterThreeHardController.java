@@ -2,6 +2,7 @@ package com.example.dandd_game.Chapter3;
 
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,6 +29,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         if (roll >= 15) {
             alert.setHeaderText("Victory!");
             alert.setContentText("You rolled " + roll + ". Your troops held the gate long enough!");
+            GameStateManager.getInstance().unlockAchievement("You successfully held the main gate!");
             alert.showAndWait();
             switchScene(event, "Chapter3/GameWinScene");
         } else {
@@ -44,10 +46,12 @@ public class ChapterThreeHardController extends BaseController implements GameMe
                 finalAlert.setHeaderText("Against all odds, You Win!");
                 finalAlert.setContentText("You rolled " + finalRoll + ". You managed to defend the throne!");
                 finalAlert.showAndWait();
+                GameStateManager.getInstance().unlockAchievement("You won the last stand! Victory!");
                 switchScene(event, "Chapter3/GameWinScene");
             } else {
                 finalAlert.setHeaderText("Overrun...");
                 finalAlert.setContentText("You rolled " + finalRoll + ". The Kingdom has been defeated.");
+                GameStateManager.getInstance().unlockAchievement("You failed twice...");
                 finalAlert.showAndWait();
                 switchScene(event, "Chapter3/GameOverScene");
             }
@@ -63,6 +67,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         if (roll >= 17) {
             alert.setHeaderText("Great Ambush!");
             alert.setContentText("You rolled " + roll + ". The enemy is crushed by your trap.");
+            GameStateManager.getInstance().unlockAchievement("You successfully set a trap!");
             alert.showAndWait();
             switchScene(event, "Chapter3/GameWinScene");
         } else {
@@ -76,11 +81,13 @@ public class ChapterThreeHardController extends BaseController implements GameMe
             if (finalRoll >=18) {
                 finalAlert.setHeaderText("Success!");
                 finalAlert.setContentText("You rolled " + finalRoll + ". You managed to win with one final push!");
+                GameStateManager.getInstance().unlockAchievement("You won the final push! Victory!");
                 finalAlert.showAndWait();
                 switchScene(event, "Chapter3/GameWinScene");
             } else {
                 finalAlert.setHeaderText("Too Late...");
                 finalAlert.setContentText("You rolled " + finalRoll + ". Your party was overwhelmed.");
+                GameStateManager.getInstance().unlockAchievement("You failed twice...");
                 finalAlert.showAndWait();
                 switchScene(event, "Chapter3/GameOverScene");
             }
