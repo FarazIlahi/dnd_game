@@ -93,7 +93,7 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)) {
-                    if (owner != gameState.getCurrentCharacter()) {
+                    if (!gameState.getParty().contains(owner)) {
                         highlight(profile);
                         owner.setHighlighted(true);
                     }
@@ -105,7 +105,7 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)){
-                    if(owner != gameState.getCurrentCharacter()){
+                    if(!gameState.getParty().contains(owner)){
                         unhighlight(profile);
                         owner.setHighlighted(false);
                     }
