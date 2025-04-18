@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class KeyBindingManager {
-    private final Map<KeyCode, ThrowingRunnable> keyBindings = new HashMap<>();
+    private static final Map<KeyCode, ThrowingRunnable> keyBindings = new HashMap<>();
     private final Pane root;
 
     public KeyBindingManager(Pane root) {
@@ -24,6 +24,9 @@ public class KeyBindingManager {
     public void removeKeyBinding(String key) {
         KeyCode keyCode = KeyCode.valueOf(key.toUpperCase());
         keyBindings.remove(keyCode);
+    }
+    public static ThrowingRunnable getActionForKey(KeyCode key) {
+        return keyBindings.get(key);
     }
 
     public void clearAllBindings() {
