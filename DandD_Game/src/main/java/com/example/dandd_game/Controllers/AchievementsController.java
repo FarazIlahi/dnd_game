@@ -8,16 +8,29 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
 import java.io.IOException;
+import java.util.List;
 
 public class AchievementsController extends BaseController{
+
+    @FXML
+    private void initialize() {
+
+    }
+
+    @FXML
+    public void onSceneShown() {
+        System.out.println("Refreshing achievements");
+        refreshAchievements();
+    }
 
     @FXML
     private ListView<String> achievementList;
 
 
     public void refreshAchievements() {
-        ObservableList<String> achievements = FXCollections.observableArrayList(GameStateManager.getInstance().getAchievements());
-        achievementList.setItems(achievements);
+        List<String> achievements = GameStateManager.getInstance().getAchievements();
+        ObservableList<String> observable = FXCollections.observableArrayList(achievements);
+        achievementList.setItems(observable);
     }
 
     @FXML

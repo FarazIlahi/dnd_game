@@ -12,6 +12,11 @@ public class Mage extends Character {
         this.mana = 36;
         this.maxMana = this.mana;
     }
+    public Mage(int hp, int def, int atk, int range, String name, Position position) {
+        super(hp, def, atk, range, name, position);
+        this.mana = 36;
+        this.maxMana = this.mana;
+    }
 
     public int getMana(){
         return this.mana;

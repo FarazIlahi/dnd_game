@@ -7,6 +7,10 @@ public class Sorcerer extends Character {
         super(35,10, 18, 13, "Sorcerer", new Position(16,3));
     }
 
+    public Sorcerer(int hp, int def, int atk, int range, String name, Position position) {
+        super(hp, def, atk, range, name, position);
+    }
+
     @Override
     public void specialMove() {
 

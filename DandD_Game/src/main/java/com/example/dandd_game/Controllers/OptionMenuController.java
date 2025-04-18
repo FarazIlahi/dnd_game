@@ -1,6 +1,8 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameSaves;
+import com.example.dandd_game.GameStateManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -43,5 +45,36 @@ public class OptionMenuController extends BaseController implements GameMechanic
                 }
         );
         has_initialized = true;
+    }
+
+    @FXML private void saveGame() {
+        try {
+            int slot = GameSaves.getSelectedSlot();
+            GameSaves.saveGame(slot);
+            GameSaves.saveAchievements();
+            System.out.println("Game saved to slot " + slot);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadGame() {
+        try {
+            GameSaves.loadGame();
+            String scene = GameStateManager.getInstance().getCurrentScene();
+            switchScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToMenu() {
+        try {
+            switchScene("GameLoads");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
