@@ -196,6 +196,14 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = false;
         updateMoveButton();
     }
+    @FXML
+    private void passTurn(){
+        try{
+            updateTurn();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void setKeybinds(){
         keyManager.addKeyBinding("W", this::moveUp);
