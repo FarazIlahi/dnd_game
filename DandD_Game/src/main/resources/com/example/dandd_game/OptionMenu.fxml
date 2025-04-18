@@ -43,9 +43,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button text="Save Game" onAction="#saveGame"/>
-                  <Button text="Load Game" onAction="#loadGame"/>
-                  <Button text="Main Menu" onAction="#goToMenu"/>
+                  <Button text="Save Game" fx:id="save_btn" onAction="#saveGame"/>
+                  <Button text="Load Game" fx:id="load_btn" onAction="#loadGame"/>
+                  <Button text="Main Menu" fx:id="menu_btn" onAction="#goToMenu"/>
                </children>
             </VBox>
          </children>

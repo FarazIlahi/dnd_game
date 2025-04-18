@@ -6,9 +6,12 @@ import com.example.dandd_game.GameStateManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
+
+import java.nio.Buffer;
 
 public class OptionMenuController extends BaseController implements GameMechanics {
     @FXML
@@ -17,35 +20,34 @@ public class OptionMenuController extends BaseController implements GameMechanic
     Label audioNum;
     @FXML
     Pane rootPane;
+    @FXML
+    Button save_btn;
+    @FXML
+    Button load_btn;
+    @FXML
+    Button menu_btn;
 
     private int audio;
-    private static boolean has_initialized = false;
+    private GameStateManager gameState = GameStateManager.getInstance();
+
     @FXML
     private void initialize() {
         super.init(rootPane);
+        checkScene(gameState.getCurrentScene());
 
-        audioNum.textProperty().bind(audioSlider.valueProperty().asString("%.0f"));
-        if(!has_initialized){
-            one_time_initialize();
+    }
+    public void checkScene(String scene){
+        switch (scene){
+            case "Combat":
+            case "GameLoads":
+                disableNode(save_btn);
+                disableNode(load_btn);
+                disableNode(menu_btn);
+                break;
         }
-
     }
 
-    private void one_time_initialize(){
-        setSettings(rootPane);
 
-        audioSlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> ov,
-                                        Number oldValue, Number newValue) {
-                        audio = newValue.intValue();
-                        audioSlider.setValue(audio);
-                    }
-                }
-        );
-        has_initialized = true;
-    }
 
     @FXML private void saveGame() {
         try {
