@@ -182,6 +182,9 @@ public interface CombatMechanics extends GameMechanics{
 
         if(!withinRange(closest)){
             moveEnemy(closest, combatGrid);
+            if(!withinRange(closest)){
+                closest = null;
+            }
         }
         return closest;
     }
@@ -216,7 +219,10 @@ public interface CombatMechanics extends GameMechanics{
     default void runEnemyAttackBackEnd(GridPane combatGrid, Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY(), combatGrid);
-
+        if(target != null){
+            target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
+            updateHp(target, target.getHpBar(), target.getHpInfo());
+        }
         updateTurn.run();
     }
     default void showPlayerAttack(Boolean bool){
