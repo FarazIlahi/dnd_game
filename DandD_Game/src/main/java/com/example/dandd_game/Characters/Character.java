@@ -28,6 +28,7 @@ public abstract class Character{
     private ArrayList<Button> buttons = new ArrayList<Button>();
 
     private boolean highlighted = false;
+    private boolean isDead = false;
 
 
     public Character(int hp, int def, int basic_attack, int range, String name, Position position){
@@ -39,6 +40,7 @@ public abstract class Character{
         this.name = name;
         this.iD = name;
         this.position = position;
+        this.isDead = false;
     }
     public int getHp(){
         return this.hp;
@@ -74,6 +76,9 @@ public abstract class Character{
     public boolean getHighlighted(){
         return this.highlighted;
     }
+    public boolean getIsDead(){
+        return this.isDead;
+    }
 
     public Label getNameLabel(){
         return this.nameLabel;
@@ -100,6 +105,10 @@ public abstract class Character{
     }
     public void setHp(int hp) {
         this.hp = hp;
+        if(this.hp <= 0){
+            this.isDead = true;
+            this.hp = 0;
+        }
     }
     public void setDef(int def) {
         this.def = def;

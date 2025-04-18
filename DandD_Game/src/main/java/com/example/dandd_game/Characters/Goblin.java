@@ -4,7 +4,7 @@ import com.example.dandd_game.Position;
 
 public class Goblin extends Character {
     public Goblin(){
-        super(15,8, 8, 4, "Goblin", new Position(10,10));
+        super(15,8, 4, 4, "Goblin", new Position(10,10));
     }
 
     public Goblin(int hp, int def, int atk, int range, String name, Position position) {
