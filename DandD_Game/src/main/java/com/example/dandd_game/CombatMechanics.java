@@ -2,6 +2,7 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
 import com.example.dandd_game.Controllers.BaseController;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -199,18 +201,46 @@ public interface CombatMechanics extends GameMechanics{
             int distY = enemyY - targetY;
             if(Math.abs(distX) >= Math.abs(distY)){
                 if(distX > 0){
-                    KeyBindingManager.getActionForKey(KeyCode.A).run();
+                    Runnable action = () -> {
+                        try {
+                            KeyBindingManager.getActionForKey(KeyCode.A).run();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    };
+                    pauseMethod(0.6, action);
                 }
                 else {
-                    KeyBindingManager.getActionForKey(KeyCode.D).run();
+                    Runnable action = () -> {
+                        try {
+                            KeyBindingManager.getActionForKey(KeyCode.D).run();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    };
+                    pauseMethod(0.6, action);
                 }
             }
             else {
                 if(distY > 0){
-                    KeyBindingManager.getActionForKey(KeyCode.W).run();
+                    Runnable action = () -> {
+                        try {
+                            KeyBindingManager.getActionForKey(KeyCode.W).run();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    };
+                    pauseMethod(0.6, action);
                 }
                 else {
-                    KeyBindingManager.getActionForKey(KeyCode.S).run();
+                    Runnable action = () -> {
+                        try {
+                            KeyBindingManager.getActionForKey(KeyCode.S).run();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    };
+                    pauseMethod(0.6, action);
                 }
             }
             range--;

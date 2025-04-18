@@ -1,10 +1,8 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.*;
 import com.example.dandd_game.Characters.Character;
-import com.example.dandd_game.CombatMechanics;
-import com.example.dandd_game.GameMechanics;
-import com.example.dandd_game.GameStateManager;
-import com.example.dandd_game.LocalImages;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,6 +112,7 @@ public class CombatController extends BaseController implements GameMechanics, C
     private ProgressBar e1_hpBar;
 
     private boolean moving = false;
+    private boolean animationMoving = false;
     private boolean attacking;
     private boolean usingSpecial;
 
@@ -195,6 +195,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     private void special(){
         moving = false;
         updateMoveButton();
+    }
+    @FXML
+    private void pass() throws IOException {
+        updateTurn();
     }
 
     public void setKeybinds(){
@@ -396,62 +400,60 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void move(String direction, int x, int y){
         switch (direction){
             case "Up":
-                clearProfiles(x, y, combatGrid);
-                y--;
-                gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x , y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                Position posU = gameState.getCurrentCharacter().getPosition();
+                moveTo(gameState.getCurrentCharacter().getProfile(), posU.getX(), posU.getY(), posU.getX(), posU.getY() - 1);
                 break;
             case "Down":
-                clearProfiles(x, y, combatGrid);
-                y++;
-                gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                Position posD = gameState.getCurrentCharacter().getPosition();
+                moveTo(gameState.getCurrentCharacter().getProfile(), posD.getX(), posD.getY(), posD.getX(), posD.getY() + 1);
                 break;
             case "Left":
-                clearProfiles(x, y, combatGrid);
-                x--;
-                gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                Position posL = gameState.getCurrentCharacter().getPosition();
+                moveTo(gameState.getCurrentCharacter().getProfile(), posL.getX(), posL.getY(), posL.getX() - 1, posL.getY());
                 break;
             case "Right":
-                clearProfiles(x, y, combatGrid);
-                x++;
-                gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                Position posR = gameState.getCurrentCharacter().getPosition();
+                moveTo(gameState.getCurrentCharacter().getProfile(), posR.getX(), posR.getY(), posR.getX() + 1, posR.getY());
                 break;
         }
         if(!(gameState.getEnemies().contains(gameState.getCurrentCharacter()))){
             updateMoveButton();
         }
     }
+    public void moveTo(Node node, int fromX, int fromY, int toX, int toY) {
+        if(animationMoving){
+            return;
+        }
+        animationMoving = true;
+        int dx = toX - fromX;
+        int dy = toY - fromY;
+
+        double cellWidth = node.getBoundsInParent().getWidth();
+        double cellHeight = node.getBoundsInParent().getHeight();
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(200), node);
+        if(gameState.getEnemies().contains(node.getUserData())){
+            transition.setDuration(Duration.millis(600));
+        }
+        transition.setByX(dx * cellWidth);
+        transition.setByY(dy * cellHeight);
+
+        transition.setOnFinished(e -> {
+            GridPane.setColumnIndex(node, toX);
+            GridPane.setRowIndex(node, toY);
+            node.setTranslateX(0);
+            node.setTranslateY(0);
+            animationMoving = false;
+        });
+
+        gameState.getCurrentCharacter().getPosition().setX(toX);
+        gameState.getCurrentCharacter().getPosition().setY(toY);
+        gameState.decreaseMoveCount();
+
+        transition.play();
+    }
+
+
     public boolean canMoveOnGrid(int x, int y){
         if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
             Node node = iterate(y, x, combatGrid);

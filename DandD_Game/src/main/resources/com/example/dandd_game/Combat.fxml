@@ -149,5 +149,6 @@
             </Label>
          </children>
       </Group>
+      <Button layoutX="1225.0" layoutY="468.0" mnemonicParsing="false" onAction="#pass" text="pass" />
    </children>
 </Pane>
