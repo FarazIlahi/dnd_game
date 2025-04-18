@@ -1,6 +1,7 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.KeyBindingManager;
 import com.example.dandd_game.MainApplication;
 import javafx.event.Event;
@@ -80,6 +81,7 @@ public class BaseController implements GameMechanics {
 
     }
     public void switchScene(Event event, String new_scene) throws IOException {
+        GameStateManager.getInstance().setCurrentScene(new_scene);
         Node source = (Node) event.getSource();
         Scene scene = source.getScene();
         Stage primaryStage = (Stage) scene.getWindow();
@@ -88,6 +90,16 @@ public class BaseController implements GameMechanics {
         Parent root = loader.load();
         Scene newscene = new Scene(root);
         primaryStage.setScene(newscene);
+    }
+
+    public void switchScene(String new_scene) throws IOException {
+        GameStateManager.getInstance().setCurrentScene(new_scene);
+        Stage stage = (Stage) currentroot.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(new_scene + ".fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
 }

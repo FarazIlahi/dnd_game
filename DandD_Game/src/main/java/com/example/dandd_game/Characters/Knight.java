@@ -11,6 +11,13 @@ public class Knight extends Character {
         this.special = 25;
         this.maxSpecial = this.special;
     }
+
+    public Knight(int hp, int def, int atk, int range, String name, Position position) {
+        super(hp, def, atk, range, name, position);
+        this.special = 25;
+        this.maxSpecial = this.special;
+    }
+
     public int getSpecial(){
         return this.special;
     }

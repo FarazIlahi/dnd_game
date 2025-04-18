@@ -22,6 +22,9 @@ public class GameStateManager {
     private Sorcerer sorcerer;
     private Character currentCharacter;
     private int moveCount = 5;
+    private String currentScene;
+    private String currentUserEmail;
+    private int currentSlot;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
@@ -81,6 +84,24 @@ public class GameStateManager {
     }
     public Character getCurrentCharacter() {
         return currentCharacter;
+    }
+    public void setCurrentScene(String scene) {
+        this.currentScene = scene;
+    }
+    public String getCurrentScene() {
+        return this.currentScene;
+    }
+    public void setCurrentUserEmail(String email) {
+        this.currentUserEmail = email;
+    }
+    public String getCurrentUserEmail() {
+        return this.currentUserEmail;
+    }
+    public void setCurrentSlot(int slot) {
+        this.currentSlot = slot;
+    }
+    public int getCurrentSlot() {
+        return currentSlot;
     }
     public void createKing(){
         this.king = new King();
@@ -164,6 +185,10 @@ public class GameStateManager {
 
     public boolean unlockAchievement(String achievement) {
         return achievements.add(achievement);
+    }
+    public void setAchievements(List<String> achievementsList) {
+        this.achievements.clear();
+        this.achievements.addAll(achievementsList);
     }
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);

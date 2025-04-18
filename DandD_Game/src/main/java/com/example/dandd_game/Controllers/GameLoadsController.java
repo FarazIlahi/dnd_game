@@ -1,8 +1,9 @@
 package com.example.dandd_game.Controllers;
 
-import com.example.dandd_game.AchievementPopup;
-import com.example.dandd_game.GameMechanics;
-import com.example.dandd_game.GameStateManager;
+import com.example.dandd_game.*;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     Pane rootPane;
     private boolean creatingFile;
+    private int selectedSlot = -1;
     @FXML
     private void initialize() {
         super.init(rootPane);
@@ -69,18 +71,51 @@ public class GameLoadsController extends BaseController implements GameMechanics
         Parent root = loader.load();
 
         AchievementsController controller = loader.getController();
-        controller.refreshAchievements();
+        controller.onSceneShown();
         rootPane.getScene().setRoot(root);
+    }
+
+    private void goToPlayerCount() {
+        try {
+            switchScene("playerCount");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void onLoadClicked(ActionEvent event) throws IOException {
-        if(creatingFile){
-            switchScene(event,"playerCount");
-        }
-        else{
-            Button clickedButton = (Button) event.getSource();
-            //switchScene("");
+        Button clickedButton = (Button) event.getSource();
+        selectedSlot = Integer.parseInt(clickedButton.getText());
+        if (creatingFile) {
+            Firestore db = FirestoreClient.getFirestore();
+            String email = GameStateManager.getInstance().getCurrentUserEmail();
+            GameSaves.setSelectedSlot(selectedSlot);
+            try {
+                DocumentSnapshot result = db.collection("saves")
+                        .document(email)
+                        .collection("slots")
+                        .document("slot" + selectedSlot)
+                        .get().get();
+                if (result.exists()) {
+                    boolean confirmed = ConfirmPopup.show("Overwrite Save Slot " + selectedSlot + "?");
+                    if (confirmed) {
+                        goToPlayerCount();
+                    }
+                } else {
+                    goToPlayerCount();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                GameSaves.loadGame(selectedSlot);
+                String scene = GameStateManager.getInstance().getCurrentScene();
+                switchScene(event, scene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

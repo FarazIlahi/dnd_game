@@ -12,6 +12,12 @@ public class King extends Character {
         this.maxSpecial = this.special;
     }
 
+    public King(int hp, int def, int atk, int range, String name, Position position) {
+        super(hp, def, atk, range, name, position);
+        this.special = 10;
+        this.maxSpecial = this.special;
+    }
+
     public int getSpecial(){
         return this.special;
     }
