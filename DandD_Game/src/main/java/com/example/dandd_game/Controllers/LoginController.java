@@ -1,8 +1,13 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameStateManager;
+import com.google.firebase.cloud.FirestoreClient;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,8 +20,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Properties;
+import java.util.List;
 import java.io.InputStream;
 
 public class LoginController extends BaseController {
@@ -61,12 +68,30 @@ public class LoginController extends BaseController {
         }
         if (authenticateUser(email, password)) {
             loginErrorLabel.setText("Login successful!");
+            gameState.setCurrentUserEmail(email);
 
-            switchScene(event, "GameLoads");
-        } else {
-            loginErrorLabel.setText("Invalid email or password.");
+            // load the achievements before switching to gameloads
+            try {
+                DocumentSnapshot document = FirestoreClient.getFirestore().collection("saves").document(email).get().get();
+                if (document.exists()) {
+                    Object rawAchievements = document.get("achievements");
+                    if (rawAchievements instanceof List<?>) {
+                        List<?> rawList = (List<?>) rawAchievements;
+                        List<String> achievements = new ArrayList<>();
+                        for (Object item : rawList) {
+                            if (item instanceof String) {
+                                achievements.add((String) item);
+                            }
+                        }
+                        GameStateManager.getInstance().setAchievements(achievements);
+                        System.out.println("Loadede: " + achievements);
+                    }
+                }
+                switchScene(event, "GameLoads");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     private boolean authenticateUser(String email, String password) {
