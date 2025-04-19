@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
    <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/OldPaper.jpg" />
+         </image>
+      </ImageView>
       <GridPane fx:id="combatGrid" layoutX="400.0" prefHeight="800.0" prefWidth="800.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,8 +24,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" layoutX="1200.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <TextArea fx:id="turnOrderArea" editable="false" layoutX="1200.0" layoutY="536.0" prefHeight="264.0" prefWidth="102.0">
          <font>
             <Font size="15.0" />
@@ -149,6 +145,6 @@
             </Label>
          </children>
       </Group>
-      <Button layoutX="1225.0" layoutY="468.0" mnemonicParsing="false" onAction="#pass" text="pass" />
+      <Button layoutX="1200.0" layoutY="500.0" mnemonicParsing="false" onAction="#passTurn" prefHeight="36.0" prefWidth="80.0" text="End Turn" />
    </children>
 </Pane>
