@@ -192,24 +192,21 @@ public interface CombatMechanics extends GameMechanics{
                 oldDistance = newDistance;
             }
         }
-        if(closest != null){
-        }
-        if(!withinRange(closest)){
-            moveEnemy(closest, gameState.getCurrentCharacter().getRange());
-            if(!withinRange(closest)){
-                closest = null;
-            }
-        }
-
         return closest;
     }
-    default void moveEnemy(Character target, int range) throws IOException {
+    default void moveEnemy(Character target, int range, Runnable updateTurn) throws IOException {
         if(canMoveCount()){
-            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range);
+            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, updateTurn);
         }
     }
-    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft) {
+    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, Runnable updateTurn) {
         if (gameState.getMoveCount() <= 0 || withinRange(target)) {
+            if(withinRange(target)){
+                runEnemyAttackBackEnd(target,updateTurn, .5);
+            }
+            else {
+                pauseMethod(.5, updateTurn);
+            }
             return;
         }
         int enemyX = gameState.getCurrentCharacter().getPosition().getX();
@@ -234,7 +231,7 @@ public interface CombatMechanics extends GameMechanics{
             gameState.getCurrentCharacter().getPosition().setX(toX);
             gameState.getCurrentCharacter().getPosition().setY(toY);
             gameState.decreaseMoveCount();
-            moveEnemyTowardTarget(enemy, target, stepsLeft - 1);
+            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn);
         });
         transition.play();
     }
@@ -264,16 +261,20 @@ public interface CombatMechanics extends GameMechanics{
     }
 
 
-    default void runEnemyAttackBackEnd(Runnable updateTurn) throws IOException {
+    default void runEnemyAttack(Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY());
-        if(target != null){
-            target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
-            updateHp(target, target.getHpBar(), target.getHpInfo());
+        if(withinRange(target)){
+            runEnemyAttackBackEnd(target, updateTurn, 0.5);
         }
-
-        pauseMethod(2.6, updateTurn);
-
+        else {
+            moveEnemy(target, gameState.getCurrentCharacter().getRange(), updateTurn);
+        }
+    }
+    default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time){
+        target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
+        updateHp(target, target.getHpBar(), target.getHpInfo());
+        pauseMethod(time, updateTurn);
     }
     default void showPlayerAttack(Boolean bool, GridPane combatGrid){
         updateShowRange(bool, combatGrid);
@@ -316,18 +317,6 @@ public interface CombatMechanics extends GameMechanics{
                 if (Math.abs(i - x) + Math.abs(j - y) <= range) {
                     if (i >= 0 && i < cellNodes.length && j >= 0 && j < cellNodes[0].length) {
                         toggleHighlightCell(cellNodes[i][j], bool);
-                        Node image = iterate(i, j, combatGrid);
-                        if(image != null){
-                            Character character = (Character)image.getUserData();
-                            if(!(gameState.getCurrentCharacter().equals(character))){
-                                if(bool){
-                                    image.getStyleClass().add("glow-image");
-                                }
-                                else {
-                                    image.getStyleClass().remove("glow-image");
-                                }
-                            }
-                        }
                     }
                 }
             }

@@ -199,6 +199,7 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private void showRange(){
         showingRange = !showingRange;
+        gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
         updateButtons(showingRange,list.get(0), list.get(1), list.get(2), end_btn);
         gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
@@ -371,7 +372,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         if(enemeyAttackCheck()){
             disableNode(show_btn);
             disableNode(end_btn);
-            runEnemyAttackBackEnd(() -> {
+            runEnemyAttack(() -> {
                 try {
                     updateTurn();
                 } catch (IOException e) {
