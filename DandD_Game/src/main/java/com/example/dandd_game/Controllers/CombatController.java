@@ -184,7 +184,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
         updateButtons(attacking,list.get(1), list.get(2), show_btn, end_btn);
-        showPlayerAttack(attacking);
+        showPlayerAttack(attacking, combatGrid);
         updateMoveButton();
     }
     @FXML
@@ -369,13 +369,19 @@ public class CombatController extends BaseController implements GameMechanics, C
             }
         }
         if(enemeyAttackCheck()){
-            runEnemyAttackBackEnd(combatGrid, () -> {
+            disableNode(show_btn);
+            disableNode(end_btn);
+            runEnemyAttackBackEnd(() -> {
                 try {
                     updateTurn();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
+        }
+        else {
+            enableNode(show_btn);
+            enableNode(end_btn);
         }
 
     }
@@ -457,7 +463,6 @@ public class CombatController extends BaseController implements GameMechanics, C
         transition.setByY(dy * cellHeight);
 
         transition.setOnFinished(e -> {
-            System.out.println(toX);
             GridPane.setColumnIndex(node, toX);
             GridPane.setRowIndex(node, toY);
             node.setTranslateX(0);

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -106,7 +107,7 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 gameState.setCurrentCharacter(owner);
-                updateShowRange(true);
+                updateShowRange(true, combatGrid);
             }
         });
         profile.setOnMouseExited(event -> {
@@ -124,7 +125,7 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 gameState.setCurrentCharacter(owner);
-                updateShowRange(false);
+                updateShowRange(false, combatGrid);
             }
         });
         profile.setOnMouseClicked(event -> {
@@ -132,12 +133,12 @@ public interface CombatMechanics extends GameMechanics{
             Character owner = (Character) iv.getUserData();
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
-                    runPlayerAttackBackEnd(owner);
+                    runPlayerAttackBackEnd(owner, combatGrid);
                     checkIsDead(owner, combatGrid);
                     updateTurn.run();
                 }
                 else if (getIsUsingSpecial()) {
-                    updateShowRange(false);
+                    updateShowRange(false, combatGrid);
                     runPlayerSpecialBackEnd();
                 }
             }
@@ -177,7 +178,7 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
-    default Character findClosest(int enemyX, int enemyY, GridPane combatGrid) throws IOException {
+    default Character findClosest(int enemyX, int enemyY) throws IOException {
         Character closest = gameState.getParty().getFirst();
         int tempx = closest.getPosition().getX();
         int tempy = closest.getPosition().getY();
@@ -192,10 +193,9 @@ public interface CombatMechanics extends GameMechanics{
             }
         }
         if(closest != null){
-            System.out.println(closest.getName());
         }
         if(!withinRange(closest)){
-            moveEnemy(closest, gameState.getCurrentCharacter().getRange(), combatGrid);
+            moveEnemy(closest, gameState.getCurrentCharacter().getRange());
             if(!withinRange(closest)){
                 closest = null;
             }
@@ -203,12 +203,12 @@ public interface CombatMechanics extends GameMechanics{
 
         return closest;
     }
-    default void moveEnemy(Character target, int range, GridPane combatGrid) throws IOException {
+    default void moveEnemy(Character target, int range) throws IOException {
         if(canMoveCount()){
-            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, combatGrid);
+            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range);
         }
     }
-    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, GridPane combatGrid) {
+    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft) {
         if (gameState.getMoveCount() <= 0 || withinRange(target)) {
             return;
         }
@@ -219,32 +219,23 @@ public interface CombatMechanics extends GameMechanics{
         Position position = calculateNewPos(enemyX, enemyY, targetX, targetY);
         int toX = position.getX();
         int toY = position.getY();
-
         int newX = toX - enemyX;
         int newY = toY - enemyY;
-
-
         double cellWidth = enemy.getBoundsInParent().getWidth();
         double cellHeight = enemy.getBoundsInParent().getHeight();
-
-        TranslateTransition transition = new TranslateTransition(Duration.millis(100), enemy);
-
+        TranslateTransition transition = new TranslateTransition(Duration.millis(500), enemy);
         transition.setByX(newX * cellWidth);
         transition.setByY(newY * cellHeight);
-
-
         transition.setOnFinished(e -> {
             GridPane.setColumnIndex(enemy, toX);
             GridPane.setRowIndex(enemy, toY);
             enemy.setTranslateX(0);
             enemy.setTranslateY(0);
-            gameState.getTurnOrder().getLast().getPosition().setX(toX);
-            gameState.getTurnOrder().getLast().getPosition().setY(toY);
+            gameState.getCurrentCharacter().getPosition().setX(toX);
+            gameState.getCurrentCharacter().getPosition().setY(toY);
             gameState.decreaseMoveCount();
-            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, combatGrid);
+            moveEnemyTowardTarget(enemy, target, stepsLeft - 1);
         });
-
-
         transition.play();
     }
 
@@ -253,8 +244,6 @@ public interface CombatMechanics extends GameMechanics{
         int distY = enemyY - targetY;
         int toX = enemyX;
         int toY = enemyY;
-
-
         if(Math.abs(distX) >= Math.abs(distY)){
             if(distX > 0){
                 toX--;
@@ -275,21 +264,23 @@ public interface CombatMechanics extends GameMechanics{
     }
 
 
-    default void runEnemyAttackBackEnd(GridPane combatGrid, Runnable updateTurn) throws IOException {
+    default void runEnemyAttackBackEnd(Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
-        Character target = findClosest(pos.getX(), pos.getY(), combatGrid);
+        Character target = findClosest(pos.getX(), pos.getY());
         if(target != null){
             target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
             updateHp(target, target.getHpBar(), target.getHpInfo());
         }
-        updateTurn.run();
+
+        pauseMethod(2.6, updateTurn);
+
     }
-    default void showPlayerAttack(Boolean bool){
-        updateShowRange(bool);
+    default void showPlayerAttack(Boolean bool, GridPane combatGrid){
+        updateShowRange(bool, combatGrid);
         setAttacking(bool);
     }
-    default void runPlayerAttackBackEnd(Character target){
-        updateShowRange(false);
+    default void runPlayerAttackBackEnd(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
         unhighlight(target.getProfile());
         target.setHighlighted(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
@@ -316,7 +307,7 @@ public interface CombatMechanics extends GameMechanics{
         }
     }
 
-    default void updateShowRange(boolean bool){
+    default void updateShowRange(boolean bool, GridPane combatGrid){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         int range = gameState.getCurrentCharacter().getRange();
@@ -325,6 +316,18 @@ public interface CombatMechanics extends GameMechanics{
                 if (Math.abs(i - x) + Math.abs(j - y) <= range) {
                     if (i >= 0 && i < cellNodes.length && j >= 0 && j < cellNodes[0].length) {
                         toggleHighlightCell(cellNodes[i][j], bool);
+                        Node image = iterate(i, j, combatGrid);
+                        if(image != null){
+                            Character character = (Character)image.getUserData();
+                            if(!(gameState.getCurrentCharacter().equals(character))){
+                                if(bool){
+                                    image.getStyleClass().add("glow-image");
+                                }
+                                else {
+                                    image.getStyleClass().remove("glow-image");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -333,7 +336,7 @@ public interface CombatMechanics extends GameMechanics{
     default void toggleHighlightCell(Node node, boolean highlight) {
         if (node != null) {
             if (highlight) {
-                node.setStyle("-fx-background-color: lightblue; -fx-border-color: gray;");
+                node.setStyle("-fx-background-color: black; -fx-border-color: gray;");
             } else {
                 node.setStyle("-fx-border-color: black; -fx-background-color: white;");
             }
