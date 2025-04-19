@@ -194,15 +194,15 @@ public interface CombatMechanics extends GameMechanics{
         }
         return closest;
     }
-    default void moveEnemy(Character target, int range, Runnable updateTurn) throws IOException {
+    default void moveEnemy(Character target, int range, Runnable updateTurn, GridPane combatGrid) throws IOException {
         if(canMoveCount()){
-            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, updateTurn);
+            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, updateTurn, combatGrid);
         }
     }
-    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, Runnable updateTurn) {
+    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, Runnable updateTurn, GridPane combatGrid) {
         if (gameState.getMoveCount() <= 0 || withinRange(target)) {
             if(withinRange(target)){
-                runEnemyAttackBackEnd(target,updateTurn, .5);
+                runEnemyAttackBackEnd(target,updateTurn, .5, combatGrid);
             }
             else {
                 pauseMethod(.5, updateTurn);
@@ -231,7 +231,7 @@ public interface CombatMechanics extends GameMechanics{
             gameState.getCurrentCharacter().getPosition().setX(toX);
             gameState.getCurrentCharacter().getPosition().setY(toY);
             gameState.decreaseMoveCount();
-            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn);
+            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn, combatGrid);
         });
         transition.play();
     }
@@ -261,19 +261,20 @@ public interface CombatMechanics extends GameMechanics{
     }
 
 
-    default void runEnemyAttack(Runnable updateTurn) throws IOException {
+    default void runEnemyAttack(GridPane combatGrid, Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY());
         if(withinRange(target)){
-            runEnemyAttackBackEnd(target, updateTurn, 0.5);
+            runEnemyAttackBackEnd(target, updateTurn, 0.5, combatGrid);
         }
         else {
-            moveEnemy(target, gameState.getCurrentCharacter().getRange(), updateTurn);
+            moveEnemy(target, gameState.getCurrentCharacter().getRange(), updateTurn, combatGrid);
         }
     }
-    default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time){
+    default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
+        checkIsDead(target, combatGrid);
         pauseMethod(time, updateTurn);
     }
     default void showPlayerAttack(Boolean bool, GridPane combatGrid){

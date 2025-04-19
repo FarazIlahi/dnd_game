@@ -372,7 +372,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         if(enemeyAttackCheck()){
             disableNode(show_btn);
             disableNode(end_btn);
-            runEnemyAttack(() -> {
+            runEnemyAttack(combatGrid, () -> {
                 try {
                     updateTurn();
                 } catch (IOException e) {
