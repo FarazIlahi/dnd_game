@@ -25,6 +25,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     private GridPane combatGrid;
     @FXML
     private TextArea turnOrderArea;
+    @FXML
+    private Button end_btn;
+    @FXML
+    private Button show_btn;
 
     @FXML
     private ImageView p1_profile;
@@ -113,8 +117,9 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     private boolean moving = false;
     private boolean animationMoving = false;
-    private boolean attacking;
-    private boolean usingSpecial;
+    private boolean attacking = false;
+    private boolean usingSpecial = false;
+    private boolean showingRange = false;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
@@ -134,6 +139,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     @Override
     public boolean getIsUsingSpecial(){
         return this.usingSpecial;
+    }
+    @Override
+    public boolean getIsShowingRange(){
+        return this.showingRange;
     }
 
     @FXML
@@ -167,27 +176,14 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = !moving;
         updateMoveButton();
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
-        updateButtons(moving,list.get(0), list.get(1));
-    }
-    public void updateButtons(Boolean check,Button other1, Button other2){
-        if(check){
-            disableNode(other1);
-            disableNode(other2);
-        }
-        else{
-            enableNode(other1);
-            enableNode(other2);
-            if(!canMoveCount()){
-                disableNode(gameState.getCurrentCharacter().getButtons().get(2));
-            }
-        }
+        updateButtons(moving,list.get(0), list.get(1), show_btn, end_btn);
     }
     @FXML
     private void attack(){
         moving = false;
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
-        updateButtons(attacking,list.get(1), list.get(2));
+        updateButtons(attacking,list.get(1), list.get(2), show_btn, end_btn);
         showPlayerAttack(attacking);
         updateMoveButton();
     }
@@ -197,9 +193,35 @@ public class CombatController extends BaseController implements GameMechanics, C
         updateMoveButton();
     }
     @FXML
-    private void pass() throws IOException {
-        moving = false;
+    private void passTurn() throws IOException {
         updateTurn();
+    }
+    @FXML
+    private void showRange(){
+        showingRange = !showingRange;
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(showingRange,list.get(0), list.get(1), list.get(2), end_btn);
+        gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
+    }
+    public void updateButtons(Boolean check,Button other1, Button other2, Button other3, Button other4){
+        if(enemeyAttackCheck()){
+            return;
+        }
+        if(check){
+            disableNode(other1);
+            disableNode(other2);
+            disableNode(other3);
+            disableNode(other4);
+        }
+        else{
+            enableNode(other1);
+            enableNode(other2);
+            enableNode(other3);
+            enableNode(other4);
+            if(!canMoveCount()){
+                disableNode(gameState.getCurrentCharacter().getButtons().get(2));
+            }
+        }
     }
 
     public void setKeybinds(){
@@ -332,6 +354,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = false;
         attacking = false;
         usingSpecial = false;
+        showingRange = false;
         gameState.nextTurn();
         gameState.resetMoveCount();
         updateMoveButton();

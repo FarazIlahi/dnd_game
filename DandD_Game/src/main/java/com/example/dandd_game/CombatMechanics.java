@@ -30,6 +30,7 @@ public interface CombatMechanics extends GameMechanics{
     boolean getIsAttacking();
 
     boolean getIsUsingSpecial();
+    boolean getIsShowingRange();
 
     default void setupGrid(GridPane combatGrid){
         combatGrid.getColumnConstraints().clear();
@@ -101,6 +102,12 @@ public interface CombatMechanics extends GameMechanics{
                     }
                 }
             }
+            else if(getIsShowingRange()){
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                gameState.setCurrentCharacter(owner);
+                updateShowRange(true);
+            }
         });
         profile.setOnMouseExited(event -> {
             if(getIsAttacking() || getIsUsingSpecial()){
@@ -112,6 +119,12 @@ public interface CombatMechanics extends GameMechanics{
                         owner.setHighlighted(false);
                     }
                 }
+            }
+            else if(getIsShowingRange()){
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                gameState.setCurrentCharacter(owner);
+                updateShowRange(false);
             }
         });
         profile.setOnMouseClicked(event -> {
@@ -141,9 +154,6 @@ public interface CombatMechanics extends GameMechanics{
             return true;
         }
         return false;
-    }
-    default void clearProfiles(int x, int y, GridPane combatGrid){
-        removeImageViewFromCell(x, y, combatGrid);
     }
     default void removeImageViewFromCell(int row, int column, GridPane gridPane) {
         List<Node> toRemove = new ArrayList<>();
@@ -228,8 +238,8 @@ public interface CombatMechanics extends GameMechanics{
             GridPane.setRowIndex(enemy, toY);
             enemy.setTranslateX(0);
             enemy.setTranslateY(0);
-            gameState.getCurrentCharacter().getPosition().setX(toX);
-            gameState.getCurrentCharacter().getPosition().setY(toY);
+            gameState.getTurnOrder().getLast().getPosition().setX(toX);
+            gameState.getTurnOrder().getLast().getPosition().setY(toY);
             gameState.decreaseMoveCount();
             moveEnemyTowardTarget(enemy, target, stepsLeft - 1, combatGrid);
         });
