@@ -181,71 +181,90 @@ public interface CombatMechanics extends GameMechanics{
                 oldDistance = newDistance;
             }
         }
-
+        if(closest != null){
+            System.out.println(closest.getName());
+        }
         if(!withinRange(closest)){
-            moveEnemy(closest, combatGrid);
+            moveEnemy(closest, gameState.getCurrentCharacter().getRange(), combatGrid);
             if(!withinRange(closest)){
                 closest = null;
             }
         }
+
         return closest;
     }
-    default void moveEnemy(Character target, GridPane combatGrid) throws IOException {
-        int range = gameState.getCurrentCharacter().getRange();
-        while (range != 0){
-            int enemyX = gameState.getCurrentCharacter().getPosition().getX();
-            int enemyY = gameState.getCurrentCharacter().getPosition().getY();
-            int targetX = target.getPosition().getX();
-            int targetY = target.getPosition().getY();
-            int distX = enemyX - targetX;
-            int distY = enemyY - targetY;
-            if(Math.abs(distX) >= Math.abs(distY)){
-                if(distX > 0){
-                    Runnable action = () -> {
-                        try {
-                            KeyBindingManager.getActionForKey(KeyCode.A).run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    };
-                    pauseMethod(0.6, action);
-                }
-                else {
-                    Runnable action = () -> {
-                        try {
-                            KeyBindingManager.getActionForKey(KeyCode.D).run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    };
-                    pauseMethod(0.6, action);
-                }
-            }
-            else {
-                if(distY > 0){
-                    Runnable action = () -> {
-                        try {
-                            KeyBindingManager.getActionForKey(KeyCode.W).run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    };
-                    pauseMethod(0.6, action);
-                }
-                else {
-                    Runnable action = () -> {
-                        try {
-                            KeyBindingManager.getActionForKey(KeyCode.S).run();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    };
-                    pauseMethod(0.6, action);
-                }
-            }
-            range--;
+    default void moveEnemy(Character target, int range, GridPane combatGrid) throws IOException {
+        if(canMoveCount()){
+            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, combatGrid);
         }
     }
+    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, GridPane combatGrid) {
+        if (gameState.getMoveCount() <= 0 || withinRange(target)) {
+            return;
+        }
+        int enemyX = gameState.getCurrentCharacter().getPosition().getX();
+        int enemyY = gameState.getCurrentCharacter().getPosition().getY();
+        int targetX = target.getPosition().getX();
+        int targetY = target.getPosition().getY();
+        Position position = calculateNewPos(enemyX, enemyY, targetX, targetY);
+        int toX = position.getX();
+        int toY = position.getY();
+
+        int newX = toX - enemyX;
+        int newY = toY - enemyY;
+
+
+        double cellWidth = enemy.getBoundsInParent().getWidth();
+        double cellHeight = enemy.getBoundsInParent().getHeight();
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(100), enemy);
+
+        transition.setByX(newX * cellWidth);
+        transition.setByY(newY * cellHeight);
+
+
+        transition.setOnFinished(e -> {
+            GridPane.setColumnIndex(enemy, toX);
+            GridPane.setRowIndex(enemy, toY);
+            enemy.setTranslateX(0);
+            enemy.setTranslateY(0);
+            gameState.getCurrentCharacter().getPosition().setX(toX);
+            gameState.getCurrentCharacter().getPosition().setY(toY);
+            gameState.decreaseMoveCount();
+            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, combatGrid);
+        });
+
+
+        transition.play();
+    }
+
+    default Position calculateNewPos(int enemyX, int enemyY, int targetX, int targetY){
+        int distX = enemyX - targetX;
+        int distY = enemyY - targetY;
+        int toX = enemyX;
+        int toY = enemyY;
+
+
+        if(Math.abs(distX) >= Math.abs(distY)){
+            if(distX > 0){
+                toX--;
+            }
+            else {
+                toX++;
+            }
+        }
+        else {
+            if(distY > 0){
+                toY--;
+            }
+            else {
+                toY++;
+            }
+        }
+        return new Position(toX, toY);
+    }
+
+
     default void runEnemyAttackBackEnd(GridPane combatGrid, Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY(), combatGrid);
@@ -346,4 +365,14 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
+    default boolean canMoveOnGrid(int x, int y, GridPane combatGrid){
+        if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
+            Node node = iterate(y, x, combatGrid);
+            if(node == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
