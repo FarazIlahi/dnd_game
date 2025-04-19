@@ -2,13 +2,16 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.Character;
 import com.example.dandd_game.Controllers.BaseController;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public interface CombatMechanics extends GameMechanics{
     boolean getIsAttacking();
 
     boolean getIsUsingSpecial();
+    boolean getIsShowingRange();
 
     default void setupGrid(GridPane combatGrid){
         combatGrid.getColumnConstraints().clear();
@@ -93,11 +97,17 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)) {
-                    if (owner != gameState.getCurrentCharacter()) {
+                    if (!gameState.getParty().contains(owner)) {
                         highlight(profile);
                         owner.setHighlighted(true);
                     }
                 }
+            }
+            else if(getIsShowingRange()){
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                gameState.setCurrentCharacter(owner);
+                updateShowRange(true, combatGrid);
             }
         });
         profile.setOnMouseExited(event -> {
@@ -105,11 +115,17 @@ public interface CombatMechanics extends GameMechanics{
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)){
-                    if(owner != gameState.getCurrentCharacter()){
+                    if(!gameState.getParty().contains(owner)){
                         unhighlight(profile);
                         owner.setHighlighted(false);
                     }
                 }
+            }
+            else if(getIsShowingRange()){
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                gameState.setCurrentCharacter(owner);
+                updateShowRange(false, combatGrid);
             }
         });
         profile.setOnMouseClicked(event -> {
@@ -117,12 +133,12 @@ public interface CombatMechanics extends GameMechanics{
             Character owner = (Character) iv.getUserData();
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
-                    runPlayerAttackBackEnd(owner);
+                    runPlayerAttackBackEnd(owner, combatGrid);
                     checkIsDead(owner, combatGrid);
                     updateTurn.run();
                 }
                 else if (getIsUsingSpecial()) {
-                    updateShowRange(false);
+                    updateShowRange(false, combatGrid);
                     runPlayerSpecialBackEnd();
                 }
             }
@@ -139,9 +155,6 @@ public interface CombatMechanics extends GameMechanics{
             return true;
         }
         return false;
-    }
-    default void clearProfiles(int x, int y, GridPane combatGrid){
-        removeImageViewFromCell(x, y, combatGrid);
     }
     default void removeImageViewFromCell(int row, int column, GridPane gridPane) {
         List<Node> toRemove = new ArrayList<>();
@@ -165,7 +178,7 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
-    default Character findClosest(int enemyX, int enemyY, GridPane combatGrid) throws IOException {
+    default Character findClosest(int enemyX, int enemyY) throws IOException {
         Character closest = gameState.getParty().getFirst();
         int tempx = closest.getPosition().getX();
         int tempy = closest.getPosition().getY();
@@ -179,58 +192,97 @@ public interface CombatMechanics extends GameMechanics{
                 oldDistance = newDistance;
             }
         }
-
-        if(!withinRange(closest)){
-            moveEnemy(closest, combatGrid);
-            if(!withinRange(closest)){
-                closest = null;
-            }
-        }
         return closest;
     }
-    default void moveEnemy(Character target, GridPane combatGrid) throws IOException {
-        int range = gameState.getCurrentCharacter().getRange();
-        while (range != 0){
-            int enemyX = gameState.getCurrentCharacter().getPosition().getX();
-            int enemyY = gameState.getCurrentCharacter().getPosition().getY();
-            int targetX = target.getPosition().getX();
-            int targetY = target.getPosition().getY();
-            int distX = enemyX - targetX;
-            int distY = enemyY - targetY;
-            if(Math.abs(distX) >= Math.abs(distY)){
-                if(distX > 0){
-                    KeyBindingManager.getActionForKey(KeyCode.A).run();
-                }
-                else {
-                    KeyBindingManager.getActionForKey(KeyCode.D).run();
-                }
+    default void moveEnemy(Character target, int range, Runnable updateTurn, GridPane combatGrid) throws IOException {
+        if(canMoveCount()){
+            moveEnemyTowardTarget(gameState.getCurrentCharacter().getProfile(), target, range, updateTurn, combatGrid);
+        }
+    }
+    default void moveEnemyTowardTarget(Node enemy, Character target, int stepsLeft, Runnable updateTurn, GridPane combatGrid) {
+        if (gameState.getMoveCount() <= 0 || withinRange(target)) {
+            if(withinRange(target)){
+                runEnemyAttackBackEnd(target,updateTurn, .5, combatGrid);
             }
             else {
-                if(distY > 0){
-                    KeyBindingManager.getActionForKey(KeyCode.W).run();
-                }
-                else {
-                    KeyBindingManager.getActionForKey(KeyCode.S).run();
-                }
+                pauseMethod(.5, updateTurn);
             }
-            range--;
+            return;
         }
+        int enemyX = gameState.getCurrentCharacter().getPosition().getX();
+        int enemyY = gameState.getCurrentCharacter().getPosition().getY();
+        int targetX = target.getPosition().getX();
+        int targetY = target.getPosition().getY();
+        Position position = calculateNewPos(enemyX, enemyY, targetX, targetY);
+        int toX = position.getX();
+        int toY = position.getY();
+        int newX = toX - enemyX;
+        int newY = toY - enemyY;
+        double cellWidth = enemy.getBoundsInParent().getWidth();
+        double cellHeight = enemy.getBoundsInParent().getHeight();
+        TranslateTransition transition = new TranslateTransition(Duration.millis(500), enemy);
+        transition.setByX(newX * cellWidth);
+        transition.setByY(newY * cellHeight);
+        transition.setOnFinished(e -> {
+            GridPane.setColumnIndex(enemy, toX);
+            GridPane.setRowIndex(enemy, toY);
+            enemy.setTranslateX(0);
+            enemy.setTranslateY(0);
+            gameState.getCurrentCharacter().getPosition().setX(toX);
+            gameState.getCurrentCharacter().getPosition().setY(toY);
+            gameState.decreaseMoveCount();
+            moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn, combatGrid);
+        });
+        transition.play();
     }
-    default void runEnemyAttackBackEnd(GridPane combatGrid, Runnable updateTurn) throws IOException {
+
+    default Position calculateNewPos(int enemyX, int enemyY, int targetX, int targetY){
+        int distX = enemyX - targetX;
+        int distY = enemyY - targetY;
+        int toX = enemyX;
+        int toY = enemyY;
+        if(Math.abs(distX) >= Math.abs(distY)){
+            if(distX > 0){
+                toX--;
+            }
+            else {
+                toX++;
+            }
+        }
+        else {
+            if(distY > 0){
+                toY--;
+            }
+            else {
+                toY++;
+            }
+        }
+        return new Position(toX, toY);
+    }
+
+
+    default void runEnemyAttack(GridPane combatGrid, Runnable updateTurn) throws IOException {
         Position pos = gameState.getCurrentCharacter().getPosition();
-        Character target = findClosest(pos.getX(), pos.getY(), combatGrid);
-        if(target != null){
-            target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
-            updateHp(target, target.getHpBar(), target.getHpInfo());
+        Character target = findClosest(pos.getX(), pos.getY());
+        if(withinRange(target)){
+            runEnemyAttackBackEnd(target, updateTurn, 0.5, combatGrid);
         }
-        updateTurn.run();
+        else {
+            moveEnemy(target, gameState.getCurrentCharacter().getRange(), updateTurn, combatGrid);
+        }
     }
-    default void showPlayerAttack(Boolean bool){
-        updateShowRange(bool);
+    default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
+        target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
+        updateHp(target, target.getHpBar(), target.getHpInfo());
+        checkIsDead(target, combatGrid);
+        pauseMethod(time, updateTurn);
+    }
+    default void showPlayerAttack(Boolean bool, GridPane combatGrid){
+        updateShowRange(bool, combatGrid);
         setAttacking(bool);
     }
-    default void runPlayerAttackBackEnd(Character target){
-        updateShowRange(false);
+    default void runPlayerAttackBackEnd(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
         unhighlight(target.getProfile());
         target.setHighlighted(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
@@ -257,7 +309,7 @@ public interface CombatMechanics extends GameMechanics{
         }
     }
 
-    default void updateShowRange(boolean bool){
+    default void updateShowRange(boolean bool, GridPane combatGrid){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
         int range = gameState.getCurrentCharacter().getRange();
@@ -274,7 +326,7 @@ public interface CombatMechanics extends GameMechanics{
     default void toggleHighlightCell(Node node, boolean highlight) {
         if (node != null) {
             if (highlight) {
-                node.setStyle("-fx-background-color: lightblue; -fx-border-color: gray;");
+                node.setStyle("-fx-background-color: black; -fx-border-color: gray;");
             } else {
                 node.setStyle("-fx-border-color: black; -fx-background-color: white;");
             }
@@ -316,4 +368,14 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
+    default boolean canMoveOnGrid(int x, int y, GridPane combatGrid){
+        if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
+            Node node = iterate(y, x, combatGrid);
+            if(node == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -1,10 +1,8 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.*;
 import com.example.dandd_game.Characters.Character;
-import com.example.dandd_game.CombatMechanics;
-import com.example.dandd_game.GameMechanics;
-import com.example.dandd_game.GameStateManager;
-import com.example.dandd_game.LocalImages;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +25,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     private GridPane combatGrid;
     @FXML
     private TextArea turnOrderArea;
+    @FXML
+    private Button end_btn;
+    @FXML
+    private Button show_btn;
 
     @FXML
     private ImageView p1_profile;
@@ -113,8 +116,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     private ProgressBar e1_hpBar;
 
     private boolean moving = false;
-    private boolean attacking;
-    private boolean usingSpecial;
+    private boolean animationMoving = false;
+    private boolean attacking = false;
+    private boolean usingSpecial = false;
+    private boolean showingRange = false;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
@@ -134,6 +139,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     @Override
     public boolean getIsUsingSpecial(){
         return this.usingSpecial;
+    }
+    @Override
+    public boolean getIsShowingRange(){
+        return this.showingRange;
     }
 
     @FXML
@@ -167,34 +176,53 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = !moving;
         updateMoveButton();
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
-        updateButtons(moving,list.get(0), list.get(1));
-    }
-    public void updateButtons(Boolean check,Button other1, Button other2){
-        if(check){
-            disableNode(other1);
-            disableNode(other2);
-        }
-        else{
-            enableNode(other1);
-            enableNode(other2);
-            if(!canMoveCount()){
-                disableNode(gameState.getCurrentCharacter().getButtons().get(2));
-            }
-        }
+        updateButtons(moving,list.get(0), list.get(1), show_btn, end_btn);
     }
     @FXML
     private void attack(){
         moving = false;
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
-        updateButtons(attacking,list.get(1), list.get(2));
-        showPlayerAttack(attacking);
+        updateButtons(attacking,list.get(1), list.get(2), show_btn, end_btn);
+        showPlayerAttack(attacking, combatGrid);
         updateMoveButton();
     }
     @FXML
     private void special(){
         moving = false;
         updateMoveButton();
+    }
+    @FXML
+    private void passTurn() throws IOException {
+        updateTurn();
+    }
+    @FXML
+    private void showRange(){
+        showingRange = !showingRange;
+        gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(showingRange,list.get(0), list.get(1), list.get(2), end_btn);
+        gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
+    }
+    public void updateButtons(Boolean check,Button other1, Button other2, Button other3, Button other4){
+        if(enemeyAttackCheck()){
+            return;
+        }
+        if(check){
+            disableNode(other1);
+            disableNode(other2);
+            disableNode(other3);
+            disableNode(other4);
+        }
+        else{
+            enableNode(other1);
+            enableNode(other2);
+            enableNode(other3);
+            enableNode(other4);
+            if(!canMoveCount()){
+                disableNode(gameState.getCurrentCharacter().getButtons().get(2));
+            }
+        }
     }
 
     public void setKeybinds(){
@@ -327,7 +355,10 @@ public class CombatController extends BaseController implements GameMechanics, C
         moving = false;
         attacking = false;
         usingSpecial = false;
+        showingRange = false;
         gameState.nextTurn();
+        gameState.resetMoveCount();
+        updateMoveButton();
         updateTurnOrder();
         String targetID = gameState.getCurrentCharacter().getID();
         for(Character character : gameState.getParty()){
@@ -339,13 +370,19 @@ public class CombatController extends BaseController implements GameMechanics, C
             }
         }
         if(enemeyAttackCheck()){
-            runEnemyAttackBackEnd(combatGrid, () -> {
+            disableNode(show_btn);
+            disableNode(end_btn);
+            runEnemyAttack(combatGrid, () -> {
                 try {
                     updateTurn();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
+        }
+        else {
+            enableNode(show_btn);
+            enableNode(end_btn);
         }
 
     }
@@ -359,8 +396,8 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveUp(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if (canMoveOnGrid(x, y - 1) && canMoveCount()){
-            if(moving || gameState.getEnemies().contains(gameState.getCurrentCharacter())){
+        if (canMoveOnGrid(x, y - 1, combatGrid) && canMoveCount()){
+            if(moving || enemeyAttackCheck()){
                 move("Up", x, y);
             }
         }
@@ -368,8 +405,8 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveDown(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if(canMoveOnGrid(x, y + 1) && canMoveCount()){
-            if(moving || gameState.getEnemies().contains(gameState.getCurrentCharacter())){
+        if(canMoveOnGrid(x, y + 1, combatGrid) && canMoveCount()){
+            if(moving || enemeyAttackCheck()){
                 move("Down", x, y);
             }
         }
@@ -377,8 +414,8 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveRight(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if (canMoveOnGrid(x + 1, y) && canMoveCount()){
-            if(moving || gameState.getEnemies().contains(gameState.getCurrentCharacter())){
+        if (canMoveOnGrid(x + 1, y, combatGrid) && canMoveCount()){
+            if(moving || enemeyAttackCheck()){
                 move("Right", x, y);
             }
         }
@@ -386,8 +423,8 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void moveLeft(){
         int x = gameState.getCurrentCharacter().getPosition().getX();
         int y = gameState.getCurrentCharacter().getPosition().getY();
-        if(canMoveOnGrid(x - 1, y) && canMoveCount()){
-            if(moving || gameState.getEnemies().contains(gameState.getCurrentCharacter())){
+        if(canMoveOnGrid(x - 1, y, combatGrid) && canMoveCount()){
+            if(moving || enemeyAttackCheck()){
                 move("Left", x, y);
             }
         }
@@ -396,72 +433,55 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void move(String direction, int x, int y){
         switch (direction){
             case "Up":
-                clearProfiles(x, y, combatGrid);
-                y--;
-                gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x , y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                moveTo(gameState.getCurrentCharacter().getProfile(), x, y, x, y- 1);
                 break;
             case "Down":
-                clearProfiles(x, y, combatGrid);
-                y++;
-                gameState.getCurrentCharacter().getPosition().setY(y);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                moveTo(gameState.getCurrentCharacter().getProfile(), x, y, x, y + 1);
                 break;
             case "Left":
-                clearProfiles(x, y, combatGrid);
-                x--;
-                gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                moveTo(gameState.getCurrentCharacter().getProfile(), x, y, x - 1, y);
                 break;
             case "Right":
-                clearProfiles(x, y, combatGrid);
-                x++;
-                gameState.getCurrentCharacter().getPosition().setX(x);
-                updateProfiles(gameState.getCurrentCharacter(), x, y, combatGrid, () -> {
-                    try {
-                        updateTurn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                gameState.decreaseMoveCount();
+                moveTo(gameState.getCurrentCharacter().getProfile(), x, y, x + 1, y);
                 break;
         }
-        if(!(gameState.getEnemies().contains(gameState.getCurrentCharacter()))){
-            updateMoveButton();
-        }
+        updateMoveButton();
     }
-    public boolean canMoveOnGrid(int x, int y){
-        if((x >= 0) && (x < 20) && (y >= 0) && (y < 20)){
-            Node node = iterate(y, x, combatGrid);
-            if(node == null){
-                return true;
-            }
+    public void moveTo(Node node, int fromX, int fromY, int toX, int toY) {
+        if(animationMoving){
+            return;
         }
-        return false;
+        animationMoving = true;
+        int dx = toX - fromX;
+        int dy = toY - fromY;
+
+        double cellWidth = node.getBoundsInParent().getWidth();
+        double cellHeight = node.getBoundsInParent().getHeight();
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(100), node);
+
+        transition.setByX(dx * cellWidth);
+        transition.setByY(dy * cellHeight);
+
+        transition.setOnFinished(e -> {
+            GridPane.setColumnIndex(node, toX);
+            GridPane.setRowIndex(node, toY);
+            node.setTranslateX(0);
+            node.setTranslateY(0);
+            animationMoving = false;
+        });
+        gameState.getCurrentCharacter().getPosition().setX(toX);
+        gameState.getCurrentCharacter().getPosition().setY(toY);
+        gameState.decreaseMoveCount();
+
+        transition.play();
     }
+
+
     public void updateMoveButton(){
+        if((enemeyAttackCheck())){
+            return;
+        }
         if (moving){
             gameState.getCurrentCharacter().getButtons().getLast().setText("Moves: " + gameState.getMoveCount());
         }

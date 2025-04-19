@@ -5,16 +5,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
    <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/OldPaper.jpg" />
+         </image>
+      </ImageView>
       <GridPane fx:id="combatGrid" layoutX="400.0" prefHeight="800.0" prefWidth="800.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,8 +31,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" layoutX="1200.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <TextArea fx:id="turnOrderArea" editable="false" layoutX="1200.0" layoutY="536.0" prefHeight="264.0" prefWidth="102.0">
          <font>
             <Font size="15.0" />
@@ -36,7 +39,7 @@
       <Group layoutX="23.0" layoutY="18.0">
          <children>
             <ImageView fx:id="p1_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="p1_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0">
+            <Label fx:id="p1_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" styleClass="info-label">
                <font>
                   <Font size="25.0" />
                </font>
@@ -61,7 +64,7 @@
       <Group layoutX="23.0" layoutY="228.0">
          <children>
             <ImageView fx:id="p2_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="p2_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0">
+            <Label fx:id="p2_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" styleClass="info-label">
                <font>
                   <Font size="25.0" />
                </font>
@@ -86,7 +89,7 @@
       <Group layoutX="23.0" layoutY="421.0">
          <children>
             <ImageView fx:id="p3_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="p3_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0">
+            <Label fx:id="p3_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" styleClass="info-label">
                <font>
                   <Font size="25.0" />
                </font>
@@ -111,7 +114,7 @@
       <Group layoutX="23.0" layoutY="612.0">
          <children>
             <ImageView fx:id="p4_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="p4_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0">
+            <Label fx:id="p4_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" styleClass="info-label">
                <font>
                   <Font size="25.0" />
                </font>
@@ -142,12 +145,18 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="e1_name" layoutX="116.0" layoutY="11.0" prefHeight="36.0" prefWidth="102.0">
+            <Label fx:id="e1_name" layoutX="116.0" layoutY="11.0" prefHeight="36.0" prefWidth="102.0" styleClass="info-label">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
          </children>
       </Group>
+      <Button fx:id="end_btn" layoutX="1200.0" layoutY="500.0" mnemonicParsing="false" onAction="#passTurn" prefHeight="36.0" prefWidth="80.0" text="End Turn" />
+      <Button fx:id="show_btn" layoutX="1200.0" layoutY="464.0" mnemonicParsing="false" onAction="#showRange" prefHeight="36.0" prefWidth="102.0" text="Show Character Range">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
