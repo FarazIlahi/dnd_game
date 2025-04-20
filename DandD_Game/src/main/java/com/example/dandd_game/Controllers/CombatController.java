@@ -115,6 +115,24 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private ProgressBar e1_hpBar;
 
+    @FXML
+    private ImageView e2_profile;
+    @FXML
+    private Label e2_name;
+    @FXML
+    private Label e2_hpInfo;
+    @FXML
+    private ProgressBar e2_hpBar;
+
+    @FXML
+    private ImageView e3_profile;
+    @FXML
+    private Label e3_name;
+    @FXML
+    private Label e3_hpInfo;
+    @FXML
+    private ProgressBar e3_hpBar;
+
     private boolean moving = false;
     private boolean animationMoving = false;
     private boolean attacking = false;
@@ -347,6 +365,26 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.setNameLabel(e1_name);
                 character.setHpBar(e1_hpBar);
                 character.setHpInfo(e1_hpInfo);
+                break;
+            case "2":
+                e2_profile.setImage(localImages.getImage(character.getID()));
+                e2_name.setText(character.getName());
+                e2_hpBar.setVisible(true);
+                updateHp(character, e2_hpBar, e2_hpInfo);
+                character.setProfile(new ImageView(e2_profile.getImage()));
+                character.setNameLabel(e2_name);
+                character.setHpBar(e2_hpBar);
+                character.setHpInfo(e2_hpInfo);
+                break;
+            case "3":
+                e3_profile.setImage(localImages.getImage(character.getID()));
+                e3_name.setText(character.getName());
+                e3_hpBar.setVisible(true);
+                updateHp(character, e3_hpBar, e3_hpInfo);
+                character.setProfile(new ImageView(e3_profile.getImage()));
+                character.setNameLabel(e3_name);
+                character.setHpBar(e3_hpBar);
+                character.setHpInfo(e3_hpInfo);
                 break;
         }
     }

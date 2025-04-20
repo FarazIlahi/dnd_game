@@ -292,7 +292,7 @@ public interface CombatMechanics extends GameMechanics{
         switch (gameState.getCurrentCharacter().getID()){
             case "King":
             case "Knight":
-                showSlash(target, combatGrid);
+                //showSlash(target, combatGrid);
                 break;
         }
     }

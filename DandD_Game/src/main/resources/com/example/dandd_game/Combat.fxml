@@ -152,6 +152,38 @@
             </Label>
          </children>
       </Group>
+      <Group layoutX="1292.0" layoutY="126.0">
+         <children>
+            <ImageView fx:id="e2_profile" fitHeight="57.0" fitWidth="75.0" layoutX="230.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e2_hpBar" layoutX="70.0" layoutY="71.0" prefHeight="20.0" prefWidth="218.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e2_hpInfo" layoutX="22.0" layoutY="71.0" styleClass="info-label">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="e2_name" layoutX="116.0" layoutY="11.0" prefHeight="36.0" prefWidth="102.0" styleClass="info-label">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1292.0" layoutY="241.0">
+         <children>
+            <ImageView fx:id="e3_profile" fitHeight="57.0" fitWidth="75.0" layoutX="230.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e3_hpBar" layoutX="70.0" layoutY="71.0" prefHeight="20.0" prefWidth="218.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e3_hpInfo" layoutX="22.0" layoutY="71.0" styleClass="info-label">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="e3_name" layoutX="116.0" layoutY="11.0" prefHeight="36.0" prefWidth="102.0" styleClass="info-label">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Group>
       <Button fx:id="end_btn" layoutX="1200.0" layoutY="500.0" mnemonicParsing="false" onAction="#passTurn" prefHeight="36.0" prefWidth="80.0" text="End Turn" />
       <Button fx:id="show_btn" layoutX="1200.0" layoutY="464.0" mnemonicParsing="false" onAction="#showRange" prefHeight="36.0" prefWidth="102.0" text="Show Character Range">
          <font>

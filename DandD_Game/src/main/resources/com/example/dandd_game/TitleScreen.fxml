@@ -41,8 +41,14 @@
             <Image url="@images/evilEyes.png" />
          </image>
       </ImageView>
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView id="goblin" fx:id="goblin" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/goblin.png" />
+         </image></ImageView>
+      <ImageView id="orc" fx:id="orc" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/orc.png" />
+         </image></ImageView>
       <ImageView id="slash" fx:id="slash" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@images/slash.png" />
@@ -58,5 +64,9 @@
          <Font size="29.0" />
       </font>
    </Button>
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>
 </Pane>

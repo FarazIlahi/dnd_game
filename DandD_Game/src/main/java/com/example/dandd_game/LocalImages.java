@@ -65,7 +65,7 @@ public class LocalImages {
         else if (image.equals("Goblin")) {
             return new Image(this.goblinURL);
         }
-        else if (image.equals("orc")) {
+        else if (image.equals("Orc")) {
             return new Image(this.orcURL);
         }
         else if (image.equals("Sorcerer")) {

@@ -22,6 +22,10 @@ public class TitleScreenController extends BaseController {
     @FXML
     private ImageView sorcerer;
     @FXML
+    private ImageView goblin;
+    @FXML
+    private ImageView orc;
+    @FXML
     private ImageView slash;
 
 
@@ -33,6 +37,8 @@ public class TitleScreenController extends BaseController {
         localImages.setClericURL(cleric.getImage().getUrl());
         localImages.setMageURL(mage.getImage().getUrl());
         localImages.setSorcererURL(sorcerer.getImage().getUrl());
+        localImages.setGoblinURL(goblin.getImage().getUrl());
+        localImages.setOrcURL(orc.getImage().getUrl());
         localImages.setSlashURL(slash.getImage().getUrl());
     }
 
@@ -53,11 +59,11 @@ public class TitleScreenController extends BaseController {
         gameState.addToParty(gameState.getCleric());
         gameState.addToParty(gameState.getMage());
 
-        //gameState.createGoblin();
-        //gameState.createOrc();
+        gameState.createGoblin();
+        gameState.createOrc();
         gameState.createSorcerer();
-        //gameState.addToEnemys(gameState.getGoblin());
-        //gameState.addToEnemys(gameState.getOrc());
+        gameState.addToEnemys(gameState.getGoblin());
+        gameState.addToEnemys(gameState.getOrc());
         gameState.addToEnemys(gameState.getSorcerer());
 
 
