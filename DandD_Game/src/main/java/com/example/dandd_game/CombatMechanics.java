@@ -23,6 +23,8 @@ public interface CombatMechanics extends GameMechanics{
     Node[][] cellNodes = new Node[20][20];
     GameStateManager gameState = GameStateManager.getInstance();
     LocalImages localImages = LocalImages.getInstance();
+    ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
+
 
     void setAttacking(boolean bool);
 
@@ -287,6 +289,22 @@ public interface CombatMechanics extends GameMechanics{
         target.setHighlighted(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
+        switch (gameState.getCurrentCharacter().getID()){
+            case "King":
+            case "Knight":
+                showSlash(target, combatGrid);
+                break;
+        }
+    }
+    default void showSlash(Character target, GridPane combatGrid){
+        ImageView targetImage = target.getProfile();
+        slashEffect.setFitWidth(targetImage.getFitWidth());
+        slashEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, slashEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        slashEffect.setVisible(true);
+        pauseMethod(1.0,() -> slashEffect.setVisible(false));
     }
 
     default void runPlayerSpecial(){

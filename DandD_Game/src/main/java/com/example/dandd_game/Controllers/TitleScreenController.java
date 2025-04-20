@@ -21,6 +21,8 @@ public class TitleScreenController extends BaseController {
     private ImageView mage;
     @FXML
     private ImageView sorcerer;
+    @FXML
+    private ImageView slash;
 
 
     private LocalImages localImages = LocalImages.getInstance();
@@ -31,6 +33,7 @@ public class TitleScreenController extends BaseController {
         localImages.setClericURL(cleric.getImage().getUrl());
         localImages.setMageURL(mage.getImage().getUrl());
         localImages.setSorcererURL(sorcerer.getImage().getUrl());
+        localImages.setSlashURL(slash.getImage().getUrl());
     }
 
     @FXML
