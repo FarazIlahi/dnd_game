@@ -51,7 +51,15 @@
          </image></ImageView>
       <ImageView id="slash" fx:id="slash" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@images/slash.png" />
+            <Image url="@images/slash.gif" />
+         </image></ImageView>
+      <ImageView id="explosion" fx:id="explosion" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/explode.gif" />
+         </image></ImageView>
+      <ImageView id="heal" fx:id="heal" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/heal.gif" />
          </image></ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" layoutX="524.0" layoutY="580.0" onMouseClicked="#goNext" stroke="BLACK" strokeType="INSIDE" width="453.0" />
       <Label layoutX="531.0" layoutY="580.0" onMouseClicked="#goNext" prefHeight="93.0" prefWidth="422.0" text="Click anywhere to continue">
@@ -64,8 +72,6 @@
          <Font size="29.0" />
       </font>
    </Button>
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>

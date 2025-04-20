@@ -17,8 +17,9 @@ public class GameStateManager {
     private Knight knight;
     private Cleric cleric;
     private Mage mage;
-    private Goblin goblin;
-    private Orc orc;
+    private ArrayList<Character> goblins = new ArrayList<Character>();
+    private ArrayList<Character> orcs = new ArrayList<Character>();
+
     private Sorcerer sorcerer;
     private Character currentCharacter;
     private int moveCount = 5;
@@ -43,8 +44,8 @@ public class GameStateManager {
         knight = null;
         cleric = null;
         mage = null;
-        goblin = null;
-        orc = null;
+        resetList(goblins);
+        resetList(orcs);
         sorcerer = null;
         currentCharacter = null;
         moveCount = 5;
@@ -128,16 +129,16 @@ public class GameStateManager {
         return this.mage;
     }
     public void createGoblin(){
-        this.goblin = new Goblin();
+        goblins.add(new Goblin());
     }
-    public Goblin getGoblin(){
-        return this.goblin;
+    public ArrayList<Character> getGoblins(){
+        return this.goblins;
     }
     public void createOrc(){
-        this.orc = new Orc();
-    }
-    public Orc getOrc(){
-        return this.orc;
+        orcs.add(new Orc());}
+
+    public ArrayList<Character> getOrcs(){
+        return this.orcs;
     }
     public void createSorcerer(){
         this.sorcerer = new Sorcerer();

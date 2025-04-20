@@ -27,6 +27,10 @@ public class TitleScreenController extends BaseController {
     private ImageView orc;
     @FXML
     private ImageView slash;
+    @FXML
+    private ImageView explosion;
+    @FXML
+    private ImageView heal;
 
 
     private LocalImages localImages = LocalImages.getInstance();
@@ -40,6 +44,8 @@ public class TitleScreenController extends BaseController {
         localImages.setGoblinURL(goblin.getImage().getUrl());
         localImages.setOrcURL(orc.getImage().getUrl());
         localImages.setSlashURL(slash.getImage().getUrl());
+        localImages.setExplosionURL(explosion.getImage().getUrl());
+        localImages.setHealURL(heal.getImage().getUrl());
     }
 
     @FXML
@@ -60,11 +66,26 @@ public class TitleScreenController extends BaseController {
         gameState.addToParty(gameState.getMage());
 
         gameState.createGoblin();
-        gameState.createOrc();
-        gameState.createSorcerer();
-        gameState.addToEnemys(gameState.getGoblin());
-        gameState.addToEnemys(gameState.getOrc());
-        gameState.addToEnemys(gameState.getSorcerer());
+        gameState.createGoblin();
+        gameState.createGoblin();
+        //gameState.createOrc();
+        //gameState.createSorcerer();
+        gameState.getGoblins().getFirst().getPosition().setX(3);
+        gameState.getGoblins().getFirst().getPosition().setY(8);
+        gameState.getGoblins().get(1).getPosition().setX(4);
+        gameState.getGoblins().get(1).getPosition().setY(7);
+
+
+        gameState.getGoblins().getLast().getPosition().setX(4);
+        gameState.getGoblins().getLast().getPosition().setY(8);
+        gameState.getGoblins().getLast().setRange(20);
+        gameState.getGoblins().get(1).setRange(20);
+        gameState.addToEnemys(gameState.getGoblins().get(0));
+        gameState.addToEnemys(gameState.getGoblins().get(1));
+        gameState.addToEnemys(gameState.getGoblins().get(2));
+
+        //gameState.addToEnemys(gameState.getOrc());
+        //gameState.addToEnemys(gameState.getSorcerer());
 
 
         switchScene(event,"Combat");

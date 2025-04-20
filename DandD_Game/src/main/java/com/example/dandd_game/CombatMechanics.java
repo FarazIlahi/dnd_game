@@ -237,7 +237,6 @@ public interface CombatMechanics extends GameMechanics{
         });
         transition.play();
     }
-
     default Position calculateNewPos(int enemyX, int enemyY, int targetX, int targetY){
         int distX = enemyX - targetX;
         int distY = enemyY - targetY;
