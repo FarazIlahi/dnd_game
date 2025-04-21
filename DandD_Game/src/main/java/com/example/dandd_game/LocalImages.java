@@ -83,10 +83,10 @@ public class LocalImages {
             return new Image(this.slashURL);
         }
         else if (image.equals("Explosion")) {
-            return new Image(this.slashURL);
+            return new Image(this.explosionURL);
         }
         else if (image.equals("Heal")) {
-            return new Image(this.slashURL);
+            return new Image(this.healURL);
         }
 
         else {
