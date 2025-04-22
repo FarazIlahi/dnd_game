@@ -23,9 +23,6 @@ public interface CombatMechanics extends GameMechanics{
     Node[][] cellNodes = new Node[20][20];
     GameStateManager gameState = GameStateManager.getInstance();
     LocalImages localImages = LocalImages.getInstance();
-    ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
-    ImageView explosionEffect = new ImageView(localImages.getImage("Explosion"));
-    ImageView healEffect = new ImageView(localImages.getImage("Heal"));
 
 
     void setAttacking(boolean bool);
@@ -138,8 +135,8 @@ public interface CombatMechanics extends GameMechanics{
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
                     runPlayerAttackBackEnd(owner, combatGrid);
-                    checkIsDead(owner, combatGrid);
-                    pauseMethod(1.5, updateTurn);
+                    pauseMethod(0.5, updateTurn);
+                    pauseMethod(1.0, () -> checkIsDead(owner, combatGrid));
                 }
                 else if (getIsUsingSpecial()) {
                     updateShowRange(false, combatGrid);
@@ -297,42 +294,41 @@ public interface CombatMechanics extends GameMechanics{
                 showSlash(target, combatGrid);
                 break;
             case "Mage":
-                showExplosion(target, combatGrid);
-                break;
             case "Cleric":
-                showHeal(target, combatGrid);
+                showExplosion(target, combatGrid);
                 break;
         }
     }
     default void showSlash(Character target, GridPane combatGrid){
         ImageView targetImage = target.getProfile();
+        ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
         slashEffect.setFitWidth(targetImage.getFitWidth());
         slashEffect.setFitHeight(targetImage.getFitHeight());
         StackPane enemyWrapper = new StackPane();
         enemyWrapper.getChildren().addAll(targetImage, slashEffect);
         combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        slashEffect.setVisible(true);
-        pauseMethod(1.1, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
     }
     default void showExplosion(Character target, GridPane combatGrid){
+        ImageView explosionEffect = new ImageView(localImages.getImage("Explosion"));
         ImageView targetImage = target.getProfile();
         explosionEffect.setFitWidth(targetImage.getFitWidth());
         explosionEffect.setFitHeight(targetImage.getFitHeight());
         StackPane enemyWrapper = new StackPane();
         enemyWrapper.getChildren().addAll(targetImage, explosionEffect);
         combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        explosionEffect.setVisible(true);
-        pauseMethod(1.5, () -> combatGrid.getChildren().remove(enemyWrapper));
-
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
     }
     default void showHeal(Character target, GridPane combatGrid){
+        ImageView healEffect = new ImageView(localImages.getImage("Heal"));
         ImageView targetImage = target.getProfile();
         healEffect.setFitWidth(targetImage.getFitWidth());
         healEffect.setFitHeight(targetImage.getFitHeight());
         StackPane enemyWrapper = new StackPane();
         enemyWrapper.getChildren().addAll(targetImage, healEffect);
         combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        healEffect.setVisible(true);
         pauseMethod(1.0,() -> healEffect.setVisible(false));
     }
 
