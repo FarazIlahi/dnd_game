@@ -28,12 +28,13 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     Button load4;
     @FXML
-    Pane rootPane;
+    private Pane rootPane;
     private boolean creatingFile;
     private int selectedSlot = -1;
     @FXML
     private void initialize() {
         super.init(rootPane);
+        rootPane.requestFocus();
         creatingFile = false;
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
