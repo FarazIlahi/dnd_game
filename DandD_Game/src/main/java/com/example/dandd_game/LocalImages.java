@@ -12,6 +12,8 @@ public class LocalImages {
     private String orcURL;
     private String sorcererURL;
     private String slashURL;
+    private String explosionURL;
+    private String healURL;
 
     private static LocalImages instance;
     public static LocalImages getInstance() {
@@ -48,6 +50,12 @@ public class LocalImages {
     public void setSlashURL(String slashURL) {
         this.slashURL = slashURL;
     }
+    public void setExplosionURL(String explosionURL) {
+        this.explosionURL = explosionURL;
+    }
+    public void setHealURL(String healURL) {
+        this.healURL = healURL;
+    }
 
     public Image getImage(String image){
         if(image.equals("King")){
@@ -73,6 +81,12 @@ public class LocalImages {
         }
         else if (image.equals("Slash")) {
             return new Image(this.slashURL);
+        }
+        else if (image.equals("Explosion")) {
+            return new Image(this.explosionURL);
+        }
+        else if (image.equals("Heal")) {
+            return new Image(this.healURL);
         }
 
         else {

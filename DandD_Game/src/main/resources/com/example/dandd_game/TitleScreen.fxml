@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
    <children>
 
       <ImageView fitHeight="800.0" fitWidth="1600.0" onMouseClicked="#goNext" pickOnBounds="true" preserveRatio="true">
@@ -51,7 +49,15 @@
          </image></ImageView>
       <ImageView id="slash" fx:id="slash" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@images/slash.png" />
+            <Image url="@images/slash.gif" />
+         </image></ImageView>
+      <ImageView id="explosion" fx:id="explosion" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/explode.gif" />
+         </image></ImageView>
+      <ImageView id="heal" fx:id="heal" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/heal.gif" />
          </image></ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" layoutX="524.0" layoutY="580.0" onMouseClicked="#goNext" stroke="BLACK" strokeType="INSIDE" width="453.0" />
       <Label layoutX="531.0" layoutY="580.0" onMouseClicked="#goNext" prefHeight="93.0" prefWidth="422.0" text="Click anywhere to continue">
@@ -64,8 +70,6 @@
          <Font size="29.0" />
       </font>
    </Button>
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>

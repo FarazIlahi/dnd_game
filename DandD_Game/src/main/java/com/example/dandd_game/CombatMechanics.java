@@ -23,7 +23,6 @@ public interface CombatMechanics extends GameMechanics{
     Node[][] cellNodes = new Node[20][20];
     GameStateManager gameState = GameStateManager.getInstance();
     LocalImages localImages = LocalImages.getInstance();
-    ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
 
 
     void setAttacking(boolean bool);
@@ -136,8 +135,8 @@ public interface CombatMechanics extends GameMechanics{
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
                     runPlayerAttackBackEnd(owner, combatGrid);
-                    checkIsDead(owner, combatGrid);
-                    updateTurn.run();
+                    pauseMethod(0.5, updateTurn);
+                    pauseMethod(1.0, () -> checkIsDead(owner, combatGrid));
                 }
                 else if (getIsUsingSpecial()) {
                     updateShowRange(false, combatGrid);
@@ -160,7 +159,6 @@ public interface CombatMechanics extends GameMechanics{
     }
     default void removeImageViewFromCell(int row, int column, GridPane gridPane) {
         List<Node> toRemove = new ArrayList<>();
-
         Node node = iterate(column,row,gridPane);
         if(node != null){
             toRemove.add(node);
@@ -230,14 +228,14 @@ public interface CombatMechanics extends GameMechanics{
             GridPane.setRowIndex(enemy, toY);
             enemy.setTranslateX(0);
             enemy.setTranslateY(0);
-            gameState.getCurrentCharacter().getPosition().setX(toX);
-            gameState.getCurrentCharacter().getPosition().setY(toY);
-            gameState.decreaseMoveCount();
+
             moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn, combatGrid);
         });
+        gameState.getCurrentCharacter().getPosition().setX(toX);
+        gameState.getCurrentCharacter().getPosition().setY(toY);
+        gameState.decreaseMoveCount();
         transition.play();
     }
-
     default Position calculateNewPos(int enemyX, int enemyY, int targetX, int targetY){
         int distX = enemyX - targetX;
         int distY = enemyY - targetY;
@@ -264,6 +262,10 @@ public interface CombatMechanics extends GameMechanics{
 
 
     default void runEnemyAttack(GridPane combatGrid, Runnable updateTurn) throws IOException {
+        if(gameState.getCurrentCharacter().getIsDead()){
+            updateTurn.run();
+            return;
+        }
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY());
         if(withinRange(target)){
@@ -276,8 +278,9 @@ public interface CombatMechanics extends GameMechanics{
     default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        checkIsDead(target, combatGrid);
+        showEffect(target, combatGrid);
         pauseMethod(time, updateTurn);
+        pauseMethod(1.0, () -> checkIsDead(target, combatGrid));
     }
     default void showPlayerAttack(Boolean bool, GridPane combatGrid){
         updateShowRange(bool, combatGrid);
@@ -287,24 +290,56 @@ public interface CombatMechanics extends GameMechanics{
         updateShowRange(false, combatGrid);
         unhighlight(target.getProfile());
         target.setHighlighted(false);
+        setAttacking(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
+        showEffect(target, combatGrid);
+    }
+    default void showEffect(Character character, GridPane combatGrid){
         switch (gameState.getCurrentCharacter().getID()){
             case "King":
             case "Knight":
-                //showSlash(target, combatGrid);
+            case "Goblin":
+                showSlash(character, combatGrid);
+                break;
+            case "Mage":
+            case "Cleric":
+            case "Sorcerer":
+                showExplosion(character, combatGrid);
                 break;
         }
     }
     default void showSlash(Character target, GridPane combatGrid){
         ImageView targetImage = target.getProfile();
+        ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
         slashEffect.setFitWidth(targetImage.getFitWidth());
         slashEffect.setFitHeight(targetImage.getFitHeight());
         StackPane enemyWrapper = new StackPane();
         enemyWrapper.getChildren().addAll(targetImage, slashEffect);
         combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        slashEffect.setVisible(true);
-        pauseMethod(1.0,() -> slashEffect.setVisible(false));
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
+    }
+    default void showExplosion(Character target, GridPane combatGrid){
+        ImageView explosionEffect = new ImageView(localImages.getImage("Explosion"));
+        ImageView targetImage = target.getProfile();
+        explosionEffect.setFitWidth(targetImage.getFitWidth());
+        explosionEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, explosionEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
+    }
+    default void showHeal(Character target, GridPane combatGrid){
+        ImageView healEffect = new ImageView(localImages.getImage("Heal"));
+        ImageView targetImage = target.getProfile();
+        healEffect.setFitWidth(targetImage.getFitWidth());
+        healEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, healEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        pauseMethod(1.0,() -> healEffect.setVisible(false));
     }
 
     default void runPlayerSpecial(){
@@ -395,5 +430,4 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
-
 }

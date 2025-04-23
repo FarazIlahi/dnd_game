@@ -27,6 +27,10 @@ public class TitleScreenController extends BaseController {
     private ImageView orc;
     @FXML
     private ImageView slash;
+    @FXML
+    private ImageView explosion;
+    @FXML
+    private ImageView heal;
 
 
     private LocalImages localImages = LocalImages.getInstance();
@@ -40,6 +44,8 @@ public class TitleScreenController extends BaseController {
         localImages.setGoblinURL(goblin.getImage().getUrl());
         localImages.setOrcURL(orc.getImage().getUrl());
         localImages.setSlashURL(slash.getImage().getUrl());
+        localImages.setExplosionURL(explosion.getImage().getUrl());
+        localImages.setHealURL(heal.getImage().getUrl());
     }
 
     @FXML
@@ -65,7 +71,6 @@ public class TitleScreenController extends BaseController {
         gameState.addToEnemys(gameState.getGoblin());
         gameState.addToEnemys(gameState.getOrc());
         gameState.addToEnemys(gameState.getSorcerer());
-
 
         switchScene(event,"Combat");
     }

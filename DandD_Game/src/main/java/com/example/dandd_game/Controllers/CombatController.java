@@ -390,6 +390,7 @@ public class CombatController extends BaseController implements GameMechanics, C
     }
 
     public void updateTurn() throws IOException {
+        pauseMethodThrowing(1.5, this::gameOverCheck);
         moving = false;
         attacking = false;
         usingSpecial = false;
@@ -525,6 +526,14 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
         else{
             gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
+        }
+    }
+    public void gameOverCheck() throws IOException {
+        if(gameState.getKing().getIsDead()){
+            switchScene("Chapter3/GameOverScene");
+        }
+        else if (gameState.getEnemies().isEmpty()) {
+            switchScene("Chapter3/GameWinScene");
         }
     }
 }
