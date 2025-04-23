@@ -32,7 +32,6 @@ public class OptionMenuController extends BaseController implements GameMechanic
 
     @FXML
     private void initialize() {
-        super.init(rootPane);
         checkScene(gameState.getCurrentScene());
 
     }
