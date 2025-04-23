@@ -262,6 +262,10 @@ public interface CombatMechanics extends GameMechanics{
 
 
     default void runEnemyAttack(GridPane combatGrid, Runnable updateTurn) throws IOException {
+        if(gameState.getCurrentCharacter().getIsDead()){
+            updateTurn.run();
+            return;
+        }
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY());
         if(withinRange(target)){
@@ -274,8 +278,9 @@ public interface CombatMechanics extends GameMechanics{
     default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        checkIsDead(target, combatGrid);
+        showEffect(target, combatGrid);
         pauseMethod(time, updateTurn);
+        pauseMethod(1.0, () -> checkIsDead(target, combatGrid));
     }
     default void showPlayerAttack(Boolean bool, GridPane combatGrid){
         updateShowRange(bool, combatGrid);
@@ -285,17 +290,22 @@ public interface CombatMechanics extends GameMechanics{
         updateShowRange(false, combatGrid);
         unhighlight(target.getProfile());
         target.setHighlighted(false);
+        setAttacking(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        checkIsDead(target, combatGrid);
+        showEffect(target, combatGrid);
+    }
+    default void showEffect(Character character, GridPane combatGrid){
         switch (gameState.getCurrentCharacter().getID()){
             case "King":
             case "Knight":
-                showSlash(target, combatGrid);
+            case "Goblin":
+                showSlash(character, combatGrid);
                 break;
             case "Mage":
             case "Cleric":
-                showExplosion(target, combatGrid);
+            case "Sorcerer":
+                showExplosion(character, combatGrid);
                 break;
         }
     }
@@ -420,5 +430,4 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
-
 }

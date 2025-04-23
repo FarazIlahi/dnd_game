@@ -72,7 +72,6 @@ public class TitleScreenController extends BaseController {
         gameState.addToEnemys(gameState.getOrc());
         gameState.addToEnemys(gameState.getSorcerer());
 
-
         switchScene(event,"Combat");
     }
 }
