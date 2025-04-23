@@ -14,7 +14,6 @@ public class Knight extends Character {
 
     @Override
     public int specialMove(){
-        updateSpecial();
         //blocks attack for an ally for half the dmg
         //Must be wihtin rangew
         return this.getDef();

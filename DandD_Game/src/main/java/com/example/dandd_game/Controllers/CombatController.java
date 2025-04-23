@@ -138,6 +138,8 @@ public class CombatController extends BaseController implements GameMechanics, C
     private boolean attacking = false;
     private boolean usingSpecial = false;
     private boolean showingRange = false;
+    private int defenseCount = -1;
+    private Character defendedAlly;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
@@ -162,6 +164,23 @@ public class CombatController extends BaseController implements GameMechanics, C
     public boolean getIsShowingRange(){
         return this.showingRange;
     }
+    @Override
+    public void setDefenseCount(int num){
+        this.defenseCount = num;
+    }
+    @Override
+    public int getDefenseCount(){
+        return this.defenseCount;
+    }
+    @Override
+    public void setDefendedAlly(Character ally){
+        this.defendedAlly = ally;
+    }
+    @Override
+    public Character getDefendedAlly(){
+        return this.defendedAlly;
+    }
+
 
     @FXML
     private void initialize() {
@@ -406,6 +425,9 @@ public class CombatController extends BaseController implements GameMechanics, C
         gameState.resetMoveCount();
         updateMoveButton();
         updateTurnOrder();
+        resetDefendedAlly();
+        setDefenseCount(getDefenseCount() - 1);
+        System.out.println(getDefenseCount());
         String targetID = gameState.getCurrentCharacter().getID();
         for(Character character : gameState.getParty()){
             disableButtons(character.getButtons());

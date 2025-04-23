@@ -13,7 +13,6 @@ public class King extends Character {
     }
     @Override
     public int specialMove(){
-        updateSpecial();
         return getBasic_attack() * 2;
     }
 

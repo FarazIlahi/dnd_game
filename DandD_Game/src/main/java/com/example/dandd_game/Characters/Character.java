@@ -126,6 +126,9 @@ public abstract class Character{
             this.isDead = true;
             this.hp = 0;
         }
+        else if (this.hp > this.max_hp) {
+            this.hp = this.max_hp;
+        }
     }
     public void setDef(int def) {
         this.def = def;
@@ -174,6 +177,13 @@ public abstract class Character{
         if(this.special <= 0){
             this.special = 0;
         }
+        else if (this.special > this.max_special) {
+         this.special = max_special;
+        }
+    }
+
+    public void setSpecial(int special) {
+        this.special = special;
     }
 
     public abstract int specialMove();

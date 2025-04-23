@@ -13,9 +13,8 @@ public class Mage extends Character {
     }
     @Override
     public int specialMove(){
-        updateSpecial();
         //AOE attack doing 15 ATk(Could change)
         //Must be within 15 range units
-        return 15;
+        return 7;
     }
 }

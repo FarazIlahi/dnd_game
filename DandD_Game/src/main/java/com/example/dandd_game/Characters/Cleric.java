@@ -14,9 +14,8 @@ public class Cleric extends Character {
     }
     @Override
     public int specialMove(){
-        updateSpecial();
         //heals all for 15hp(Could change)
         //Must be wihtin range
-        return -15;
+        return -9;
     }
 }
