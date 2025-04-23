@@ -202,12 +202,16 @@ public class CombatController extends BaseController implements GameMechanics, C
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
         updateButtons(attacking,list.get(1), list.get(2), show_btn, end_btn);
-        showPlayerAttack(attacking, combatGrid);
+        showPlayerRange(attacking, combatGrid);
         updateMoveButton();
     }
     @FXML
     private void special(){
         moving = false;
+        setUsingSpecial(!usingSpecial);
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(usingSpecial,list.get(0), list.get(2), show_btn, end_btn);
+        showPlayerRange(usingSpecial, combatGrid);
         updateMoveButton();
     }
     @FXML
@@ -239,6 +243,9 @@ public class CombatController extends BaseController implements GameMechanics, C
             enableNode(other4);
             if(!canMoveCount()){
                 disableNode(gameState.getCurrentCharacter().getButtons().get(2));
+            }
+            if(!canUseSpecial()){
+                disableNode(gameState.getCurrentCharacter().getButtons().get(1));
             }
         }
     }
@@ -406,6 +413,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         for(Character character : gameState.getParty()){
             if(targetID.equals(character.getID())){
                 enableButtons(character.getButtons());
+                updateSpecialButton();
             }
         }
         if(enemeyAttackCheck()){
@@ -526,6 +534,14 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
         else{
             gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
+        }
+    }
+    public void updateSpecialButton(){
+        if((enemeyAttackCheck())){
+            return;
+        }
+        if(!canUseSpecial()){
+            disableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
     }
     public void gameOverCheck() throws IOException {

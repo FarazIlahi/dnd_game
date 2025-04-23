@@ -30,7 +30,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         } // leave this code in (its to check for queued achievements)
 
         // example character also for testing, can be deleted
-        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
+        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0), 0, 0) {
             @Override
             public String specialToSrting() {
 
@@ -38,8 +38,9 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             }
 
             @Override
-            public void specialMove() {
+            public int specialMove() {
                 System.out.println("Big hit");
+                return 0;
             }
         }; // end of character data
     }

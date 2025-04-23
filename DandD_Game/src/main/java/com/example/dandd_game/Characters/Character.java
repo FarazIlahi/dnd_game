@@ -18,6 +18,9 @@ public abstract class Character{
     private String name;
     private String iD;
     private Position position;
+    private int special;
+    private int max_special;
+    private int specialCost;
 
     private ImageView profile;
     private Label nameLabel;
@@ -31,7 +34,7 @@ public abstract class Character{
     private boolean isDead = false;
 
 
-    public Character(int hp, int def, int basic_attack, int range, String name, Position position){
+    public Character(int hp, int def, int basic_attack, int range, String name, Position position, int special, int specialCost){
         this.hp = hp;
         this.max_hp = hp;
         this.def = def;
@@ -41,6 +44,9 @@ public abstract class Character{
         this.iD = name;
         this.position = position;
         this.isDead = false;
+        this.special = special;
+        this.max_special = special;
+        this.specialCost = specialCost;
     }
     public int getHp(){
         return this.hp;
@@ -64,10 +70,21 @@ public abstract class Character{
     public Position getPosition(){
         return this.position;
     }
+    public int getSpecial(){
+        return this.special;
+    }
+
+    public int getSpecialCost() {
+        return specialCost;
+    }
+    public int getMax_special() {
+        return max_special;
+    }
+
+
     public String hpToString(){
         return this.hp + "/" + this.max_hp;
     }
-    public abstract String specialToSrting();
 
     public ImageView getProfile() {
         return profile;
@@ -152,5 +169,18 @@ public abstract class Character{
         this.highlighted = highlighted;
     }
 
-    public abstract void specialMove();
+    public void updateSpecial(){
+        this.special -= this.specialCost;
+        if(this.special <= 0){
+            this.special = 0;
+        }
+    }
+
+    public abstract int specialMove();
+
+
+    public String specialToSrting() {
+        return this.special + "/" + this.max_special;
+    }
+
 }
