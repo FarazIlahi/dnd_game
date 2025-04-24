@@ -7,7 +7,7 @@ import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class InvestigateSceneController extends BaseController implements GameMechanics {
 
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     @FXML
     private Label investigateText;

@@ -6,7 +6,7 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert;
 import javafx.event.ActionEvent;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class SiegeSceneController extends BaseController implements GameMechanics {
 
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     @FXML
     private Label siegeText;
