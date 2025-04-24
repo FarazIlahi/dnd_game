@@ -4,34 +4,17 @@ import com.example.dandd_game.Position;
 
 public class Mage extends Character {
 
-    private int mana;
-    private final int maxMana;
 
     public Mage(){
-        super(18, 10, 8, 6, "Mage", new Position(11,11));
-        this.mana = 36;
-        this.maxMana = this.mana;
+        super(18, 10, 8, 6, "Mage", new Position(11,11), 36, 12);
     }
-    public Mage(int hp, int def, int atk, int range, String name, Position position) {
-        super(hp, def, atk, range, name, position);
-        this.mana = 36;
-        this.maxMana = this.mana;
-    }
-
-    public int getMana(){
-        return this.mana;
-    }
-    public void updateMana(int x){
-        this.mana += x;
+    public Mage(int hp, int def, int atk, int range, String name, Position position, int special, int cost) {
+        super(hp, def, atk, range, name, position, special, cost);
     }
     @Override
-    public void specialMove(){
-        updateMana(-12);
+    public int specialMove(){
         //AOE attack doing 15 ATk(Could change)
         //Must be within 15 range units
-    }
-    @Override
-    public String specialToSrting() {
-        return this.mana + "/" + this.maxMana;
+        return 7;
     }
 }
