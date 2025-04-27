@@ -7,13 +7,13 @@ import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public class FinalDefendController extends BaseController implements GameMechanics {
     @FXML
-    public AnchorPane rootPane;
+    public Pane rootPane;
 
     @FXML
     private void initialize() {
