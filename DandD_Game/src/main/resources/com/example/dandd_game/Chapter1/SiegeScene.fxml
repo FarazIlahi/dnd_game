@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.SiegeSceneController">
-
-    <Label fx:id="siegeText" layoutX="100" layoutY="100" prefHeight="800.0" prefWidth="1600.0" style="-fx-font-size: 18px; -fx-text-fill: black;" text="The enemy arrives at dawn. What should the first move of defense be?" wrapText="true" />
-
-    <Button fx:id="holdButton" layoutX="190.0" layoutY="188.0" onAction="#holdWalls" text="Hold Castle Walls" />
-
-    <Button fx:id="flankButton" layoutX="379.0" layoutY="188.0" onAction="#flankEnemy" text="Sneak Out and Flank" />
-
-</AnchorPane>
+<Pane prefHeight="797.0" prefWidth="1195.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/OldPaper.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="siegeText" layoutX="307.0" layoutY="434.0" prefHeight="111.0" prefWidth="566.0" style="-fx-font-size: 18px; -fx-text-fill: black;" text="The enemy arrives at dawn. What should the first move of defense be?" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button fx:id="holdButton" layoutX="639.0" layoutY="620.0" onAction="#holdWalls" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Hold Castle Walls" />
+      <Button fx:id="flankButton" layoutX="405.0" layoutY="620.0" onAction="#flankEnemy" prefHeight="42.0" prefWidth="127.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Sneak Out and Flank" />
+      <HBox layoutX="271.0" layoutY="-1.0" prefHeight="800.0" prefWidth="638.0">
+         <children>
+            <Region prefHeight="401.0" prefWidth="726.0" />
+            <ImageView fitHeight="501.0" fitWidth="637.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/pixelCastleSmall.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="308.0" fitWidth="409.0" layoutX="-484.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/PixelKnight%202.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</Pane>
