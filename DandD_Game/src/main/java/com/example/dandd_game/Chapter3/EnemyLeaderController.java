@@ -9,13 +9,13 @@ import com.example.dandd_game.Position;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public class EnemyLeaderController extends BaseController implements GameMechanics {
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     // creating a player to test a taking damage method
     private Character player; // this is just for testing it can be deleted
