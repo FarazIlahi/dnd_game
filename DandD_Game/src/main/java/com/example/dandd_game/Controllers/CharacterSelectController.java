@@ -80,17 +80,17 @@ public class CharacterSelectController extends BaseController implements GameMec
     }
     public void disableAllNodes(){
         if(knight != null){
-            enableNode(knight);
+            disableNode(knight);
             knightStats.setText("");
             knightName.setText("");
         }
         if(cleric != null){
-            enableNode(cleric);
+            disableNode(cleric);
             clericStats.setText("");
             clericName.setText("");
         }
         if(mage != null){
-            enableNode(mage);
+            disableNode(mage);
             mageStats.setText("");
             mageName.setText("");
         }

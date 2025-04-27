@@ -6,13 +6,13 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public class ChapterThreeController extends BaseController implements GameMechanics {
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     @FXML
     private void initialize() {

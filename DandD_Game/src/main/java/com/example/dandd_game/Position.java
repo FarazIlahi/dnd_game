@@ -3,6 +3,7 @@ package com.example.dandd_game;
 public class Position {
     private int x;
     private int y;
+    private Position lastPosition;
 
     public Position(int x, int y){
         this.x = x;
@@ -22,5 +23,11 @@ public class Position {
 
     public void setY(int y) {
         this.y = y;
+    }
+    public void setLastPosition(Position pos) {
+        this.lastPosition = pos;
+    }
+    public Position getLastPosition() {
+        return lastPosition;
     }
 }

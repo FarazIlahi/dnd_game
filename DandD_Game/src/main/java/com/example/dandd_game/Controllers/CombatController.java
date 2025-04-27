@@ -115,11 +115,31 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private ProgressBar e1_hpBar;
 
+    @FXML
+    private ImageView e2_profile;
+    @FXML
+    private Label e2_name;
+    @FXML
+    private Label e2_hpInfo;
+    @FXML
+    private ProgressBar e2_hpBar;
+
+    @FXML
+    private ImageView e3_profile;
+    @FXML
+    private Label e3_name;
+    @FXML
+    private Label e3_hpInfo;
+    @FXML
+    private ProgressBar e3_hpBar;
+
     private boolean moving = false;
     private boolean animationMoving = false;
     private boolean attacking = false;
     private boolean usingSpecial = false;
     private boolean showingRange = false;
+    private int defenseCount = -1;
+    private Character defendedAlly;
 
     private GameStateManager gameState = GameStateManager.getInstance();
     private LocalImages localImages = LocalImages.getInstance();
@@ -144,6 +164,23 @@ public class CombatController extends BaseController implements GameMechanics, C
     public boolean getIsShowingRange(){
         return this.showingRange;
     }
+    @Override
+    public void setDefenseCount(int num){
+        this.defenseCount = num;
+    }
+    @Override
+    public int getDefenseCount(){
+        return this.defenseCount;
+    }
+    @Override
+    public void setDefendedAlly(Character ally){
+        this.defendedAlly = ally;
+    }
+    @Override
+    public Character getDefendedAlly(){
+        return this.defendedAlly;
+    }
+
 
     @FXML
     private void initialize() {
@@ -184,12 +221,16 @@ public class CombatController extends BaseController implements GameMechanics, C
         setAttacking(!attacking);
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
         updateButtons(attacking,list.get(1), list.get(2), show_btn, end_btn);
-        showPlayerAttack(attacking, combatGrid);
+        showPlayerRange(attacking, combatGrid);
         updateMoveButton();
     }
     @FXML
     private void special(){
         moving = false;
+        setUsingSpecial(!usingSpecial);
+        ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
+        updateButtons(usingSpecial,list.get(0), list.get(2), show_btn, end_btn);
+        showPlayerRange(usingSpecial, combatGrid);
         updateMoveButton();
     }
     @FXML
@@ -221,6 +262,9 @@ public class CombatController extends BaseController implements GameMechanics, C
             enableNode(other4);
             if(!canMoveCount()){
                 disableNode(gameState.getCurrentCharacter().getButtons().get(2));
+            }
+            if(!canUseSpecial()){
+                disableNode(gameState.getCurrentCharacter().getButtons().get(1));
             }
         }
     }
@@ -348,10 +392,31 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.setHpBar(e1_hpBar);
                 character.setHpInfo(e1_hpInfo);
                 break;
+            case "2":
+                e2_profile.setImage(localImages.getImage(character.getID()));
+                e2_name.setText(character.getName());
+                e2_hpBar.setVisible(true);
+                updateHp(character, e2_hpBar, e2_hpInfo);
+                character.setProfile(new ImageView(e2_profile.getImage()));
+                character.setNameLabel(e2_name);
+                character.setHpBar(e2_hpBar);
+                character.setHpInfo(e2_hpInfo);
+                break;
+            case "3":
+                e3_profile.setImage(localImages.getImage(character.getID()));
+                e3_name.setText(character.getName());
+                e3_hpBar.setVisible(true);
+                updateHp(character, e3_hpBar, e3_hpInfo);
+                character.setProfile(new ImageView(e3_profile.getImage()));
+                character.setNameLabel(e3_name);
+                character.setHpBar(e3_hpBar);
+                character.setHpInfo(e3_hpInfo);
+                break;
         }
     }
 
     public void updateTurn() throws IOException {
+        pauseMethodThrowing(1.5, this::gameOverCheck);
         moving = false;
         attacking = false;
         usingSpecial = false;
@@ -360,6 +425,9 @@ public class CombatController extends BaseController implements GameMechanics, C
         gameState.resetMoveCount();
         updateMoveButton();
         updateTurnOrder();
+        resetDefendedAlly();
+        setDefenseCount(getDefenseCount() - 1);
+        System.out.println(getDefenseCount());
         String targetID = gameState.getCurrentCharacter().getID();
         for(Character character : gameState.getParty()){
             disableButtons(character.getButtons());
@@ -367,6 +435,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         for(Character character : gameState.getParty()){
             if(targetID.equals(character.getID())){
                 enableButtons(character.getButtons());
+                updateSpecialButton();
             }
         }
         if(enemeyAttackCheck()){
@@ -487,6 +556,22 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
         else{
             gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
+        }
+    }
+    public void updateSpecialButton(){
+        if((enemeyAttackCheck())){
+            return;
+        }
+        if(!canUseSpecial()){
+            disableNode(gameState.getCurrentCharacter().getButtons().get(1));
+        }
+    }
+    public void gameOverCheck() throws IOException {
+        if(gameState.getKing().getIsDead()){
+            switchScene("Chapter3/GameOverScene");
+        }
+        else if (gameState.getEnemies().isEmpty()) {
+            switchScene("Chapter3/GameWinScene");
         }
     }
 }

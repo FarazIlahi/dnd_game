@@ -9,13 +9,13 @@ import com.example.dandd_game.Position;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public class EnemyLeaderController extends BaseController implements GameMechanics {
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     // creating a player to test a taking damage method
     private Character player; // this is just for testing it can be deleted
@@ -30,7 +30,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         } // leave this code in (its to check for queued achievements)
 
         // example character also for testing, can be deleted
-        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0)) {
+        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0), 0, 0) {
             @Override
             public String specialToSrting() {
 
@@ -38,8 +38,9 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             }
 
             @Override
-            public void specialMove() {
+            public int specialMove() {
                 System.out.println("Big hit");
+                return 0;
             }
         }; // end of character data
     }

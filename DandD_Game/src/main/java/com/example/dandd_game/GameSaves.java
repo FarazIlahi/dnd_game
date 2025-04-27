@@ -96,17 +96,17 @@ public class GameSaves {
         return serialized;
     }
 
-    private static Character createCharacterByType(String type, String name, int hp, int attack, int defense, int range) {
+    private static Character createCharacterByType(String type, String name, int hp, int attack, int defense, int range, int special, int cost) {
         Position defaultPosition = new Position(0, 0);
 
         return switch (type) {
-            case "King" -> new King(hp, defense, attack, range, name, defaultPosition);
-            case "Knight" -> new Knight(hp, defense, attack, range, name, defaultPosition);
-            case "Cleric" -> new Cleric(hp, defense, attack, range, name, defaultPosition);
-            case "Mage" -> new Mage(hp, defense, attack, range, name, defaultPosition);
-            case "Goblin" -> new Goblin(hp, defense, attack, range, name, defaultPosition);
-            case "Orc" -> new Orc(hp, defense, attack, range, name, defaultPosition);
-            case "Sorcerer" -> new Sorcerer(hp, defense, attack, range, name, defaultPosition);
+            case "King" -> new King(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Knight" -> new Knight(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Cleric" -> new Cleric(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Mage" -> new Mage(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Goblin" -> new Goblin(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Orc" -> new Orc(hp, defense, attack, range, name, defaultPosition, special, cost);
+            case "Sorcerer" -> new Sorcerer(hp, defense, attack, range, name, defaultPosition, special, cost);
             default -> null;
         };
 
@@ -148,8 +148,10 @@ public class GameSaves {
             int attack = safeGetInt(charData, "basic_attack");
             int defense = safeGetInt(buttons, "def");
             int range = safeGetInt(charData, "range");
+            int special = safeGetInt(charData, "special");
+            int cost = safeGetInt(charData, "cost");
             System.out.println("Loading character: " + type + " " + name + " " + hp + " " + attack + " " + defense + " " + range);
-            Character c = createCharacterByType(type, name, hp, attack, defense, range);
+            Character c = createCharacterByType(type, name, hp, attack, defense, range, special, cost);
             if (c != null) {
                 targetList.add(c);
             } else {

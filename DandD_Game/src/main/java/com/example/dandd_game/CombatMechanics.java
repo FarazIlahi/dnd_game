@@ -24,6 +24,7 @@ public interface CombatMechanics extends GameMechanics{
     GameStateManager gameState = GameStateManager.getInstance();
     LocalImages localImages = LocalImages.getInstance();
 
+
     void setAttacking(boolean bool);
 
     void setUsingSpecial(boolean bool);
@@ -32,6 +33,10 @@ public interface CombatMechanics extends GameMechanics{
 
     boolean getIsUsingSpecial();
     boolean getIsShowingRange();
+    void setDefenseCount(int num);
+    int getDefenseCount();
+    void setDefendedAlly(Character ally);
+    Character getDefendedAlly();
 
     default void setupGrid(GridPane combatGrid){
         combatGrid.getColumnConstraints().clear();
@@ -93,13 +98,55 @@ public interface CombatMechanics extends GameMechanics{
         combatGrid.add(profile, x, y);
         profile.setUserData(character);
         profile.setOnMouseEntered(event -> {
-            if(getIsAttacking() || getIsUsingSpecial()){
+            if(getIsAttacking()){
                 ImageView iv = (ImageView) event.getSource();
                 Character owner = (Character) iv.getUserData();
                 if(withinRange(owner)) {
                     if (!gameState.getParty().contains(owner)) {
                         highlight(profile);
                         owner.setHighlighted(true);
+                    }
+                }
+            }
+            else if (getIsUsingSpecial()) {
+                ImageView iv = (ImageView) event.getSource();
+                Character owner = (Character) iv.getUserData();
+                if(withinRange(owner)) {
+                    switch (gameState.getCurrentCharacter().getID()){
+                        case "King":
+                            if (!gameState.getParty().contains(owner)) {
+                            highlight(profile);
+                            owner.setHighlighted(true);
+                        }
+                            break;
+                        case "Mage":
+                            if (!gameState.getParty().contains(owner)) {
+                                for(Character enemy : gameState.getEnemies()){
+                                    if(withinRange(enemy)){
+                                        highlight(enemy.getProfile());
+                                    }
+                                }
+                                highlight(profile);
+                                owner.setHighlighted(true);
+                            }
+                            break;
+                        case "Knight":
+                            if (gameState.getParty().contains(owner)) {
+                                highlight(profile);
+                                owner.setHighlighted(true);
+                            }
+                            break;
+                        case "Cleric":
+                            if (gameState.getParty().contains(owner)) {
+                                for(Character ally : gameState.getParty()){
+                                    if(withinRange(ally)){
+                                        highlight(ally.getProfile());
+                                    }
+                                }
+                                highlight(profile);
+                                owner.setHighlighted(true);
+                            }
+                            break;
                     }
                 }
             }
@@ -111,19 +158,27 @@ public interface CombatMechanics extends GameMechanics{
             }
         });
         profile.setOnMouseExited(event -> {
-            if(getIsAttacking() || getIsUsingSpecial()){
-                ImageView iv = (ImageView) event.getSource();
-                Character owner = (Character) iv.getUserData();
-                if(withinRange(owner)){
-                    if(!gameState.getParty().contains(owner)){
-                        unhighlight(profile);
-                        owner.setHighlighted(false);
+            ImageView iv = (ImageView) event.getSource();
+            Character owner = (Character) iv.getUserData();
+            if(owner.getHighlighted()){
+                if(gameState.getCurrentCharacter().getID().equals("Cleric")){
+                    for(Character ally : gameState.getParty()){
+                        if(withinRange(ally)){
+                            unhighlight(ally.getProfile());
+                        }
                     }
                 }
+                else if (gameState.getCurrentCharacter().getID().equals("Mage")) {
+                    for(Character enemy : gameState.getParty()){
+                        if(withinRange(enemy)){
+                            unhighlight(enemy.getProfile());
+                        }
+                    }
+                }
+                unhighlight(profile);
+                owner.setHighlighted(false);
             }
             else if(getIsShowingRange()){
-                ImageView iv = (ImageView) event.getSource();
-                Character owner = (Character) iv.getUserData();
                 gameState.setCurrentCharacter(owner);
                 updateShowRange(false, combatGrid);
             }
@@ -134,12 +189,13 @@ public interface CombatMechanics extends GameMechanics{
             if(owner.getHighlighted()){
                 if(getIsAttacking()){
                     runPlayerAttackBackEnd(owner, combatGrid);
-                    checkIsDead(owner, combatGrid);
-                    updateTurn.run();
+                    pauseMethod(0.5, updateTurn);
+                    pauseMethod(1.0, () -> checkIsDead(owner, combatGrid));
                 }
                 else if (getIsUsingSpecial()) {
-                    updateShowRange(false, combatGrid);
-                    runPlayerSpecialBackEnd();
+                    runPlayerSpecialBackEnd(owner, combatGrid);
+                    pauseMethod(0.5, updateTurn);
+                    pauseMethod(1.0, () -> checkIsDead(owner, combatGrid));
                 }
             }
 
@@ -158,7 +214,6 @@ public interface CombatMechanics extends GameMechanics{
     }
     default void removeImageViewFromCell(int row, int column, GridPane gridPane) {
         List<Node> toRemove = new ArrayList<>();
-
         Node node = iterate(column,row,gridPane);
         if(node != null){
             toRemove.add(node);
@@ -228,14 +283,14 @@ public interface CombatMechanics extends GameMechanics{
             GridPane.setRowIndex(enemy, toY);
             enemy.setTranslateX(0);
             enemy.setTranslateY(0);
-            gameState.getCurrentCharacter().getPosition().setX(toX);
-            gameState.getCurrentCharacter().getPosition().setY(toY);
-            gameState.decreaseMoveCount();
+
             moveEnemyTowardTarget(enemy, target, stepsLeft - 1, updateTurn, combatGrid);
         });
+        gameState.getCurrentCharacter().getPosition().setX(toX);
+        gameState.getCurrentCharacter().getPosition().setY(toY);
+        gameState.decreaseMoveCount();
         transition.play();
     }
-
     default Position calculateNewPos(int enemyX, int enemyY, int targetX, int targetY){
         int distX = enemyX - targetX;
         int distY = enemyY - targetY;
@@ -262,6 +317,10 @@ public interface CombatMechanics extends GameMechanics{
 
 
     default void runEnemyAttack(GridPane combatGrid, Runnable updateTurn) throws IOException {
+        if(gameState.getCurrentCharacter().getIsDead()){
+            updateTurn.run();
+            return;
+        }
         Position pos = gameState.getCurrentCharacter().getPosition();
         Character target = findClosest(pos.getX(), pos.getY());
         if(withinRange(target)){
@@ -274,27 +333,134 @@ public interface CombatMechanics extends GameMechanics{
     default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        checkIsDead(target, combatGrid);
+        showEffect(target, combatGrid);
         pauseMethod(time, updateTurn);
+        pauseMethod(1.0, () -> checkIsDead(target, combatGrid));
     }
-    default void showPlayerAttack(Boolean bool, GridPane combatGrid){
+    default void showPlayerRange(Boolean bool, GridPane combatGrid){
         updateShowRange(bool, combatGrid);
-        setAttacking(bool);
     }
     default void runPlayerAttackBackEnd(Character target, GridPane combatGrid){
         updateShowRange(false, combatGrid);
         unhighlight(target.getProfile());
         target.setHighlighted(false);
+        setAttacking(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
+        showEffect(target, combatGrid);
+    }
+    default void runPlayerSpecialBackEnd(Character target, GridPane combatGrid){
+        gameState.getCurrentCharacter().updateSpecial();
+        switch (gameState.getCurrentCharacter().getID()){
+            case "King":
+                runKingSpecial(target, combatGrid);
+                break;
+            case "Knight":
+                runKnightSpecial(target, combatGrid);
+                break;
+            case "Cleric":
+                runClericSpecial(target, combatGrid);
+                break;
+            case "Mage":
+                runMageSpecial(target, combatGrid);
+                break;
+        }
+        updateSpecial();
+    }
+    default void runKingSpecial(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        setUsingSpecial(false);
+        target.setHp(target.getHp() - gameState.getCurrentCharacter().specialMove());
+        updateHp(target, target.getHpBar(), target.getHpInfo());
+    }
+    default void runKnightSpecial(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        setUsingSpecial(false);
+        target.setDef(target.getDef() + gameState.getCurrentCharacter().specialMove());
+        setDefenseCount(gameState.getTurnOrder().size());
+        setDefendedAlly(target);
+    }
+    default void runClericSpecial(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        setUsingSpecial(false);
+        for(Character ally : gameState.getParty()){
+            if(withinRange(ally)){
+                ally.setHp(ally.getHp() - gameState.getCurrentCharacter().specialMove());
+                if(!ally.getHighlighted()){
+                    unhighlight(ally.getProfile());
+                }
+                updateHp(ally, ally.getHpBar(), ally.getHpInfo());
+            }
+        }
+    }
+    default void runMageSpecial(Character target, GridPane combatGrid){
+        updateShowRange(false, combatGrid);
+        unhighlight(target.getProfile());
+        target.setHighlighted(false);
+        setUsingSpecial(false);
+        for(Character enemy : gameState.getEnemies()){
+            if(withinRange(enemy)){
+                enemy.setHp(enemy.getHp() - gameState.getCurrentCharacter().specialMove());
+                if(!enemy.getHighlighted()){
+                    unhighlight(enemy.getProfile());
+                }
+                updateHp(enemy, enemy.getHpBar(), enemy.getHpInfo());
+            }
+        }
+    }
+    default void showEffect(Character target, GridPane combatGrid){
+        switch (gameState.getCurrentCharacter().getID()){
+            case "King":
+            case "Knight":
+            case "Goblin":
+                showSlash(target, combatGrid);
+                break;
+            case "Mage":
+            case "Cleric":
+            case "Sorcerer":
+                showExplosion(target, combatGrid);
+                break;
+        }
+    }
+    default void showSlash(Character target, GridPane combatGrid){
+        ImageView targetImage = target.getProfile();
+        ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
+        slashEffect.setFitWidth(targetImage.getFitWidth());
+        slashEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, slashEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
+    }
+    default void showExplosion(Character target, GridPane combatGrid){
+        ImageView explosionEffect = new ImageView(localImages.getImage("Explosion"));
+        ImageView targetImage = target.getProfile();
+        explosionEffect.setFitWidth(targetImage.getFitWidth());
+        explosionEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, explosionEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
+    }
+    default void showHeal(Character target, GridPane combatGrid){
+        ImageView healEffect = new ImageView(localImages.getImage("Heal"));
+        ImageView targetImage = target.getProfile();
+        healEffect.setFitWidth(targetImage.getFitWidth());
+        healEffect.setFitHeight(targetImage.getFitHeight());
+        StackPane enemyWrapper = new StackPane();
+        enemyWrapper.getChildren().addAll(targetImage, healEffect);
+        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
+        pauseMethod(1.0,() -> healEffect.setVisible(false));
     }
 
-    default void runPlayerSpecial(){
-
-    }
-    default void runPlayerSpecialBackEnd(){
-
-    }
     default void checkIsDead(Character character, GridPane combatGrid){
         if(character.getIsDead()){
             if(gameState.getParty().contains(character)){
@@ -306,6 +472,7 @@ public interface CombatMechanics extends GameMechanics{
             Position position = character.getPosition();
             removeImageViewFromCell(position.getX(), position.getY(), combatGrid);
             gameState.removeFromTurnOrder(character);
+            setDefenseCount(getDefenseCount() - 1);
         }
     }
 
@@ -335,6 +502,11 @@ public interface CombatMechanics extends GameMechanics{
     default void updateHp(Character character, ProgressBar bar, Label label){
         bar.setProgress((double) character.getHp() / character.getMaxHp());
         label.setText(character.hpToString());
+    }
+    default void updateSpecial(){
+        Character current = gameState.getCurrentCharacter();
+        current.getSpecialBar().setProgress((double) current.getSpecial() / current.getMax_special());
+        current.getSpecialInfo().setText(current.specialToSrting());
     }
     default void disableButtons(ArrayList<Button> buttons){
         for(Button button : buttons){
@@ -377,5 +549,13 @@ public interface CombatMechanics extends GameMechanics{
         }
         return false;
     }
-
+    default boolean canUseSpecial(){
+        Character character = gameState.getCurrentCharacter();
+        return character.getSpecial() >= character.getSpecialCost();
+    }
+    default void resetDefendedAlly(){
+        if(getDefenseCount() == 0){
+            getDefendedAlly().setDef(getDefendedAlly().getDef() - gameState.getKnight().specialMove());
+        }
+    }
 }

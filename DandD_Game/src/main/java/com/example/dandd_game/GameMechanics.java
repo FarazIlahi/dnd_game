@@ -38,6 +38,17 @@ public interface GameMechanics {
         });
         pause.play();
     }
+    default void pauseMethodThrowing(Double seconds,ThrowingRunnable method) {
+        PauseTransition pause = new PauseTransition(Duration.seconds(seconds));
+        pause.setOnFinished(event -> {
+            try {
+                method.run();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        pause.play();
+    }
     default void highlight(Node e){
         if(e.getEffect() == null){
             Scale scale = new Scale(1.25, 1.25);

@@ -3,7 +3,7 @@ package com.example.dandd_game.Chapter2;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class PrepareBattleController extends BaseController implements GameMechanics {
 
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     @FXML
     private void initialize() {

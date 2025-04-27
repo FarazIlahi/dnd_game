@@ -35,9 +35,11 @@ public class BaseController implements GameMechanics {
     public Pane getCurrentroot(){
         return currentroot;
     }
-    KeyBindingManager keyManager;
+    protected KeyBindingManager keyManager;
 
     public void createStackPane() throws IOException {
+        stackPane.getChildren().clear();
+
         ImageView snapshot = new ImageView(getCurrentroot().snapshot(null, null));
         BoxBlur blur = new BoxBlur(10,10,3);
 
@@ -58,26 +60,36 @@ public class BaseController implements GameMechanics {
             setCurrentroot(root);
             keyManager = new KeyBindingManager(getCurrentroot());
         }
+        root.setFocusTraversable(true);
+        root.requestFocus();
+
+        setCurrentroot(root);
         keyManager = new KeyBindingManager(root);
         keyManager.addKeyBinding("ESCAPE", this::handleKeyPress);
     }
     private void handleKeyPress() throws IOException {
         if(is_on_settings){
             is_on_settings = false;
+            System.out.println("ESC pressed: is_on_settings = " + is_on_settings);
             closePopupScene();
         }
         else {
             is_on_settings = true;
+            System.out.println("ESC pressed: is_on_settings = " + is_on_settings);
             openPopupScene();
         }
     }
     private void openPopupScene() throws IOException {
+        getCurrentroot().getChildren().remove(stackPane);
+        stackPane.getChildren().clear();
         createStackPane();
-        getCurrentroot().getChildren().add(getStackPane());
+        getCurrentroot().getChildren().add(stackPane);
 
     }
     private void closePopupScene(){
-        getCurrentroot().getChildren().remove(getStackPane());
+        if (getCurrentroot().getChildren().contains(stackPane)) {
+            getCurrentroot().getChildren().remove(stackPane);
+        }
 
     }
     public void switchScene(Event event, String new_scene) throws IOException {
