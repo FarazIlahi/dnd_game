@@ -13,7 +13,9 @@ import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import java.io.IOException;
-
+import javafx.scene.control.Label;
+import javafx.application.Platform;
+import com.google.api.core.ApiFuture;
 
 public class GameLoadsController extends BaseController implements GameMechanics {
 
@@ -28,17 +30,51 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     Button load4;
     @FXML
-    private Pane rootPane;
+    Pane rootPane;
+    @FXML private Label load1Label;
+    @FXML private Label load2Label;
+    @FXML private Label load3Label;
+    @FXML private Label load4Label;
+
     private boolean creatingFile;
     private int selectedSlot = -1;
     @FXML
     private void initialize() {
         super.init(rootPane);
-        rootPane.requestFocus();
         creatingFile = false;
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
+        }
+        checkSaveFileLabels();
+    }
+    private void checkSaveFileLabels() {
+        Firestore db = FirestoreClient.getFirestore();
+        String email = GameStateManager.getInstance().getCurrentUserEmail();
+
+        for (int i = 1; i <= 4; i++) {
+            final int slot = i;
+            ApiFuture<DocumentSnapshot> future = db.collection("saves")
+                    .document(email)
+                    .collection("slots")
+                    .document("slot" + slot)
+                    .get();
+            try {
+                DocumentSnapshot document = future.get(); // blocking call
+                if (document.exists()) {
+                    Platform.runLater(() -> setSaveLabel(slot, "Save File has Data"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void setSaveLabel(int slot, String text) {
+        switch (slot) {
+            case 1: load1Label.setText(text); break;
+            case 2: load2Label.setText(text); break;
+            case 3: load3Label.setText(text); break;
+            case 4: load4Label.setText(text); break;
         }
     }
     @FXML
