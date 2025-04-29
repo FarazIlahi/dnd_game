@@ -35,13 +35,13 @@
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <Region prefHeight="100.0" prefWidth="250.0" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#reinforceWalls" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Hold the Main Gate" textAlignment="CENTER" wrapText="true">
+                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#holdMainGate" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Hold the Main Gate" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Button>
                                 <Region prefHeight="100.0" prefWidth="100.0" />
-                                <Button mnemonicParsing="false" onAction="#trainSoldiers" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Set a Trap Inside the Castle" textAlignment="CENTER" wrapText="true">
+                                <Button mnemonicParsing="false" onAction="#setTrap" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Set a Trap Inside the Castle" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
