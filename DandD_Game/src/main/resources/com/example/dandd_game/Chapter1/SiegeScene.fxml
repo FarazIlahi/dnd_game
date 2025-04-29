@@ -8,37 +8,50 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane prefHeight="797.0" prefWidth="1195.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.InfiltrateController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="1600.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
             <Image url="@../images/OldPaper.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="siegeText" layoutX="307.0" layoutY="434.0" prefHeight="111.0" prefWidth="566.0" style="-fx-font-size: 18px; -fx-text-fill: black;" text="The enemy arrives at dawn. What should the first move of defense be?" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <Button fx:id="holdButton" layoutX="639.0" layoutY="620.0" onAction="#holdWalls" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Hold Castle Walls" />
-      <Button fx:id="flankButton" layoutX="405.0" layoutY="620.0" onAction="#flankEnemy" prefHeight="42.0" prefWidth="127.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Sneak Out and Flank" />
-      <HBox layoutX="271.0" layoutY="-1.0" prefHeight="800.0" prefWidth="638.0">
+      <HBox prefHeight="800.0" prefWidth="1600.0">
          <children>
-            <Region prefHeight="401.0" prefWidth="726.0" />
-            <ImageView fitHeight="501.0" fitWidth="637.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/pixelCastleSmall.png" />
-               </image>
-            </ImageView>
-            <Pane prefHeight="200.0" prefWidth="200.0">
+            <Region prefHeight="800.0" prefWidth="350.0" />
+            <VBox prefHeight="800.0" prefWidth="900.0">
                <children>
-                  <ImageView fitHeight="308.0" fitWidth="409.0" layoutX="-484.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="400.0" fitWidth="900.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../images/PixelKnight%202.png" />
+                        <Image url="@../images/enemyCastle.png" />
                      </image>
+                     <effect>
+                        <InnerShadow choke="0.5" />
+                     </effect>
                   </ImageView>
+                  <Region prefHeight="50.0" prefWidth="900.0" />
+                  <Label alignment="TOP_CENTER" prefHeight="200.0" prefWidth="900.0" text="You're inside the enemy castle. A patrol is approaching. What do you do?" wrapText="true">
+                     <font>
+                        <Font name="URWGothic-Book" size="34.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Region prefHeight="100.0" prefWidth="350.0" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#proceedInfiltration" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Proceed with infiltration">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </Pane>
+            </VBox>
          </children>
       </HBox>
    </children>

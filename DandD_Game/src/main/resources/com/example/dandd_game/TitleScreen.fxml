@@ -48,6 +48,31 @@
             <Image url="@images/Scroll.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="goblin" fitHeight="80.0" fitWidth="90.0" layoutX="50.0" visible="false">
+         <image>
+            <Image url="@images/goblin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="orc" fitHeight="80.0" fitWidth="90.0" layoutX="150.0" layoutY="50.0" visible="false">
+         <image>
+            <Image url="@images/orc.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="slash" fitHeight="80.0" fitWidth="90.0" layoutX="250.0" layoutY="50.0" visible="false" opacity="0.0">
+      <image>
+            <Image url="@images/slash.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="explosion" fitHeight="80.0" fitWidth="90.0" layoutX="350.0" layoutY="50.0" visible="false" opacity="0.0">
+         <image>
+            <Image url="@images/explode.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="heal" fitHeight="80.0" fitWidth="90.0" layoutX="450.0" layoutY="50.0" visible="false" opacity="0.0">
+         <image>
+            <Image url="@images/heal.gif" />
+         </image>
+      </ImageView>
       <Label layoutX="586.0" layoutY="643.0" onMouseClicked="#goNext" prefHeight="50.0" prefWidth="415.0" text="Click anywhere to continue">
          <font>
             <Font size="34.0" />
