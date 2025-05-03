@@ -16,4 +16,14 @@ public class King extends Character {
         return getBasic_attack() * 2;
     }
 
+    public int typeMatchup(Character Target) {
+        int damageKing = gameState.getKing().getBasic_attack();
+        int specialKing = gameState.getKing().specialMove();
+
+        if ("Imp".equals(Target.getID())) {
+            specialKing /= 2;
+            damageKing /= 2;
+        }
+        return damageKing + specialKing;
+    }
 }

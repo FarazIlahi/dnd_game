@@ -1,5 +1,6 @@
 package com.example.dandd_game.Characters;
 
+import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.Position;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public abstract class Character{
 
     private boolean highlighted = false;
     private boolean isDead = false;
-
+    protected GameStateManager gameState = GameStateManager.getInstance();
 
     public Character(int hp, int def, int basic_attack, int range, String name, Position position, int special, int specialCost){
         this.hp = hp;
@@ -193,4 +194,5 @@ public abstract class Character{
         return this.special + "/" + this.max_special;
     }
 
+    public abstract int typeMatchup(Character Target);
 }

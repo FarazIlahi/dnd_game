@@ -15,7 +15,19 @@ public class Cleric extends Character {
     @Override
     public int specialMove(){
         //heals all for 15hp(Could change)
-        //Must be wihtin range
+        //Must be within range
         return -9;
+    }
+    @Override
+    public int typeMatchup(Character Target) {
+        int damageCleric = gameState.getCleric().getBasic_attack();
+
+        if ("Skeleton".equals(Target.getID())) {
+            damageCleric *= 2;
+        }
+        else if ("Zombie".equals(Target.getID())) {
+            damageCleric *= 2;
+        }
+        return damageCleric;
     }
 }
