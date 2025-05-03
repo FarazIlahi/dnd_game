@@ -9,7 +9,10 @@ import java.util.Set;
 
 public class GameStateManager {
     private static GameStateManager instance;
-    private GameStateManager() {}
+
+    private GameStateManager() {
+    }
+
     private Integer playerCount;
     private String difficulty;
     private String campaignName;
@@ -25,6 +28,8 @@ public class GameStateManager {
     private String currentScene;
     private String currentUserEmail;
     private int currentSlot;
+    private String previousScene;
+    private String nextScene;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
@@ -35,6 +40,7 @@ public class GameStateManager {
         }
         return instance;
     }
+
     public void resetInstance() {
         playerCount = null;
         difficulty = null;
@@ -52,8 +58,9 @@ public class GameStateManager {
         resetList(enemies);
         resetList(turnOrder);
     }
-    public void resetList(ArrayList<Character> list){
-        for(int i = list.size() - 1; i >= 0; i--){
+
+    public void resetList(ArrayList<Character> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             list.remove(i);
         }
     }
@@ -61,9 +68,11 @@ public class GameStateManager {
     public void setPlayerCount(int playerCount) {
         this.playerCount = playerCount;
     }
+
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
+
     public void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
     }
@@ -72,145 +81,188 @@ public class GameStateManager {
         return this.playerCount;
     }
 
-    public String getDifficulty(){
+    public String getDifficulty() {
         return this.difficulty;
     }
-    public String getCampaignName(){
+
+    public String getCampaignName() {
         return this.campaignName;
     }
 
     public void setCurrentCharacter(Character currentCharacter) {
         this.currentCharacter = currentCharacter;
     }
+
     public Character getCurrentCharacter() {
         return currentCharacter;
     }
+
     public void setCurrentScene(String scene) {
         this.currentScene = scene;
     }
+
     public String getCurrentScene() {
         return this.currentScene;
     }
+
     public void setCurrentUserEmail(String email) {
         this.currentUserEmail = email;
     }
+
     public String getCurrentUserEmail() {
         return this.currentUserEmail;
     }
+
     public void setCurrentSlot(int slot) {
         this.currentSlot = slot;
     }
+
     public int getCurrentSlot() {
         return currentSlot;
     }
-    public void createKing(){
+
+    public void createKing() {
         this.king = new King();
     }
-    public King getKing(){
+
+    public King getKing() {
         return this.king;
     }
-    public void createKnight(){
+
+    public void createKnight() {
         this.knight = new Knight();
     }
-    public Knight getKnight(){
+
+    public Knight getKnight() {
         return this.knight;
     }
-    public void createCleric(){
+
+    public void createCleric() {
         this.cleric = new Cleric();
     }
-    public Cleric getCleric(){
+
+    public Cleric getCleric() {
         return this.cleric;
     }
-    public void createMage(){
+
+    public void createMage() {
         this.mage = new Mage();
     }
-    public Mage getMage(){
+
+    public Mage getMage() {
         return this.mage;
     }
-    public void createGoblin(){
+
+    public void createGoblin() {
         this.goblin = new Goblin();
     }
-    public Goblin getGoblin(){
+
+    public Goblin getGoblin() {
         return this.goblin;
     }
-    public void createOrc(){
+
+    public void createOrc() {
         this.orc = new Orc();
     }
-    public Orc getOrc(){
+
+    public Orc getOrc() {
         return this.orc;
     }
-    public void createSorcerer(){
+
+    public void createSorcerer() {
         this.sorcerer = new Sorcerer();
     }
-    public Sorcerer getSorcerer(){
+
+    public Sorcerer getSorcerer() {
         return this.sorcerer;
     }
-    public void addToParty(Character character){
+
+    public void addToParty(Character character) {
         this.party.add(character);
     }
-    public void removeFromParty(Character character){
+
+    public void removeFromParty(Character character) {
         this.party.remove(character);
     }
-    public ArrayList<Character> getParty(){
+
+    public ArrayList<Character> getParty() {
         return this.party;
     }
-    public void addToEnemys(Character character){
+
+    public void addToEnemys(Character character) {
         this.enemies.add(character);
     }
-    public void removeFromEnemys(Character character){
+
+    public void removeFromEnemys(Character character) {
         this.enemies.remove(character);
     }
-    public ArrayList<Character> getEnemies(){
+
+    public ArrayList<Character> getEnemies() {
         return this.enemies;
     }
-    public void addToTurn(Character character){
+
+    public void addToTurn(Character character) {
         this.turnOrder.add(character);
     }
-    public void removeFromTurnOrder(Character character){
+
+    public void removeFromTurnOrder(Character character) {
         this.turnOrder.remove(character);
     }
-    public ArrayList<Character> getTurnOrder(){
+
+    public ArrayList<Character> getTurnOrder() {
         return this.turnOrder;
     }
-    public void clearTurnOrder(){
+
+    public void clearTurnOrder() {
         this.turnOrder.clear();
     }
-    public void nextTurn(){
+
+    public void nextTurn() {
         this.turnOrder.add(this.turnOrder.getFirst());
         this.turnOrder.remove(0);
         setCurrentCharacter(this.turnOrder.get(0));
         resetMoveCount();
     }
+
     private Set<String> achievements = new LinkedHashSet<>();
 
     public boolean unlockAchievement(String achievement) {
         return achievements.add(achievement);
     }
+
     public void setAchievements(List<String> achievementsList) {
         this.achievements.clear();
         this.achievements.addAll(achievementsList);
     }
+
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);
     }
+
     private String pendingAchievement = null;
+
     public void queueAchievementPopup(String achievement) {
         pendingAchievement = achievement;
     }
+
     public String getPendingAchievement() {
         String temp = pendingAchievement;
         pendingAchievement = null;
         return temp;
     }
+
     public int getMoveCount() {
         return this.moveCount;
     }
-    public void decreaseMoveCount(){
+
+    public void decreaseMoveCount() {
         this.moveCount--;
     }
-    public void resetMoveCount(){
+
+    public void resetMoveCount() {
         this.moveCount = 5;
     }
+
     public boolean nameExists(String name) {
         for (Character c : party) {
             if (c == getCurrentCharacter()) continue;
@@ -219,5 +271,41 @@ public class GameStateManager {
             }
         }
         return false;
+    }
+
+    public String getPreviousScene() {
+        return previousScene;
+    }
+
+    public void setPreviousScene(String previousScene) {
+        this.previousScene = previousScene;
+    }
+
+    public void resetEnemies() {
+        resetList(enemies);
+    }
+
+    public void setNextScene(String nextScene) {
+        this.nextScene = nextScene;
+    }
+
+    public String getNextScene() {
+        return nextScene;
+    }
+
+    public void setKing(King king) {
+        this.king = king;
+    }
+
+    public void setKnight(Knight knight) {
+        this.knight = knight;
+    }
+
+    public void setCleric(Cleric cleric) {
+        this.cleric = cleric;
+    }
+
+    public void setMage(Mage mage) {
+        this.mage = mage;
     }
 }

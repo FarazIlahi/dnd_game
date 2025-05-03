@@ -13,6 +13,7 @@ import com.example.dandd_game.Characters.Orc;
 import com.example.dandd_game.Characters.Sorcerer;
 import com.example.dandd_game.Position;
 import com.google.cloud.firestore.SetOptions;
+import javafx.scene.image.ImageView;
 
 
 import java.util.*;
@@ -77,6 +78,18 @@ public class GameSaves {
         data.put("currentCharacter", gsm.getCurrentCharacter() != null ? gsm.getCurrentCharacter().getName() : null);
         data.put("party", serializeCharacterList(gsm.getParty()));
         data.put("enemies", serializeCharacterList(gsm.getEnemies()));
+
+        if (gsm.getTurnOrder().isEmpty()) {
+            System.out.println("Turn order is empty - creating defualt turn order");
+            gsm.getTurnOrder().addAll(gsm.getParty());
+            gsm.getTurnOrder().addAll(gsm.getEnemies());
+        }
+
+        System.out.println("Saving turn Order:");
+        for (Character c : gsm.getTurnOrder()) {
+            System.out.println(c.getName());
+        }
+
         data.put("turnOrder", serializeCharacterList(gsm.getTurnOrder()));
         return data;
     }
@@ -88,16 +101,20 @@ public class GameSaves {
             charData.put("type", c.getClass().getSimpleName());
             charData.put("name", c.getName());
             charData.put("hp", c.getHp());
-            charData.put("attack", c.getBasic_attack());
+            charData.put("basic_attack", c.getBasic_attack());
             charData.put("defense", c.getDef());
             charData.put("range", c.getRange());
+            charData.put("special", c.getSpecial());
+            charData.put("cost", c.getSpecialCost());
+            charData.put("x", c.getPosition().getX());
+            charData.put("y", c.getPosition().getY());
             serialized.add(charData);
         }
         return serialized;
     }
 
-    private static Character createCharacterByType(String type, String name, int hp, int attack, int defense, int range, int special, int cost) {
-        Position defaultPosition = new Position(0, 0);
+    private static Character createCharacterByType(String type, String name, int hp, int attack, int defense, int range, int special, int cost, int x, int y) {
+        Position defaultPosition = new Position(x, y);
 
         return switch (type) {
             case "King" -> new King(hp, defense, attack, range, name, defaultPosition, special, cost);
@@ -134,31 +151,45 @@ public class GameSaves {
     }
 
     private static void loadCharacterList(List<Map<String, Object>> rawList, List<Character> targetList) {
+        GameStateManager gsm = GameStateManager.getInstance();
         for (Map<String, Object> charData : rawList) {
-            Object buttonsObj = charData.get("buttons");
-            if (!(buttonsObj instanceof Map)) {
-                System.out.println("Invalid character data " + charData);
-                continue;
-            }
-            Map<String, Object> buttons = (Map<String, Object>) charData.get("buttons");
-
-            String type = (String) buttons.getOrDefault("id", "Unknown");
-            String name = (String) buttons.getOrDefault("name", "Unnamed");
-            int hp = safeGetInt(buttons, "hp");
+            String type = (String) charData.getOrDefault("type", "Unknown");
+            String name = (String) charData.getOrDefault("name", "Unnamed");
+            int hp = safeGetInt(charData, "hp");
             int attack = safeGetInt(charData, "basic_attack");
-            int defense = safeGetInt(buttons, "def");
+            int defense = safeGetInt(charData, "def");
             int range = safeGetInt(charData, "range");
             int special = safeGetInt(charData, "special");
             int cost = safeGetInt(charData, "cost");
-            System.out.println("Loading character: " + type + " " + name + " " + hp + " " + attack + " " + defense + " " + range);
-            Character c = createCharacterByType(type, name, hp, attack, defense, range, special, cost);
+            int x = safeGetInt(charData, "x");
+            int y = safeGetInt(charData, "y");
+
+            System.out.println("Loading character: " + type + " " + name);
+
+            Character c = createCharacterByType(type, name, hp, attack, defense, range, special, cost, x, y);
             if (c != null) {
+                ImageView profile = new ImageView(LocalImages.getInstance().getImage(type));
+                profile.setFitWidth(40);
+                profile.setFitHeight(40);
+                c.setProfile(profile);
                 targetList.add(c);
+
+                switch (type) {
+                    case "King" -> gsm.setKing((King) c);
+                    case "Knight" -> gsm.setKnight((Knight) c);
+                    case "Cleric" -> gsm.setCleric((Cleric) c);
+                    case "Mage" -> gsm.setMage((Mage) c);
+                    case "Goblin" -> gsm.getEnemies().add(c);
+                    case "Orc" -> gsm.getEnemies().add(c);
+                    case "Sorcerer" -> gsm.getEnemies().add(c);
+                }
+
             } else {
                 System.out.println("Failed to create character: " + type + " " + name);
             }
         }
     }
+
 
 
     private static void loadIntoGameState(Map<String, Object> data) {
@@ -181,7 +212,40 @@ public class GameSaves {
         if (enemiesData != null) loadCharacterList(enemiesData, gsm.getEnemies());
 
         List<Map<String, Object>> turnOrderData = (List<Map<String, Object>>) data.get("turnOrder");
-        if (turnOrderData != null) loadCharacterList(turnOrderData, gsm.getTurnOrder());
+        if (turnOrderData != null) {
+            List<Character> correctOrder = new ArrayList<>();
+            System.out.println("Turn order on file" + turnOrderData);
+            for (Map<String, Object> charData : turnOrderData) {
+                String name = (String) charData.get("name");
+                Character found = null;
+                for (Character partyChar : gsm.getParty()) {
+                    if (partyChar.getName().equals(name)) {
+                        found = partyChar;
+                        break;
+                    }
+                }
+                if (found == null) {
+                    for (Character enemyChar : gsm.getEnemies()) {
+                        if (enemyChar.getName().equals(name)) {
+                            found = enemyChar;
+                            break;
+                        }
+                    }
+                }
+                if (found != null) {
+                    correctOrder.add(found);
+                } else {
+                    System.out.println("Failed to find character: " + name);
+                }
+            }
+            gsm.getTurnOrder().clear();
+            gsm.getTurnOrder().addAll(correctOrder);
+        }
+
+        if (gsm.getTurnOrder().isEmpty()) {
+            System.out.println("Warning: Turn order failed to load correctly.");
+        }
+
 
         String currentCharName = (String) data.get("currentCharacter");
         for (Character c : gsm.getTurnOrder()) {

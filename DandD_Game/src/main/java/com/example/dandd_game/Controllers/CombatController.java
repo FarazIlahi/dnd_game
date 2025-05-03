@@ -138,6 +138,7 @@ public class CombatController extends BaseController implements GameMechanics, C
     private boolean attacking = false;
     private boolean usingSpecial = false;
     private boolean showingRange = false;
+    private boolean sceneSwitched = false;
     private int defenseCount = -1;
     private Character defendedAlly;
 
@@ -184,6 +185,7 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     @FXML
     private void initialize() {
+        LocalImages.getInstance().ensureImagesLoaded();
         Platform.runLater(() -> {
             root.setFocusTraversable(true);
             root.requestFocus();
@@ -567,11 +569,33 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
     }
     public void gameOverCheck() throws IOException {
-        if(gameState.getKing().getIsDead()){
+        GameStateManager gameState = GameStateManager.getInstance();
+        if (sceneSwitched) return;
+
+        Character king = gameState.getKing();
+        if (gameState.getKing().getIsDead()) {
             switchScene("Chapter3/GameOverScene");
+            return;
         }
         else if (gameState.getEnemies().isEmpty()) {
-            switchScene("Chapter3/GameWinScene");
+            if (gameState.getNextScene() != null) {
+                sceneSwitched = true;
+                switchScene(gameState.getNextScene());
+                gameState.setNextScene(null);
+                gameState.setPreviousScene(null);
+                return;
+            }
+            else if (gameState.getPreviousScene() != null) {
+                sceneSwitched = true;
+                switchScene(gameState.getPreviousScene());
+                gameState.setPreviousScene(null);
+                return;
+            }
+            else {
+                sceneSwitched = true;
+                switchScene("Chapter3/GameWinScene");
+                return;
+            }
         }
     }
 }
