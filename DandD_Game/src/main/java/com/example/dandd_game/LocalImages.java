@@ -57,25 +57,7 @@ public class LocalImages {
     public void setHealURL(String healURL) {
         this.healURL = healURL;
     }
-    public void ensureImagesLoaded() {
-        if(kingURL == null || knightURL == null || clericURL == null || mageURL == null || goblinURL == null || orcURL == null || sorcererURL == null || slashURL == null || explosionURL == null || healURL == null) {
-            try {
-                setKingURL(getClass().getResource("/com/example/dandd_game/images/pixelKing.png").toExternalForm());
-                setKnightURL(getClass().getResource("/com/example/dandd_game/images/pixelKnight.png").toExternalForm());
-                setClericURL(getClass().getResource("/com/example/dandd_game/images/pixelCleric.png").toExternalForm());
-                setMageURL(getClass().getResource("/com/example/dandd_game/images/pixelMage.png").toExternalForm());
-                setGoblinURL(getClass().getResource("/com/example/dandd_game/images/goblin.png").toExternalForm());
-                setOrcURL(getClass().getResource("/com/example/dandd_game/images/orc.png").toExternalForm());
-                setSorcererURL(getClass().getResource("/com/example/dandd_game/images/evilEyes.png").toExternalForm());
-                setSlashURL(getClass().getResource("/com/example/dandd_game/images/slash.gif").toExternalForm());
-                setExplosionURL(getClass().getResource("/com/example/dandd_game/images/explode.gif").toExternalForm());
-                setHealURL(getClass().getResource("/com/example/dandd_game/images/heal.png").toExternalForm());
-                System.out.println("Image URLs initialized.");
-            } catch (Exception e) {
-                System.out.println("Error loading images: " + e.getMessage());
-            }
-        }
-    }
+
 
     public Image getImage(String image){
         if(image.equals("King")){

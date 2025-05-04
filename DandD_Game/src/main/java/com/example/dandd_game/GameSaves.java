@@ -14,6 +14,8 @@ import com.example.dandd_game.Characters.Sorcerer;
 import com.example.dandd_game.Position;
 import com.google.cloud.firestore.SetOptions;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+
 
 
 import java.util.*;
@@ -79,18 +81,17 @@ public class GameSaves {
         data.put("party", serializeCharacterList(gsm.getParty()));
         data.put("enemies", serializeCharacterList(gsm.getEnemies()));
 
-        if (gsm.getTurnOrder().isEmpty()) {
-            System.out.println("Turn order is empty - creating defualt turn order");
-            gsm.getTurnOrder().addAll(gsm.getParty());
-            gsm.getTurnOrder().addAll(gsm.getEnemies());
-        }
 
         System.out.println("Saving turn Order:");
         for (Character c : gsm.getTurnOrder()) {
             System.out.println(c.getName());
         }
 
-        data.put("turnOrder", serializeCharacterList(gsm.getTurnOrder()));
+        List<String> turnOrderNames = new ArrayList<>();
+        for (Character c : gsm.getTurnOrder()) {
+            turnOrderNames.add(c.getName());
+        }
+        data.put("turnOrder", turnOrderNames);
         return data;
     }
 
@@ -98,7 +99,7 @@ public class GameSaves {
         List<Map<String, Object>> serialized = new ArrayList<>();
         for (Character c : list) {
             Map<String, Object> charData = new HashMap<>();
-            charData.put("type", c.getClass().getSimpleName());
+            charData.put("type", c.getID());
             charData.put("name", c.getName());
             charData.put("hp", c.getHp());
             charData.put("basic_attack", c.getBasic_attack());
@@ -168,7 +169,12 @@ public class GameSaves {
 
             Character c = createCharacterByType(type, name, hp, attack, defense, range, special, cost, x, y);
             if (c != null) {
-                ImageView profile = new ImageView(LocalImages.getInstance().getImage(type));
+                String imageKey = type;
+                Image img = LocalImages.getInstance().getImage(imageKey);
+                if (img == null) {
+                    System.out.println("Image not found for: " + imageKey);
+                }
+                ImageView profile = new ImageView(img);
                 profile.setFitWidth(40);
                 profile.setFitHeight(40);
                 c.setProfile(profile);
@@ -179,12 +185,13 @@ public class GameSaves {
                     case "Knight" -> gsm.setKnight((Knight) c);
                     case "Cleric" -> gsm.setCleric((Cleric) c);
                     case "Mage" -> gsm.setMage((Mage) c);
-                    case "Goblin" -> gsm.getEnemies().add(c);
-                    case "Orc" -> gsm.getEnemies().add(c);
-                    case "Sorcerer" -> gsm.getEnemies().add(c);
                 }
 
-            } else {
+                if (type.equals("Goblin") || type.equals("Orc") || type.equals("Sorcerer")) {
+                    gsm.getEnemies().add(c);
+                }
+            }
+            else {
                 System.out.println("Failed to create character: " + type + " " + name);
             }
         }
@@ -211,12 +218,10 @@ public class GameSaves {
         List<Map<String, Object>> enemiesData = (List<Map<String, Object>>) data.get("enemies");
         if (enemiesData != null) loadCharacterList(enemiesData, gsm.getEnemies());
 
-        List<Map<String, Object>> turnOrderData = (List<Map<String, Object>>) data.get("turnOrder");
-        if (turnOrderData != null) {
+        List<String> turnOrderNames = (List<String>) data.get("turnOrder");
+        if (turnOrderNames != null) {
             List<Character> correctOrder = new ArrayList<>();
-            System.out.println("Turn order on file" + turnOrderData);
-            for (Map<String, Object> charData : turnOrderData) {
-                String name = (String) charData.get("name");
+            for (String name : turnOrderNames) {
                 Character found = null;
                 for (Character partyChar : gsm.getParty()) {
                     if (partyChar.getName().equals(name)) {
@@ -235,12 +240,13 @@ public class GameSaves {
                 if (found != null) {
                     correctOrder.add(found);
                 } else {
-                    System.out.println("Failed to find character: " + name);
+                    System.out.println("Failed to find character in turn order: " + name);
                 }
             }
             gsm.getTurnOrder().clear();
             gsm.getTurnOrder().addAll(correctOrder);
         }
+
 
         if (gsm.getTurnOrder().isEmpty()) {
             System.out.println("Warning: Turn order failed to load correctly.");

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -185,7 +186,6 @@ public class CombatController extends BaseController implements GameMechanics, C
 
     @FXML
     private void initialize() {
-        LocalImages.getInstance().ensureImagesLoaded();
         Platform.runLater(() -> {
             root.setFocusTraversable(true);
             root.requestFocus();
@@ -308,6 +308,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p1_attack);
                 character.addButton(p1_special);
                 character.addButton(p1_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
@@ -329,6 +330,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p2_attack);
                 character.addButton(p2_special);
                 character.addButton(p2_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
@@ -350,6 +352,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p3_attack);
                 character.addButton(p3_special);
                 character.addButton(p3_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
@@ -371,6 +374,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p4_attack);
                 character.addButton(p4_special);
                 character.addButton(p4_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
         }
     }

@@ -4,12 +4,14 @@ import com.example.dandd_game.AchievementPopup;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
+import com.example.dandd_game.LocalImages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class FirstSceneController extends BaseController implements GameMechanics {
     @FXML

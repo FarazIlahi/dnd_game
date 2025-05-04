@@ -18,4 +18,8 @@ public class Cleric extends Character {
         //Must be wihtin range
         return -9;
     }
+    @Override
+    public String getID() {
+        return "Cleric";
+    }
 }
