@@ -10,6 +10,7 @@ module com.example.dandd_game {
     requires com.google.api.apicommon;
     requires firebase.admin;
     requires com.google.gson;
+    requires java.desktop;
 
     // Firebase serialization
     opens com.example.dandd_game to javafx.fxml, google.cloud.firestore;
