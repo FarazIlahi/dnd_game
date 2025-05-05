@@ -2,6 +2,10 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -9,7 +13,10 @@ import java.util.Set;
 
 public class GameStateManager {
     private static GameStateManager instance;
-    private GameStateManager() {}
+
+    private GameStateManager() {
+    }
+
     private Integer playerCount;
     private String difficulty;
     private String campaignName;
@@ -25,9 +32,13 @@ public class GameStateManager {
     private String currentScene;
     private String currentUserEmail;
     private int currentSlot;
+    private String previousScene;
+    private String nextScene;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
+
+    private AudioInputStream soundFXInput;
 
     public static GameStateManager getInstance() {
         if (instance == null) {
@@ -52,8 +63,9 @@ public class GameStateManager {
         resetList(enemies);
         resetList(turnOrder);
     }
-    public void resetList(ArrayList<Character> list){
-        for(int i = list.size() - 1; i >= 0; i--){
+
+    public void resetList(ArrayList<Character> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             list.remove(i);
         }
     }
@@ -181,6 +193,20 @@ public class GameStateManager {
         setCurrentCharacter(this.turnOrder.get(0));
         resetMoveCount();
     }
+    public void playSoundFX(String sfxFile) {
+        try {
+            soundFXInput = AudioSystem.getAudioInputStream(new File(sfxFile));
+            Clip soundFX = AudioSystem.getClip();
+            soundFX.open(soundFXInput);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Error: File not supported");
+        } catch (LineUnavailableException e) {
+            System.out.println("Error: File unavailable");
+        } catch (IOException e) {
+            System.out.println("Error: File not found");
+        }
+    }
+
     private Set<String> achievements = new LinkedHashSet<>();
 
     public boolean unlockAchievement(String achievement) {
@@ -219,5 +245,41 @@ public class GameStateManager {
             }
         }
         return false;
+    }
+
+    public String getPreviousScene() {
+        return previousScene;
+    }
+
+    public void setPreviousScene(String previousScene) {
+        this.previousScene = previousScene;
+    }
+
+    public void resetEnemies() {
+        resetList(enemies);
+    }
+
+    public void setNextScene(String nextScene) {
+        this.nextScene = nextScene;
+    }
+
+    public String getNextScene() {
+        return nextScene;
+    }
+
+    public void setKing(King king) {
+        this.king = king;
+    }
+
+    public void setKnight(Knight knight) {
+        this.knight = knight;
+    }
+
+    public void setCleric(Cleric cleric) {
+        this.cleric = cleric;
+    }
+
+    public void setMage(Mage mage) {
+        this.mage = mage;
     }
 }

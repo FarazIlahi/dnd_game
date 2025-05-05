@@ -71,5 +71,8 @@ public interface GameMechanics {
         node.setOpacity(1);
         node.setDisable(false);
     }
+    default void playAttackSoundFX(String soundFXFile){
+        gameState.playSoundFX(soundFXFile);
+    }
 
 }

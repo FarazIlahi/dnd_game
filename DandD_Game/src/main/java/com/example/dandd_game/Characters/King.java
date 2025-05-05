@@ -15,6 +15,10 @@ public class King extends Character {
     public int specialMove(){
         return getBasic_attack() * 2;
     }
+    @Override
+    public String getID() {
+        return "King";
+    }
 
     public int typeMatchup(Character Target) {
         int damageKing = gameState.getKing().getBasic_attack();
