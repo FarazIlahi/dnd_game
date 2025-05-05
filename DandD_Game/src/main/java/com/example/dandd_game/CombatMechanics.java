@@ -426,11 +426,13 @@ public interface CombatMechanics extends GameMechanics{
             case "Knight":
             case "Goblin":
                 showSlash(target, combatGrid);
+                playAttackSoundFX("DandD_Game/src/main/resources/com/example/dandd_game/sounds/slash.wav");
                 break;
             case "Mage":
             case "Cleric":
             case "Sorcerer":
                 showExplosion(target, combatGrid);
+                playAttackSoundFX("DandD_Game/src/main/resources/com/example/dandd_game/sounds/explosion.wav");
                 break;
         }
     }
