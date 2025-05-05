@@ -18,8 +18,12 @@ public class Knight extends Character {
         //Must be wihtin rangew
         return this.getDef();
     }
-    @Override
-    public String getID(){
-        return "Knight";
+    public int typeMatchup(Character Target) {
+        int damageKnight = gameState.getKnight().getBasic_attack();
+
+        if ("Imp".equals(Target.getID())) {
+            damageKnight /= 2;
+        }
+        return damageKnight;
     }
 }

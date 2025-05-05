@@ -35,7 +35,7 @@
                   <Region prefHeight="600.0" prefWidth="138.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="king" fitHeight="267.0" fitWidth="273.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="king" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/pixelKing.png" />
                            </image>
@@ -46,7 +46,7 @@
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Ruler of the kingdom.  Has balanced stats.  The game ends if he is defeated." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="275.0" text="    Ruler of the kingdom.  Has balanced stats.  The game ends if he is defeated." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -61,7 +61,7 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="knight" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="knight" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelKnight.png" />
                            </image>
@@ -72,7 +72,7 @@
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Loyal night of the king.  Has strong defense, but has low mobility." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="277.0" text="    Loyal night of the king.  Has strong defense, but has low mobility." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -87,7 +87,7 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="cleric" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="cleric" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelCleric.png" />
                            </image>
@@ -98,7 +98,7 @@
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Priest of the kingdom.  Heals others with divine powers." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="276.0" text="    Priest of the kingdom.  Heals others with divine powers." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -113,7 +113,7 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="mage" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="mage" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelMage.png" />
                            </image>
@@ -124,7 +124,7 @@
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Witch from the forest aiding the king.  Powerful magic user, but has poor defense." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="286.0" text="    Witch from the forest aiding the king.  Powerful magic user, but has poor defense." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
