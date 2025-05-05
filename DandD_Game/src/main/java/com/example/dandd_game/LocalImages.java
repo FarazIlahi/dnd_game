@@ -1,6 +1,5 @@
 package com.example.dandd_game;
 
-import com.example.dandd_game.Characters.Knight;
 import javafx.scene.image.Image;
 
 public class LocalImages {
@@ -15,6 +14,9 @@ public class LocalImages {
     private String slashURL;
     private String explosionURL;
     private String healURL;
+    private String xAttackURL;
+    private String shieldURL;
+    private String modAttackURL;
 
     private static LocalImages instance;
     public static LocalImages getInstance() {
@@ -58,6 +60,17 @@ public class LocalImages {
         this.healURL = healURL;
     }
 
+    public void setModAttackURL(String modAttackURL) {
+        this.modAttackURL = modAttackURL;
+    }
+
+    public void setShieldURL(String shieldURL) {
+        this.shieldURL = shieldURL;
+    }
+
+    public void setxAttackURL(String xAttackURL) {
+        this.xAttackURL = xAttackURL;
+    }
 
     public Image getImage(String image){
         if(image.equals("King")){
@@ -89,6 +102,15 @@ public class LocalImages {
         }
         else if (image.equals("Heal")) {
             return new Image(this.healURL);
+        }
+        else if (image.equals("XAttack")) {
+            return new Image(this.xAttackURL);
+        }
+        else if (image.equals("Shield")) {
+            return new Image(this.shieldURL);
+        }
+        else if (image.equals("ModAttack")) {
+            return new Image(this.modAttackURL);
         }
 
         else {

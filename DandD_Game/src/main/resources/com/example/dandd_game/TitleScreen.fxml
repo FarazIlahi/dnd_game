@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
    <children>
 
       <ImageView fitHeight="800.0" fitWidth="1600.0" onMouseClicked="#goNext" pickOnBounds="true" preserveRatio="true">
@@ -40,9 +40,38 @@
             <Image url="@images/evilEyes.png" />
          </image>
       </ImageView>
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView id="goblin" fx:id="goblin" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/goblin.png" />
+         </image></ImageView>
+      <ImageView id="orc" fx:id="orc" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/orc.png" />
+         </image></ImageView>
+      <ImageView id="slash" fx:id="slash" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/slash.gif" />
+         </image></ImageView>
+      <ImageView id="explosion" fx:id="explosion" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/explode.gif" />
+         </image></ImageView>
+      <ImageView id="heal" fx:id="heal" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/heal.gif" />
+         </image></ImageView>
+      <ImageView id="xAttack" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false" fx:id="xAttack">
+         <image>
+            <Image url="@images/X_Attack.gif" />
+         </image></ImageView>
+      <ImageView id="shield" fx:id="shield" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/shield.gif" />
+         </image></ImageView>
+      <ImageView id="modAttack" fx:id="modAttack" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/Modular_Attack.gif" />
+         </image></ImageView>
       <ImageView fitHeight="126.0" fitWidth="488.0" layoutX="551.0" layoutY="605.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/Scroll.png" />

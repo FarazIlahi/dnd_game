@@ -77,24 +77,18 @@ public interface CombatMechanics extends GameMechanics{
     }
     default void loadCharacter(GridPane combatGrid, Runnable updateTurn){
         for (Character character : gameState.getParty()) {
-            System.out.println("loaded character " + character.getName());
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
             updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         for (Character character : gameState.getEnemies()) {
-            System.out.println("Loaded enemy " + character.getName());
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
             updateProfiles(character, x, y, combatGrid, updateTurn);
         }
-        if (gameState.getTurnOrder().isEmpty()) {
-            System.out.println("Turn order is empty");
-        } else {
-            shuffleTurnOrder();
-        }
+        shuffleTurnOrder();
     }
 
     default void updateProfiles(Character character, int x, int y, GridPane combatGrid, Runnable updateTurn){
@@ -121,9 +115,9 @@ public interface CombatMechanics extends GameMechanics{
                     switch (gameState.getCurrentCharacter().getID()){
                         case "King":
                             if (!gameState.getParty().contains(owner)) {
-                                highlight(profile);
-                                owner.setHighlighted(true);
-                            }
+                            highlight(profile);
+                            owner.setHighlighted(true);
+                        }
                             break;
                         case "Mage":
                             if (!gameState.getParty().contains(owner)) {
@@ -175,7 +169,7 @@ public interface CombatMechanics extends GameMechanics{
                     }
                 }
                 else if (gameState.getCurrentCharacter().getID().equals("Mage")) {
-                    for(Character enemy : gameState.getParty()){
+                    for(Character enemy : gameState.getEnemies()){
                         if(withinRange(enemy)){
                             unhighlight(enemy.getProfile());
                         }
@@ -202,6 +196,13 @@ public interface CombatMechanics extends GameMechanics{
                     runPlayerSpecialBackEnd(owner, combatGrid);
                     pauseMethod(0.5, updateTurn);
                     pauseMethod(1.0, () -> checkIsDead(owner, combatGrid));
+                    if(gameState.getCurrentCharacter().getID().equals("Mage")) {
+                        for(Character enemy : gameState.getEnemies()){
+                            if(withinRange(enemy)){
+                                pauseMethod(1.0, () -> checkIsDead(enemy, combatGrid));
+                            }
+                        }
+                    }
                 }
             }
 
@@ -339,7 +340,7 @@ public interface CombatMechanics extends GameMechanics{
     default void runEnemyAttackBackEnd(Character target, Runnable updateTurn, Double time, GridPane combatGrid){
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        showEffect(target, combatGrid);
+        showBasicEffect(target, combatGrid);
         pauseMethod(time, updateTurn);
         pauseMethod(1.0, () -> checkIsDead(target, combatGrid));
     }
@@ -353,7 +354,7 @@ public interface CombatMechanics extends GameMechanics{
         setAttacking(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().getBasic_attack());
         updateHp(target, target.getHpBar(), target.getHpInfo());
-        showEffect(target, combatGrid);
+        showBasicEffect(target, combatGrid);
     }
     default void runPlayerSpecialBackEnd(Character target, GridPane combatGrid){
         gameState.getCurrentCharacter().updateSpecial();
@@ -371,6 +372,7 @@ public interface CombatMechanics extends GameMechanics{
                 runMageSpecial(target, combatGrid);
                 break;
         }
+        showSpecialEffect(target, combatGrid);
         updateSpecial();
     }
     default void runKingSpecial(Character target, GridPane combatGrid){
@@ -420,53 +422,51 @@ public interface CombatMechanics extends GameMechanics{
             }
         }
     }
-    default void showEffect(Character target, GridPane combatGrid){
+    default void showBasicEffect(Character target, GridPane combatGrid){
+        ImageView targetImage = target.getProfile();
+        ImageView effect = new ImageView();
         switch (gameState.getCurrentCharacter().getID()){
+            case "Goblin":
+            case "Orc":
             case "King":
             case "Knight":
-            case "Goblin":
-                showSlash(target, combatGrid);
-                playAttackSoundFX("DandD_Game/src/main/resources/com/example/dandd_game/sounds/slash.wav");
+                effect.setImage(localImages.getImage("Slash"));
+                break;
+            case "Cleric":
+            case "Mage":
+            case "Sorcerer":
+                effect.setImage(localImages.getImage("Explosion"));
+        }
+        updateEffect(effect, target, combatGrid);
+    }
+    default void showSpecialEffect(Character target, GridPane combatGrid){
+        ImageView targetImage = target.getProfile();
+        ImageView effect = new ImageView();
+        switch (gameState.getCurrentCharacter().getID()){
+            case "King":
+                effect.setImage(localImages.getImage("XAttack"));
+                break;
+            case "Knight":
+                effect.setImage(localImages.getImage("Shield"));
+                break;
+            case "Cleric":
+                effect.setImage(localImages.getImage("Heal"));
                 break;
             case "Mage":
-            case "Cleric":
-            case "Sorcerer":
-                showExplosion(target, combatGrid);
-                playAttackSoundFX("DandD_Game/src/main/resources/com/example/dandd_game/sounds/explosion.wav");
+                effect.setImage(localImages.getImage("ModAttack"));
                 break;
         }
+        updateEffect(effect, target, combatGrid);
     }
-    default void showSlash(Character target, GridPane combatGrid){
+    default void updateEffect(ImageView effect, Character target, GridPane combatGrid){
         ImageView targetImage = target.getProfile();
-        ImageView slashEffect = new ImageView(localImages.getImage("Slash"));
-        slashEffect.setFitWidth(targetImage.getFitWidth());
-        slashEffect.setFitHeight(targetImage.getFitHeight());
+        effect.setFitWidth(targetImage.getFitWidth());
+        effect.setFitHeight(targetImage.getFitHeight());
         StackPane enemyWrapper = new StackPane();
-        enemyWrapper.getChildren().addAll(targetImage, slashEffect);
+        enemyWrapper.getChildren().addAll(targetImage, effect);
         combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
-        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
-    }
-    default void showExplosion(Character target, GridPane combatGrid){
-        ImageView explosionEffect = new ImageView(localImages.getImage("Explosion"));
-        ImageView targetImage = target.getProfile();
-        explosionEffect.setFitWidth(targetImage.getFitWidth());
-        explosionEffect.setFitHeight(targetImage.getFitHeight());
-        StackPane enemyWrapper = new StackPane();
-        enemyWrapper.getChildren().addAll(targetImage, explosionEffect);
-        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        pauseMethod(1.0, () -> combatGrid.getChildren().remove(enemyWrapper));
-        pauseMethod(1.0, () -> combatGrid.getChildren().add(targetImage));
-    }
-    default void showHeal(Character target, GridPane combatGrid){
-        ImageView healEffect = new ImageView(localImages.getImage("Heal"));
-        ImageView targetImage = target.getProfile();
-        healEffect.setFitWidth(targetImage.getFitWidth());
-        healEffect.setFitHeight(targetImage.getFitHeight());
-        StackPane enemyWrapper = new StackPane();
-        enemyWrapper.getChildren().addAll(targetImage, healEffect);
-        combatGrid.add(enemyWrapper, target.getPosition().getX(), target.getPosition().getY());
-        pauseMethod(1.0,() -> healEffect.setVisible(false));
+        pauseMethod(.9, () -> combatGrid.getChildren().remove(enemyWrapper));
+        pauseMethod(.9, () -> combatGrid.getChildren().add(targetImage));
     }
 
     default void checkIsDead(Character character, GridPane combatGrid){
