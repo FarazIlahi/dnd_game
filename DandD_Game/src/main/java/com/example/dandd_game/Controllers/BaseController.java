@@ -15,6 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import javax.sound.sampled.*;
+import java.io.File;
 import java.io.IOException;
 
 public class BaseController implements GameMechanics {
@@ -36,6 +39,8 @@ public class BaseController implements GameMechanics {
         return currentroot;
     }
     protected KeyBindingManager keyManager;
+
+    private AudioInputStream musicInput;
 
     public void createStackPane() throws IOException {
         stackPane.getChildren().clear();
@@ -66,7 +71,24 @@ public class BaseController implements GameMechanics {
         setCurrentroot(root);
         keyManager = new KeyBindingManager(root);
         keyManager.addKeyBinding("ESCAPE", this::handleKeyPress);
+
     }
+
+    public void setMusic(String musicFile){
+        try {
+            musicInput = AudioSystem.getAudioInputStream(new File(musicFile));
+            Clip music = AudioSystem.getClip();
+            music.open(musicInput);
+            music.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException e){
+            System.out.println("Error: This file format is not supported.");
+        } catch (LineUnavailableException e){
+            System.out.println("Error: This file is unavailable.");
+        } catch (IOException e){
+            System.out.println("Error: File not found.");
+        }
+    }
+
     private void handleKeyPress() throws IOException {
         if(is_on_settings){
             is_on_settings = false;

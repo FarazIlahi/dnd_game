@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -138,6 +139,7 @@ public class CombatController extends BaseController implements GameMechanics, C
     private boolean attacking = false;
     private boolean usingSpecial = false;
     private boolean showingRange = false;
+    private boolean sceneSwitched = false;
     private int defenseCount = -1;
     private Character defendedAlly;
 
@@ -306,6 +308,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p1_attack);
                 character.addButton(p1_special);
                 character.addButton(p1_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
@@ -327,6 +330,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p2_attack);
                 character.addButton(p2_special);
                 character.addButton(p2_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
@@ -348,6 +352,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p3_attack);
                 character.addButton(p3_special);
                 character.addButton(p3_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
@@ -369,6 +374,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p4_attack);
                 character.addButton(p4_special);
                 character.addButton(p4_move);
+                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
                 break;
         }
     }
@@ -567,11 +573,33 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
     }
     public void gameOverCheck() throws IOException {
-        if(gameState.getKing().getIsDead()){
+        GameStateManager gameState = GameStateManager.getInstance();
+        if (sceneSwitched) return;
+
+        Character king = gameState.getKing();
+        if (gameState.getKing().getIsDead()) {
             switchScene("Chapter3/GameOverScene");
+            return;
         }
         else if (gameState.getEnemies().isEmpty()) {
-            switchScene("Chapter3/GameWinScene");
+            if (gameState.getNextScene() != null) {
+                sceneSwitched = true;
+                switchScene(gameState.getNextScene());
+                gameState.setNextScene(null);
+                gameState.setPreviousScene(null);
+                return;
+            }
+            else if (gameState.getPreviousScene() != null) {
+                sceneSwitched = true;
+                switchScene(gameState.getPreviousScene());
+                gameState.setPreviousScene(null);
+                return;
+            }
+            else {
+                sceneSwitched = true;
+                switchScene("Chapter3/GameWinScene");
+                return;
+            }
         }
     }
 }

@@ -18,4 +18,8 @@ public class Knight extends Character {
         //Must be wihtin rangew
         return this.getDef();
     }
+    @Override
+    public String getID(){
+        return "Knight";
+    }
 }
