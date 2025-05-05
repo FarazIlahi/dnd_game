@@ -2,6 +2,8 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
+import com.google.cloud.firestore.Firestore;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,6 +28,13 @@ public class GameStateManager {
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
 
+    private int totalDamageDone = 0;
+    private int enemiesKilled = 0;
+    private int rollCompleted = 0;
+    private int randomEventTriggered = 0;
+    private boolean gameCompleted = false;
+
+
     public static GameStateManager getInstance() {
         if (instance == null) {
             instance = new GameStateManager();
@@ -48,6 +57,12 @@ public class GameStateManager {
         resetList(party);
         resetList(enemies);
         resetList(turnOrder);
+
+        totalDamageDone = 0;
+        enemiesKilled = 0;
+        rollCompleted = 0;
+        randomEventTriggered = 0;
+        gameCompleted = false;
     }
     public void resetList(ArrayList<Character> list){
         for(int i = list.size() - 1; i >= 0; i--){
@@ -178,4 +193,37 @@ public class GameStateManager {
     public void resetMoveCount(){
         this.moveCount = 5;
     }
+
+
+    // Game Report Stat Tracking
+    public void addDamage(int damage) {totalDamageDone += damage; }
+    public void incrementEnemiesKilled() {enemiesKilled ++; }
+    public void incrementRollsCompleted(){rollCompleted++; }
+    public void incrementRandomEventsTriggered(){randomEventTriggered++; }
+    public void setGameMechanics(boolean completed) {this.gameCompleted = completed; }
+
+    public int getPlayerSurvived(){
+        int count = 0;
+        for (Character c : this.party) {
+            if(c.getHp() > 0) count++;
+        }
+        return count;
+    }
+
+    public void EndGameReport(){
+        Firestore db = FirebaseConfig.initialize();
+        GameReport report = new GameReport(
+          getPlayerSurvived(),
+          enemiesKilled,
+          totalDamageDone,
+          rollCompleted,
+          gameCompleted,
+          randomEventTriggered
+        );
+
+        db.collection("GameReport")
+                .add(report)
+                .addListener(() -> System.out.println("Report uploaded"), Runnable::run);
+    }
+
 }

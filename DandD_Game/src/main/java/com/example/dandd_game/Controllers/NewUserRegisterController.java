@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.Firestore;
+import com.google.firebase.auth.FirebaseToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +20,7 @@ public class NewUserRegisterController extends BaseController {
     @FXML
     private PasswordField elPWPasswordField;
     @FXML
-    private PasswordField elPWPasswordFieldtwo;
+    private PasswordField elPWPasswordFieldTwo;
     @FXML
     private Button CSbutton;
 
@@ -27,7 +28,7 @@ public class NewUserRegisterController extends BaseController {
     public void createUser(ActionEvent event) throws IOException {
         String email = elEmailTextField.getText();
         String password = elPWPasswordField.getText();
-        String password2 = elPWPasswordFieldtwo.getText();
+        String password2 = elPWPasswordFieldTwo.getText();
 
         if(!password.equals(password2)){
             System.out.println("Passwords do not match");

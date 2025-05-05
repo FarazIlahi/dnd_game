@@ -10,7 +10,8 @@ module com.example.dandd_game {
     requires com.google.api.apicommon;
     requires java.logging;
     requires firebase.admin;
-
+    requires com.google.gson;
+    requires javafx.web;
 
     opens com.example.dandd_game to javafx.fxml;
     exports com.example.dandd_game;

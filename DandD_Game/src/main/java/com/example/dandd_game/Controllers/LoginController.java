@@ -1,6 +1,10 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.FirebaseAuthHelper;
+import com.example.dandd_game.FirebaseConfig;
 import com.example.dandd_game.GameStateManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,4 +55,45 @@ public class LoginController extends BaseController {
         Stage stage = (Stage) leaveButton.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    public void loginWithFacebook(ActionEvent event) throws IOException {
+        try {
+            System.out.println("Starting Facebook login...");
+
+            // Step 1: Open Facebook Login WebView and get access token
+            FacebookLoginWebView webView = new FacebookLoginWebView();
+            String facebookAccessToken = webView.startFacebookLogin((Stage) root.getScene().getWindow());
+
+            if (facebookAccessToken == null) {
+                loginErrorLabel.setText("Facebook login failed. Try again.");
+                return;
+            }
+
+            System.out.println("Facebook Access Token: " + facebookAccessToken);
+
+            // Step 2: Exchange Facebook access token for Firebase ID token
+            String firebaseIdToken = FirebaseAuthHelper.exchangeFacebookAccessTokenForFirebaseToken(facebookAccessToken);
+
+            if (firebaseIdToken == null) {
+                loginErrorLabel.setText("Failed to exchange token with Firebase.");
+                return;
+            }
+
+            System.out.println("Firebase ID Token: " + firebaseIdToken);
+
+            // Step 3: Verify Firebase ID Token
+            FirebaseToken decodedToken = FirebaseConfig.verifyIdToken(firebaseIdToken);
+
+            System.out.println("Firebase login successful!");
+            System.out.println("UID: " + decodedToken.getUid());
+            System.out.println("Email: " + decodedToken.getEmail());
+
+            // Step 4: Switch scene
+            switchScene(event, "GameLoads");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            loginErrorLabel.setText("Something went wrong! Login failed.");
+        }
+        }
 }
