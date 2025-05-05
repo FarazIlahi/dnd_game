@@ -2,6 +2,10 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,6 +32,8 @@ public class GameStateManager {
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
+
+    private AudioInputStream soundFXInput;
 
     public static GameStateManager getInstance() {
         if (instance == null) {
@@ -181,6 +187,20 @@ public class GameStateManager {
         setCurrentCharacter(this.turnOrder.get(0));
         resetMoveCount();
     }
+    public void playSoundFX(String sfxFile) {
+        try {
+            soundFXInput = AudioSystem.getAudioInputStream(new File(sfxFile));
+            Clip soundFX = AudioSystem.getClip();
+            soundFX.open(soundFXInput);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Error: File not supported");
+        } catch (LineUnavailableException e) {
+            System.out.println("Error: File unavailable");
+        } catch (IOException e) {
+            System.out.println("Error: File not found");
+        }
+    }
+
     private Set<String> achievements = new LinkedHashSet<>();
 
     public boolean unlockAchievement(String achievement) {
