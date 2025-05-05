@@ -18,6 +18,13 @@ public class Cleric extends Character {
         //Must be within range
         return -9;
     }
+
+    @Override
+    public String getID() {
+        return "Cleric";
+    }
+
+
     @Override
     public int typeMatchup(Character Target) {
         int damageCleric = gameState.getCleric().getBasic_attack();
