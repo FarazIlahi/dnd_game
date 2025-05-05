@@ -17,4 +17,8 @@ public class Mage extends Character {
         //Must be within 15 range units
         return 7;
     }
+    @Override
+    public String getID(){
+        return "Mage";
+    }
 }

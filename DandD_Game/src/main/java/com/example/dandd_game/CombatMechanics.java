@@ -77,18 +77,24 @@ public interface CombatMechanics extends GameMechanics{
     }
     default void loadCharacter(GridPane combatGrid, Runnable updateTurn){
         for (Character character : gameState.getParty()) {
+            System.out.println("loaded character " + character.getName());
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
             updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         for (Character character : gameState.getEnemies()) {
+            System.out.println("Loaded enemy " + character.getName());
             gameState.addToTurn(character);
             int x = character.getPosition().getX();
             int y = character.getPosition().getY();
             updateProfiles(character, x, y, combatGrid, updateTurn);
         }
-        shuffleTurnOrder();
+        if (gameState.getTurnOrder().isEmpty()) {
+            System.out.println("Turn order is empty");
+        } else {
+            shuffleTurnOrder();
+        }
     }
 
     default void updateProfiles(Character character, int x, int y, GridPane combatGrid, Runnable updateTurn){
@@ -115,9 +121,9 @@ public interface CombatMechanics extends GameMechanics{
                     switch (gameState.getCurrentCharacter().getID()){
                         case "King":
                             if (!gameState.getParty().contains(owner)) {
-                            highlight(profile);
-                            owner.setHighlighted(true);
-                        }
+                                highlight(profile);
+                                owner.setHighlighted(true);
+                            }
                             break;
                         case "Mage":
                             if (!gameState.getParty().contains(owner)) {

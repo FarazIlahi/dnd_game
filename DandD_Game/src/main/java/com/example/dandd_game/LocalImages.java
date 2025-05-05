@@ -1,5 +1,6 @@
 package com.example.dandd_game;
 
+import com.example.dandd_game.Characters.Knight;
 import javafx.scene.image.Image;
 
 public class LocalImages {
@@ -56,6 +57,7 @@ public class LocalImages {
     public void setHealURL(String healURL) {
         this.healURL = healURL;
     }
+
 
     public Image getImage(String image){
         if(image.equals("King")){
