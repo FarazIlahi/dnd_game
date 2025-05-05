@@ -15,4 +15,9 @@ public class Goblin extends Character {
     public int specialMove() {
         return 0;
     }
+
+    @Override
+    public int typeMatchup(Character Target) {
+        return 0;
+    }
 }

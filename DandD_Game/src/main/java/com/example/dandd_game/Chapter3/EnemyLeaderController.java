@@ -38,6 +38,11 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             }
 
             @Override
+            public int typeMatchup(Character Target) {
+                return 0;
+            }
+
+            @Override
             public int specialMove() {
                 System.out.println("Big hit");
                 return 0;
