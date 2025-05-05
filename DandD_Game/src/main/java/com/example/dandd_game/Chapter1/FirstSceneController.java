@@ -33,7 +33,9 @@ public class FirstSceneController extends BaseController implements GameMechanic
 
         gameState.resetEnemies();
         gameState.createGoblin();
+        gameState.createOrc();
         gameState.addToEnemys(gameState.getGoblin());
+        gameState.addToEnemys(gameState.getOrc());
 
         switchScene("Combat");
     }
