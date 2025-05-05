@@ -39,6 +39,9 @@ public class OptionMenuController extends BaseController implements GameMechanic
         switch (scene){
             case "Combat":
             case "GameLoads":
+            case "TitleScreen":
+            case "NewUserRegisterController":
+            case "LoginController":
                 disableNode(save_btn);
                 disableNode(load_btn);
                 disableNode(menu_btn);

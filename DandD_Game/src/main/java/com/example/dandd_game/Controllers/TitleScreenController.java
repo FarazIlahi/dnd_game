@@ -52,6 +52,9 @@ public class TitleScreenController extends BaseController {
         localImages.setSlashURL(slash.getImage().getUrl());
         localImages.setExplosionURL(explosion.getImage().getUrl());
         localImages.setHealURL(heal.getImage().getUrl());
+        localImages.setxAttackURL(xAttack.getImage().getUrl());
+        localImages.setShieldURL(shield.getImage().getUrl());
+        localImages.setModAttackURL(modAttack.getImage().getUrl());
         super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/introMusic.wav");
     }
 
@@ -61,6 +64,7 @@ public class TitleScreenController extends BaseController {
     }
     @FXML
     private void tutorial(ActionEvent event) throws IOException {
+        super.init(root);
         gameState.resetInstance();
         gameState.setPlayerCount(4);
         gameState.createKing();
