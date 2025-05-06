@@ -372,7 +372,7 @@ public interface CombatMechanics extends GameMechanics{
                 runMageSpecial(target, combatGrid);
                 break;
         }
-        showSpecialEffect(target, combatGrid);
+
         updateSpecial();
     }
     default void runKingSpecial(Character target, GridPane combatGrid){
@@ -382,6 +382,7 @@ public interface CombatMechanics extends GameMechanics{
         setUsingSpecial(false);
         target.setHp(target.getHp() - gameState.getCurrentCharacter().specialMove());
         updateHp(target, target.getHpBar(), target.getHpInfo());
+        showSpecialEffect(target, combatGrid);
     }
     default void runKnightSpecial(Character target, GridPane combatGrid){
         updateShowRange(false, combatGrid);
@@ -391,6 +392,7 @@ public interface CombatMechanics extends GameMechanics{
         target.setDef(target.getDef() + gameState.getCurrentCharacter().specialMove());
         setDefenseCount(gameState.getTurnOrder().size());
         setDefendedAlly(target);
+        showSpecialEffect(target, combatGrid);
     }
     default void runClericSpecial(Character target, GridPane combatGrid){
         updateShowRange(false, combatGrid);
@@ -404,6 +406,7 @@ public interface CombatMechanics extends GameMechanics{
                     unhighlight(ally.getProfile());
                 }
                 updateHp(ally, ally.getHpBar(), ally.getHpInfo());
+                showSpecialEffect(ally, combatGrid);
             }
         }
     }
@@ -419,6 +422,7 @@ public interface CombatMechanics extends GameMechanics{
                     unhighlight(enemy.getProfile());
                 }
                 updateHp(enemy, enemy.getHpBar(), enemy.getHpInfo());
+                showSpecialEffect(enemy, combatGrid);
             }
         }
     }
