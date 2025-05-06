@@ -1,6 +1,7 @@
 package com.example.dandd_game.Chapter1;
 
 import com.example.dandd_game.AchievementPopup;
+import com.example.dandd_game.Characters.Goblin;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -39,7 +40,18 @@ public class InfiltrateController extends BaseController implements GameMechanic
         } else {
             alert.setContentText("You rolled a " + roll + "\nFailed! You are caught.");
             alert.showAndWait();
-            switchScene(event, "Chapter3/GameOverScene");
+            GameStateManager gsm = GameStateManager.getInstance();
+            gsm.resetEnemies();
+            gsm.resetList(gsm.getTurnOrder());
+            gsm.createGoblin();
+            gsm.createGoblin();
+            gsm.getGoblin().setName("Goblin Scout");
+            Goblin goblinB = new Goblin();
+            goblinB.setName("Goblin Fighter");
+            gsm.addToEnemys(gsm.getGoblin());
+            gsm.addToEnemys(goblinB);
+            gsm.setNextScene("Chapter2/ChapterTwoScene");
+            switchScene(event, "Combat");
         }
     }
 }
