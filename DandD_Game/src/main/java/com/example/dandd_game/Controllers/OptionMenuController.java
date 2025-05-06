@@ -67,6 +67,7 @@ public class OptionMenuController extends BaseController implements GameMechanic
         try {
             GameSaves.loadGame();
             String scene = GameStateManager.getInstance().getCurrentScene();
+            setIs_on_settings(false);
             switchScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,6 +77,7 @@ public class OptionMenuController extends BaseController implements GameMechanic
     @FXML
     private void goToMenu() {
         try {
+            setIs_on_settings(false);
             switchScene("GameLoads");
         } catch (Exception e) {
             e.printStackTrace();
