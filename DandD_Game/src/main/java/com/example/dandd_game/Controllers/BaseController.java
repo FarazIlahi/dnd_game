@@ -40,7 +40,11 @@ public class BaseController implements GameMechanics {
     }
     protected KeyBindingManager keyManager;
 
-    private AudioInputStream musicInput;
+    private static AudioInputStream musicInput;
+    private static Clip music;
+    private float prevVolume = 0;
+    private float currentVolume = 1.0f;
+    private FloatControl volumeControl;
 
     public void createStackPane() throws IOException {
         stackPane.getChildren().clear();
@@ -77,14 +81,25 @@ public class BaseController implements GameMechanics {
     public void setMusic(String musicFile){
         try {
             musicInput = AudioSystem.getAudioInputStream(new File(musicFile));
-            Clip music = AudioSystem.getClip();
+            music = AudioSystem.getClip();
             music.open(musicInput);
+            volumeControl = (FloatControl)music.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(currentVolume);
             music.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException e){
             System.out.println("Error: This file format is not supported.");
         } catch (LineUnavailableException e){
             System.out.println("Error: This file is unavailable.");
         } catch (IOException e){
+            System.out.println("Error: File not found.");
+        }
+    }
+
+    public void stopMusic(){
+        try {
+            music.stop();
+            musicInput.reset();
+        } catch (IOException e) {
             System.out.println("Error: File not found.");
         }
     }
