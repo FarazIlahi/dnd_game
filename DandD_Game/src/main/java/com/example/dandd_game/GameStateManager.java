@@ -11,6 +11,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameStateManager {
     private static GameStateManager instance;
 
@@ -37,6 +40,10 @@ public class GameStateManager {
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
+    private String upKey = "W";
+    private String downKey = "S";
+    private String leftKey = "A";
+    private String rightKey = "D";
 
     private AudioInputStream soundFXInput;
 
@@ -62,6 +69,10 @@ public class GameStateManager {
         resetList(party);
         resetList(enemies);
         resetList(turnOrder);
+        upKey = "W";
+        downKey = "S";
+        leftKey = "A";
+        rightKey = "D";
     }
 
     public void resetList(ArrayList<Character> list) {
@@ -282,4 +293,49 @@ public class GameStateManager {
     public void setMage(Mage mage) {
         this.mage = mage;
     }
+
+    public void setUpKey(String upKey) {
+        this.upKey = upKey;
+    }
+    public String getUpKey() {
+        return upKey;
+    }
+
+    public void setDownKey(String downKey) {
+        this.downKey = downKey;
+    }
+    public String getDownKey() {
+        return downKey;
+    }
+
+    public void setLeftKey(String leftKey) {
+        this.leftKey = leftKey;
+    }
+    public String getLeftKey() {
+        return leftKey;
+    }
+
+    public void setRightKey(String rightKey) {
+        this.rightKey = rightKey;
+    }
+    public String getRightKey() {
+        return rightKey;
+    }
+
+    public Map<String, String> getKeybindsMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("up", upKey);
+        map.put("down", downKey);
+        map.put("left", leftKey);
+        map.put("right", rightKey);
+        return map;
+    }
+
+    public void setKeybindsFromMap(Map<String, String> map) {
+        if (map.containsKey("up")) setUpKey(map.get("up"));
+        if (map.containsKey("down")) setDownKey(map.get("down"));
+        if (map.containsKey("left")) setLeftKey(map.get("left"));
+        if (map.containsKey("right")) setRightKey(map.get("right"));
+    }
+
 }

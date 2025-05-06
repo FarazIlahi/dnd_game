@@ -271,11 +271,13 @@ public class CombatController extends BaseController implements GameMechanics, C
         }
     }
 
-    public void setKeybinds(){
-        keyManager.addKeyBinding("W", this::moveUp);
-        keyManager.addKeyBinding("A", this::moveLeft);
-        keyManager.addKeyBinding("S", this::moveDown);
-        keyManager.addKeyBinding("D", this::moveRight);
+    public void setKeybinds() {
+        GameStateManager gameState = GameStateManager.getInstance();
+
+        keyManager.addKeyBinding(gameState.getUpKey(), this::moveUp);
+        keyManager.addKeyBinding(gameState.getLeftKey(), this::moveLeft);
+        keyManager.addKeyBinding(gameState.getDownKey(), this::moveDown);
+        keyManager.addKeyBinding(gameState.getRightKey(), this::moveRight);
     }
 
     public void setParty(){
