@@ -42,6 +42,10 @@ public class BaseController implements GameMechanics {
 
     private AudioInputStream musicInput;
 
+    public void setIs_on_settings(boolean b){
+        is_on_settings = b;
+    }
+
     public void createStackPane() throws IOException {
         stackPane.getChildren().clear();
 

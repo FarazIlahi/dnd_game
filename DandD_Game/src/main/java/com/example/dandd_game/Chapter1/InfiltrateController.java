@@ -8,6 +8,7 @@ import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -16,6 +17,8 @@ public class InfiltrateController extends BaseController implements GameMechanic
 
     @FXML
     private Pane rootPane;
+    @FXML
+    private ImageView dice;
 
     @FXML
     private void initialize() {
@@ -27,7 +30,12 @@ public class InfiltrateController extends BaseController implements GameMechanic
     }
 
     @FXML
-    private void proceedInfiltration(ActionEvent event) throws IOException {
+    private void proceedInfiltration(ActionEvent event) throws IOException, InterruptedException {
+        Double spinDuration =  spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::showAlert);
+    }
+    private void showAlert() throws IOException {
         int roll= rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Infiltration");
@@ -35,11 +43,14 @@ public class InfiltrateController extends BaseController implements GameMechanic
 
         if (roll >=10) {
             alert.setContentText("You rolled a " + roll + "\nSuccess! You infiltrate the enemy lines and took advantage.");
-            alert.showAndWait();
-            switchScene(event, "Chapter2/ChapterTwoScene");
-        } else {
+            alert.show();
+
+            switchScene("Chapter2/ChapterTwoScene");
+        }
+        else {
             alert.setContentText("You rolled a " + roll + "\nFailed! You are caught.");
-            alert.showAndWait();
+            alert.show();
+
             GameStateManager gsm = GameStateManager.getInstance();
             gsm.resetEnemies();
             gsm.resetList(gsm.getTurnOrder());
@@ -51,7 +62,7 @@ public class InfiltrateController extends BaseController implements GameMechanic
             gsm.addToEnemys(gsm.getGoblin());
             gsm.addToEnemys(goblinB);
             gsm.setNextScene("Chapter2/ChapterTwoScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
 }

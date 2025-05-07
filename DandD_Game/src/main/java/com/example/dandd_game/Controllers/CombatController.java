@@ -134,6 +134,15 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private ProgressBar e3_hpBar;
 
+    @FXML
+    private ImageView e4_profile;
+    @FXML
+    private Label e4_name;
+    @FXML
+    private Label e4_hpInfo;
+    @FXML
+    private ProgressBar e4_hpBar;
+
     private boolean moving = false;
     private boolean animationMoving = false;
     private boolean attacking = false;
@@ -417,6 +426,16 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.setNameLabel(e3_name);
                 character.setHpBar(e3_hpBar);
                 character.setHpInfo(e3_hpInfo);
+                break;
+            case "4":
+                e4_profile.setImage(localImages.getImage(character.getID()));
+                e4_name.setText(character.getName());
+                e4_hpBar.setVisible(true);
+                updateHp(character, e4_hpBar, e4_hpInfo);
+                character.setProfile(new ImageView(e4_profile.getImage()));
+                character.setNameLabel(e4_name);
+                character.setHpBar(e4_hpBar);
+                character.setHpInfo(e4_hpInfo);
                 break;
         }
     }

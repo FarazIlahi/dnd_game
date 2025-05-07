@@ -9,11 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewUserRegisterController extends BaseController {
+    @FXML
+    private Pane root;
     @FXML
     private TextField elUNTextField;
     @FXML
@@ -23,6 +27,10 @@ public class NewUserRegisterController extends BaseController {
     @FXML
     private Button CSbutton;
 
+    @FXML
+    private void initialize() {
+        super.init(root);
+    }
     @FXML
     public void createUser(ActionEvent event) throws IOException {
         String email = elUNTextField.getText();
