@@ -384,6 +384,10 @@ public class CombatController extends BaseController implements GameMechanics, C
     public void setEnemies(){
         int count = 1;
         for(Character character : gameState.getEnemies()){
+            if(character.getName().equals("Sorcerer")){
+                super.stopMusic();
+                super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/sorcererBattle.wav");
+            }
             setEnemy(character, count);
             count++;
         }
