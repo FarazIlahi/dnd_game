@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
+import javax.sound.sampled.Clip;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -191,6 +192,8 @@ public class CombatController extends BaseController implements GameMechanics, C
             root.requestFocus();
         });
         super.init(root);
+        super.stopMusic();
+        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/combat.wav");
         setKeybinds();
         setParty();
         setEnemies();
@@ -584,6 +587,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         else if (gameState.getEnemies().isEmpty()) {
             if (gameState.getNextScene() != null) {
                 sceneSwitched = true;
+                super.resumeMusic();
                 switchScene(gameState.getNextScene());
                 gameState.setNextScene(null);
                 gameState.setPreviousScene(null);
@@ -591,6 +595,7 @@ public class CombatController extends BaseController implements GameMechanics, C
             }
             else if (gameState.getPreviousScene() != null) {
                 sceneSwitched = true;
+                super.resumeMusic();
                 switchScene(gameState.getPreviousScene());
                 gameState.setPreviousScene(null);
                 return;

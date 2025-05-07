@@ -42,6 +42,7 @@ public class BaseController implements GameMechanics {
 
     private static AudioInputStream musicInput;
     private static Clip music;
+    private static Clip prevMusic;
     private float prevVolume = 0;
     private float currentVolume = 1.0f;
     private FloatControl volumeControl;
@@ -98,10 +99,17 @@ public class BaseController implements GameMechanics {
     public void stopMusic(){
         try {
             music.stop();
+            prevMusic = music;
             musicInput.reset();
         } catch (IOException e) {
             System.out.println("Error: File not found.");
         }
+    }
+
+    public void resumeMusic(){
+        music.stop();
+        music = prevMusic;
+        music.start();
     }
 
     private void handleKeyPress() throws IOException {
