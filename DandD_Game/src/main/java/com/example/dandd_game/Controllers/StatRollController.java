@@ -130,8 +130,8 @@ public class StatRollController extends BaseController implements GameMechanics 
         int statChange = convertRollToStat(roll);
         switch (currentStat){
             case "HP":
+                workingCharacter.setMax_hp(workingCharacter.getHp() + statChange);
                 workingCharacter.setHp(workingCharacter.getHp() + statChange);
-                workingCharacter.setMax_hp(workingCharacter.getHp());
                 upDateStatChange("HP", statChange, roll);
                 break;
             case "Def":
