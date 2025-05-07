@@ -45,6 +45,10 @@ public class LoginController extends BaseController {
     private GameStateManager gameState = GameStateManager.getInstance();
 
     private static final String API_KEY = loadApiKey();
+    @FXML
+    private void initialize() {
+        super.init(root);
+    }
 
     private static String loadApiKey() {
         try (InputStream input = LoginController.class.getClassLoader().getResourceAsStream("config.properties")) {

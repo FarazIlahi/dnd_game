@@ -41,6 +41,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     private void initialize() {
         super.init(rootPane);
+        gameState.resetInstance();
         creatingFile = false;
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
@@ -104,12 +105,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     }
     @FXML
     private void openAchievements(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/dandd_game/AchievementsScene.fxml"));
-        Parent root = loader.load();
-
-        AchievementsController controller = loader.getController();
-        controller.onSceneShown();
-        rootPane.getScene().setRoot(root);
+        switchScene("AchievementsScene");
     }
 
     private void goToPlayerCount() {
