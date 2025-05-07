@@ -27,16 +27,6 @@ public class FirstSceneController extends BaseController implements GameMechanic
         if (GameStateManager.getInstance().unlockAchievement("You have started the game!")) {;
             GameStateManager.getInstance().queueAchievementPopup("You have started the game!");
         }
-
-
-        gameState.setNextScene("Chapter1/SecondScene");
-
-        gameState.resetEnemies();
-        gameState.createGoblin();
-        gameState.createOrc();
-        gameState.addToEnemys(gameState.getGoblin());
-        gameState.addToEnemys(gameState.getOrc());
-
-        switchScene("Combat");
+        switchScene(event, "Chapter1/SecondScene");
     }
 }

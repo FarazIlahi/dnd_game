@@ -44,23 +44,21 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
     @FXML
     private void attackSorcerer(ActionEvent event) throws IOException {
-        int roll=rollDice(20);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Attack Sorcerer");
-        alert.setHeaderText("You attack the sorcerer!");
+        GameStateManager gsm = GameStateManager.getInstance();
         if (GameStateManager.getInstance().unlockAchievement("You chose to attack The Sorcerer early!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to attack The Sorcerer early!");
         }
-        if (roll >= 17) {
-            alert.setContentText("You rolled a " + roll + "\nSuccess! You defeat the sorcerer and take control.");
-            // next scene: game win
-            alert.showAndWait();
-            switchScene(event, "Chapter3/GameWinScene");
-        } else {
-            alert.setContentText("You rolled a " + roll + "\nFailed! The sorcerer takes control of your mind...");
-            // next scene: game over
-            alert.showAndWait();
-            switchScene(event, "Chapter3/GameOverScene");
-        }
+        gsm.resetEnemies();
+        gsm.createOrc();
+        gsm.createGoblin();
+        gsm.createSorcerer();
+        gsm.addToEnemys(gsm.getOrc());
+        gsm.addToEnemys(gsm.getGoblin());
+        gsm.addToEnemys(gsm.getSorcerer());
+        gsm.resetList(gsm.getTurnOrder());
+
+
+        gsm.setNextScene("Chapter3/GameWinScene");
+        switchScene(event, "Combat");
     }
 }

@@ -46,12 +46,17 @@ public class BattleStrategyController extends BaseController implements GameMech
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Training Party");
+        GameStateManager gsm = GameStateManager.getInstance();
         if (GameStateManager.getInstance().unlockAchievement("You chose to train the party and prepare them for the final battle!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to train the party and prepare them for the final battle!");
         }
         if (roll >= 15) {
             alert.setHeaderText("Successfully trained the party!");
             alert.setContentText("Your forces are well-trained and ready for battle.");
+            if (gsm.getKing() != null) {
+                gsm.getKing().setBasic_attack(gsm.getKing().getBasic_attack() + 5); // attack boost for succeeding risky option
+                System.out.println("attack boost, new val = " + gsm.getKing().getBasic_attack());
+            }
             if (GameStateManager.getInstance().unlockAchievement("You trained the party!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You trained the party!");
             }
