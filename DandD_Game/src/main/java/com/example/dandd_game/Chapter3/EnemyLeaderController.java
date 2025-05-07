@@ -1,6 +1,7 @@
 package com.example.dandd_game.Chapter3;
 
 import com.example.dandd_game.AchievementPopup;
+import com.example.dandd_game.Characters.Goblin;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.Characters.Character;
@@ -17,9 +18,6 @@ public class EnemyLeaderController extends BaseController implements GameMechani
     @FXML
     private Pane rootPane;
 
-    // creating a player to test a taking damage method
-    private Character player; // this is just for testing it can be deleted
-
     @FXML
     private void initialize() {
         super.init(rootPane);
@@ -27,27 +25,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
-        } // leave this code in (its to check for queued achievements)
-
-        // example character also for testing, can be deleted
-        player = new Character(21, 5 ,10,2, "Knight", new Position(1,0), 0, 0) {
-            @Override
-            public String specialToSrting() {
-
-                return null;
-            }
-
-            @Override
-            public int typeMatchup(Character Target) {
-                return 0;
-            }
-
-            @Override
-            public int specialMove() {
-                System.out.println("Big hit");
-                return 0;
-            }
-        }; // end of character data
+        }
     }
 
     @FXML
@@ -56,14 +34,23 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Duel With Enemy Leader");
 
+        GameStateManager gsm = GameStateManager.getInstance();
+        gsm.resetEnemies();
+        gsm.resetList(gsm.getTurnOrder());
+
         if (roll >= 10) {
             alert.setHeaderText("Victory!");
-            alert.setContentText("You defeated the enemy leader!");
+            alert.setContentText("Your army handles the sorcerers men, its just him now!");
             if (GameStateManager.getInstance().unlockAchievement("You defeated the enemy leader in a duel!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You defeated the enemy leader in a duel!");
             }
             alert.showAndWait();
-            switchScene(event, "Chapter3/GameWinScene");
+
+            gsm.createSorcerer();
+            gsm.getSorcerer().setName("The Sorcerer");
+            gsm.addToEnemys(gsm.getSorcerer());
+            gsm.setNextScene("Chapter3/GameWinScene");
+            switchScene(event, "Combat");
         } else {
             alert.setHeaderText("Defeat!");
             alert.setContentText("You were defeated by the enemy leader.");
@@ -71,7 +58,23 @@ public class EnemyLeaderController extends BaseController implements GameMechani
                 GameStateManager.getInstance().queueAchievementPopup("You were defeated by the enemy leader in a duel!");
             }
             alert.showAndWait();
-            switchScene(event, "Chapter3/GameOverScene");
+            gsm.createOrc();
+            gsm.createGoblin();
+            gsm.createGoblin();
+            gsm.createSorcerer();
+
+            gsm.getOrc().setName("Sorcerer's Orc");
+            Goblin g1 = new Goblin();
+            g1.setName("Sorcerer's Goblin");
+            Goblin g2 = new Goblin();
+            g2.setName("Sorcerer's Goblin");
+            gsm.getSorcerer().setName("The Sorcerer");
+            gsm.addToEnemys(gsm.getOrc());
+            gsm.addToEnemys(g1);
+            gsm.addToEnemys(g2);
+            gsm.addToEnemys(gsm.getSorcerer());
+            gsm.setNextScene("Chapter3/GameWinScene");
+            switchScene(event, "Combat");
         }
     }
 
@@ -87,35 +90,40 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         sabotageAlert.showAndWait();
 
         int roll1 = rollDice(20);
-        int roll2 = rollDice(20);
-
         Alert battleAlert = new Alert(Alert.AlertType.INFORMATION);
         battleAlert.setTitle("Final Battle");
+        GameStateManager gsm = GameStateManager.getInstance();
+        gsm.resetEnemies();
+        gsm.resetList(gsm.getTurnOrder());
 
-        if (roll1 >= 10 && roll2 >= 5) {
-            battleAlert.setHeaderText("Victory!");
-            battleAlert.setContentText("You defeated the enemy leader!");
+        if (roll1 >= 12) {
+            battleAlert.setHeaderText("Success!");
+            battleAlert.setContentText("Only the Sorcerer survived. It's time to end the war!");
             battleAlert.showAndWait();
-            switchScene(event, "Chapter3/GameWinScene");
+
+            gsm.createSorcerer();
+            gsm.getSorcerer().setName("The Sorcerer");
+            gsm.addToEnemys(gsm.getSorcerer());
+            gsm.setNextScene("Chapter3/GameWinScene");
+            switchScene(event, "Combat");
         } else {
-            player.setHp(player.getHp() - 10);
-            battleAlert.setHeaderText("Defeat!");
-            battleAlert.setContentText("You rolled " + roll1 + " and " + roll2 + ". You took 10 damage.\nCurrent HP: " + player.getHp());
+            battleAlert.setHeaderText("Failure!");
+            battleAlert.setContentText("The enemy is too strong. You must fight them now!");
             battleAlert.showAndWait();
 
-            Alert hpCheck = new Alert(Alert.AlertType.INFORMATION);
-            // game ends if hp is less than 10
-            if (player.getHp() > 10) {
-                hpCheck.setHeaderText("Wounded but surivived!");
-                hpCheck.setContentText("You are hurt, but you still win the fight");
-                hpCheck.showAndWait();
-                switchScene(event, "Chapter3/GameWinScene");
-            } else {
-                hpCheck.setHeaderText("Too heavily wounded!");
-                hpCheck.setContentText("You are too wounded to continue the fight");
-                hpCheck.showAndWait();
-                switchScene(event, "Chapter3/GameOverScene");
-            }
+            gsm.createOrc();
+            gsm.createGoblin();
+            gsm.createSorcerer();
+            gsm.getOrc().setName("Sorcerer's Orc");
+            Goblin g1 = new Goblin();
+            g1.setName("Sorcerer's Goblin");
+            gsm.getSorcerer().setName("The Sorcerer");
+            gsm.addToEnemys(gsm.getOrc());
+            gsm.addToEnemys(g1);
+            gsm.addToEnemys(gsm.getSorcerer());
+            gsm.setNextScene("Chapter3/GameWinScene");
+            switchScene(event, "Combat");
+
         }
     }
 }
