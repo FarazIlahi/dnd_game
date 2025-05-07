@@ -44,11 +44,16 @@ public class ThreatDecisionController extends BaseController implements GameMech
         if (roll >= 14) {
             alert.setHeaderText("Success!");
             alert.setContentText("You rolled a " + roll+ ". The Forgotten Kingdom offers to help you.");
+            GameStateManager gsm = GameStateManager.getInstance();
             if (GameStateManager.getInstance().unlockAchievement("You successfully seek the Forgotten Kingdom!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You successfully seek the Forgotten Kingdom!");
             }
+            if (gsm.getKing() != null) {
+                gsm.getKing().setBasic_attack(gsm.getKing().getBasic_attack() + 5); // attack boost for succeeding risky option
+                System.out.println("attack boost, new val = " + gsm.getKing().getBasic_attack());
+            }
             alert.showAndWait();
-            switchScene(event, "Chapter3/ChapterThreeScene"); // i think something should be addded here to boost party stats
+            switchScene(event, "Chapter3/ChapterThreeScene");
         } else {
             alert.setHeaderText("Failure!");
             alert.setContentText("You rolled a " + roll+ ". The Forgotten Kingdom refuses to help you.");

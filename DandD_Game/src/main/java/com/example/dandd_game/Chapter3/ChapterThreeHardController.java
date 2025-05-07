@@ -1,6 +1,8 @@
 package com.example.dandd_game.Chapter3;
 
 import com.example.dandd_game.AchievementPopup;
+import com.example.dandd_game.Characters.Goblin;
+import com.example.dandd_game.Characters.Orc;
 import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
@@ -27,75 +29,71 @@ public class ChapterThreeHardController extends BaseController implements GameMe
 
     @FXML
     private void holdMainGate(ActionEvent event) throws IOException {
-        int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hold the Main Gate!");
+        alert.setHeaderText("The enemy forces storm the gate!");
+        alert.setContentText("You must hold the main gate to stop the enemy.");
+        alert.showAndWait();
 
-        if (roll >= 15) {
-            alert.setHeaderText("Victory!");
-            alert.setContentText("You rolled " + roll + ". Your troops held the gate long enough!");
-            GameStateManager.getInstance().unlockAchievement("You successfully held the main gate!");
-            alert.showAndWait();
-            switchScene(event, "Chapter3/GameWinScene");
-        } else {
-            alert.setHeaderText("Gate Breached!");
-            alert.setContentText("You rolled " + roll + ". A last stand in the throne room is your only hope.");
-            alert.showAndWait();
+        GameStateManager gsm = GameStateManager.getInstance();
+        gsm.resetEnemies();
+        gsm.resetList(gsm.getTurnOrder());
+        gsm.createSorcerer();
+        gsm.createOrc();
+        gsm.createGoblin();
+        gsm.createOrc();
+        gsm.createGoblin();
 
-
-            int finalRoll = rollDice(20);
-            Alert finalAlert = new Alert(Alert.AlertType.INFORMATION);
-            finalAlert.setTitle("Final Fight!");
-
-            if (finalRoll >= 17) {
-                finalAlert.setHeaderText("Against all odds, You Win!");
-                finalAlert.setContentText("You rolled " + finalRoll + ". You managed to defend the throne!");
-                finalAlert.showAndWait();
-                GameStateManager.getInstance().unlockAchievement("You won the last stand! Victory!");
-                switchScene(event, "Chapter3/GameWinScene");
-            } else {
-                finalAlert.setHeaderText("Overrun...");
-                finalAlert.setContentText("You rolled " + finalRoll + ". The Kingdom has been defeated.");
-                GameStateManager.getInstance().unlockAchievement("You failed twice...");
-                finalAlert.showAndWait();
-                switchScene(event, "Chapter3/GameOverScene");
-            }
-        }
+        gsm.getSorcerer().setName("The Sorcerer");
+        gsm.getOrc().setName("Orc Leader");
+        Orc orc2 = new Orc();
+        orc2.setName("Orc Brute");
+        Goblin gob1 = new Goblin();
+        gob1.setName("Goblin Leader");
+        Goblin gob2 = new Goblin();
+        gob2.setName("Goblin Brute");
+        gsm.addToEnemys(gsm.getSorcerer());
+        gsm.addToEnemys(gsm.getOrc());
+        gsm.addToEnemys(orc2);
+        gsm.addToEnemys(gob1);
+        gsm.addToEnemys(gob2);
+        gsm.setNextScene("Chapter3/GameWinScene");
+        switchScene(event, "Combat");
     }
 
     @FXML
     private void setTrap(ActionEvent event) throws IOException {
-        int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Set a Trap!");
+        alert.setTitle("Ambush failed!");
+        alert.setHeaderText("Your trap failed!");
+        alert.setContentText("You were caught. You must fight them now!");
+        alert.showAndWait();
 
-        if (roll >= 17) {
-            alert.setHeaderText("Great Ambush!");
-            alert.setContentText("You rolled " + roll + ". The enemy is crushed by your trap.");
-            GameStateManager.getInstance().unlockAchievement("You successfully set a trap!");
-            alert.showAndWait();
-            switchScene(event, "Chapter3/GameWinScene");
-        } else {
-            alert.setHeaderText("Trap Failed!");
-            alert.setContentText("You rolled " + roll + ". The ambush was exposed. You must fight now.");
-            alert.showAndWait();
+        GameStateManager gsm = GameStateManager.getInstance();
+        gsm.resetEnemies();
+        gsm.resetList(gsm.getTurnOrder());
 
-            int finalRoll = rollDice(20);
-            Alert finalAlert = new Alert(Alert.AlertType.INFORMATION);
-            finalAlert.setTitle("Final Push");
-            if (finalRoll >=18) {
-                finalAlert.setHeaderText("Success!");
-                finalAlert.setContentText("You rolled " + finalRoll + ". You managed to win with one final push!");
-                GameStateManager.getInstance().unlockAchievement("You won the final push! Victory!");
-                finalAlert.showAndWait();
-                switchScene(event, "Chapter3/GameWinScene");
-            } else {
-                finalAlert.setHeaderText("Too Late...");
-                finalAlert.setContentText("You rolled " + finalRoll + ". Your party was overwhelmed.");
-                GameStateManager.getInstance().unlockAchievement("You failed twice...");
-                finalAlert.showAndWait();
-                switchScene(event, "Chapter3/GameOverScene");
-            }
-        }
+        gsm.createSorcerer();
+        gsm.createOrc();
+        gsm.getSorcerer().setName("The Sorcerer");
+        gsm.getOrc().setName("Orc Leader");
+
+        Goblin gob1 = new Goblin();
+        gob1.setName("Goblin Leader");
+        Goblin gob2 = new Goblin();
+        gob2.setName("Goblin Brute");
+        Goblin gob3 = new Goblin();
+        gob3.setName("Goblin Attacker");
+        Goblin gob4 = new Goblin();
+        gob4.setName("Goblin Defender");
+
+        gsm.addToEnemys(gsm.getSorcerer());
+        gsm.addToEnemys(gsm.getOrc());
+        gsm.addToEnemys(gob1);
+        gsm.addToEnemys(gob2);
+        gsm.addToEnemys(gob3);
+        gsm.addToEnemys(gob4);
+        gsm.setNextScene("Chapter3/GameWinScene");
+        switchScene(event, "Combat");
     }
 }
