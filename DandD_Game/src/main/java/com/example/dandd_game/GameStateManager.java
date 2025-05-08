@@ -26,6 +26,9 @@ public class GameStateManager {
     private Mage mage;
     private Goblin goblin;
     private Orc orc;
+    private Imp imp;
+    private Skeleton skeleton;
+    private Zombie zombie;
     private Sorcerer sorcerer;
     private Character currentCharacter;
     private int moveCount = 5;
@@ -57,6 +60,9 @@ public class GameStateManager {
         goblin = null;
         orc = null;
         sorcerer = null;
+        imp = null;
+        skeleton = null;
+        zombie = null;
         currentCharacter = null;
         moveCount = 5;
         resetList(party);
@@ -156,6 +162,24 @@ public class GameStateManager {
     }
     public Sorcerer getSorcerer(){
         return this.sorcerer;
+    }
+    public void createImp(){
+        this.imp = new Imp();
+    }
+    public Imp getImp(){
+        return this.imp;
+    }
+    public void createSkeleton(){
+        this.skeleton = new Skeleton();
+    }
+    public Skeleton getSkeleton(){
+        return this.skeleton;
+    }
+    public void createZombie(){
+        this.zombie = new Zombie();
+    }
+    public Zombie getZombie(){
+        return this.zombie;
     }
     public void addToParty(Character character){
         this.party.add(character);

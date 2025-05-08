@@ -55,12 +55,11 @@ public class InfiltrateController extends BaseController implements GameMechanic
             gsm.resetEnemies();
             gsm.resetList(gsm.getTurnOrder());
             gsm.createGoblin();
-            gsm.createGoblin();
             gsm.getGoblin().setName("Goblin Scout");
-            Goblin goblinB = new Goblin();
-            goblinB.setName("Goblin Fighter");
             gsm.addToEnemys(gsm.getGoblin());
-            gsm.addToEnemys(goblinB);
+            gsm.createImp();
+            gsm.getImp().setName("Imp Scout");
+            gsm.addToEnemys(gsm.getImp());
             gsm.setNextScene("Chapter2/ChapterTwoScene");
             switchScene("Combat");
         }

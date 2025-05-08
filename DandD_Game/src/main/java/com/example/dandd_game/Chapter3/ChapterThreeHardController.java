@@ -41,22 +41,20 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         gsm.createSorcerer();
         gsm.createOrc();
         gsm.createGoblin();
-        gsm.createOrc();
-        gsm.createGoblin();
+        gsm.createZombie();
+        gsm.createImp();
+        gsm.createSkeleton();
 
         gsm.getSorcerer().setName("The Sorcerer");
         gsm.getOrc().setName("Orc Leader");
-        Orc orc2 = new Orc();
-        orc2.setName("Orc Brute");
-        Goblin gob1 = new Goblin();
-        gob1.setName("Goblin Leader");
-        Goblin gob2 = new Goblin();
-        gob2.setName("Goblin Brute");
+        gsm.getGoblin().setName("Goblin Leader");
         gsm.addToEnemys(gsm.getSorcerer());
         gsm.addToEnemys(gsm.getOrc());
-        gsm.addToEnemys(orc2);
-        gsm.addToEnemys(gob1);
-        gsm.addToEnemys(gob2);
+        gsm.addToEnemys(gsm.getGoblin());
+        gsm.addToEnemys(gsm.getSkeleton());
+        gsm.addToEnemys(gsm.getZombie());
+        gsm.addToEnemys(gsm.getImp());
+
         gsm.setNextScene("Chapter3/GameWinScene");
         switchScene(event, "Combat");
     }
@@ -75,24 +73,16 @@ public class ChapterThreeHardController extends BaseController implements GameMe
 
         gsm.createSorcerer();
         gsm.createOrc();
+        gsm.createZombie();
+        gsm.createImp();
+        gsm.createGoblin();
+        gsm.createSkeleton();
         gsm.getSorcerer().setName("The Sorcerer");
         gsm.getOrc().setName("Orc Leader");
 
-        Goblin gob1 = new Goblin();
-        gob1.setName("Goblin Leader");
-        Goblin gob2 = new Goblin();
-        gob2.setName("Goblin Brute");
-        Goblin gob3 = new Goblin();
-        gob3.setName("Goblin Attacker");
-        Goblin gob4 = new Goblin();
-        gob4.setName("Goblin Defender");
 
         gsm.addToEnemys(gsm.getSorcerer());
         gsm.addToEnemys(gsm.getOrc());
-        gsm.addToEnemys(gob1);
-        gsm.addToEnemys(gob2);
-        gsm.addToEnemys(gob3);
-        gsm.addToEnemys(gob4);
         gsm.setNextScene("Chapter3/GameWinScene");
         switchScene(event, "Combat");
     }
