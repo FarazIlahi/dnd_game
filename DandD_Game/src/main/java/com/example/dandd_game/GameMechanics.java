@@ -5,11 +5,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.lang.Math;
+import java.net.URL;
 
 public interface GameMechanics {
     GameStateManager gameState = GameStateManager.getInstance();
@@ -18,6 +21,7 @@ public interface GameMechanics {
         return (int)(Math.random() * i) + 1;
     }
     default double spin(ImageView image) throws InterruptedException {
+        playSoundFX("/com/example/dandd_game/soundFX/diceRoll.mp3");
         RotateTransition rotate = new RotateTransition(Duration.seconds(0.35), image);
         rotate.setFromAngle(0);
         rotate.setToAngle(360);
@@ -36,6 +40,16 @@ public interface GameMechanics {
         spinAndPulse.play();
         highlight(image);
         return rotate.getDuration().toSeconds() * rotate.getCycleCount();
+    }
+    default void playSoundFX(String fx) {
+        URL soundURL = getClass().getResource(fx);
+        if (soundURL != null) {
+            Media sound = new Media(soundURL.toExternalForm());
+            MediaPlayer player = new MediaPlayer(sound);
+            player.play();
+        } else {
+            System.err.println("❌ Could not find diceRoll.mp3");
+        }
     }
     default void pauseMethod(Double seconds,Runnable method) {
         PauseTransition pause = new PauseTransition(Duration.seconds(seconds));

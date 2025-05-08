@@ -15,11 +15,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import java.net.URL;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class BaseController implements GameMechanics {
     private static Pane currentroot;
@@ -116,7 +116,6 @@ public class BaseController implements GameMechanics {
         music = prevMusic;
         music.start();
     }
-
     private void handleKeyPress() throws IOException {
         if(is_on_settings){
             is_on_settings = false;
