@@ -22,6 +22,8 @@ public class GameWinController extends BaseController implements GameMechanics {
     @FXML
     private void initialize() {
         super.init(rootPane);
+        super.stopMusic();
+        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/introMusic.wav");
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
