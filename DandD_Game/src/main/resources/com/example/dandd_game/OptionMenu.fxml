@@ -58,6 +58,11 @@
                               <Font size="10.0" />
                            </font>
                         </Button>
+                        <Button fx:id="saveChanges" layoutX="204.0" layoutY="97.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="86.0" text="Save Changes">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
                </children>
