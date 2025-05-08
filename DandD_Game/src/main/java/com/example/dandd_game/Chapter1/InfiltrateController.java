@@ -55,6 +55,7 @@ public class InfiltrateController extends BaseController implements GameMechanic
             alert.show();
 
             GameStateManager gsm = GameStateManager.getInstance();
+            GameStateManager.getInstance().resetAllCharacterPositions();
             gsm.resetEnemies();
             gsm.resetList(gsm.getTurnOrder());
             gsm.createGoblin();

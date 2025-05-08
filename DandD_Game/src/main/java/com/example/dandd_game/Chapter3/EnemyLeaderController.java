@@ -38,6 +38,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         alert.setTitle("Duel With Enemy Leader");
 
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
 
@@ -94,6 +95,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         Alert battleAlert = new Alert(Alert.AlertType.INFORMATION);
         battleAlert.setTitle("Final Battle");
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
 

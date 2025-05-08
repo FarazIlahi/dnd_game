@@ -51,6 +51,7 @@ public class BattleStrategyController extends BaseController implements GameMech
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Training Party");
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         if (GameStateManager.getInstance().unlockAchievement("You chose to train the party and prepare them for the final battle!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to train the party and prepare them for the final battle!");
         }

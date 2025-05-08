@@ -49,6 +49,7 @@ public class ThreatDecisionController extends BaseController implements GameMech
             alert.setHeaderText("Success!");
             alert.setContentText("You rolled a " + roll+ ". The Forgotten Kingdom offers to help you.");
             GameStateManager gsm = GameStateManager.getInstance();
+            GameStateManager.getInstance().resetAllCharacterPositions();
             if (GameStateManager.getInstance().unlockAchievement("You successfully seek the Forgotten Kingdom!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You successfully seek the Forgotten Kingdom!");
             }

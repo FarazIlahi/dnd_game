@@ -49,6 +49,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
     private void attackSorcerer(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         if (GameStateManager.getInstance().unlockAchievement("You chose to attack The Sorcerer early!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to attack The Sorcerer early!");
         }

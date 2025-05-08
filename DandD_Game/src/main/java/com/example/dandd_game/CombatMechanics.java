@@ -78,15 +78,15 @@ public interface CombatMechanics extends GameMechanics{
     default void loadCharacter(GridPane combatGrid, Runnable updateTurn){
         for (Character character : gameState.getParty()) {
             gameState.addToTurn(character);
-            int x = character.getPosition().getX();
-            int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid, updateTurn);
+                int x = character.getPosition().getX();
+                int y = character.getPosition().getY();
+                updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         for (Character character : gameState.getEnemies()) {
             gameState.addToTurn(character);
-            int x = character.getPosition().getX();
-            int y = character.getPosition().getY();
-            updateProfiles(character, x, y, combatGrid, updateTurn);
+                int x = character.getPosition().getX();
+                int y = character.getPosition().getY();
+                updateProfiles(character, x, y, combatGrid, updateTurn);
         }
         shuffleTurnOrder();
     }
