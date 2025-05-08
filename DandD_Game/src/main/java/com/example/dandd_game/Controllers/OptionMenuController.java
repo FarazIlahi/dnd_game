@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 
 import java.nio.Buffer;
 
+import javafx.scene.input.KeyCode;
+
 public class OptionMenuController extends BaseController implements GameMechanics {
     @FXML
     Slider audioSlider;
@@ -27,14 +29,85 @@ public class OptionMenuController extends BaseController implements GameMechanic
     @FXML
     Button menu_btn;
 
+
+    @FXML private Button upButton;
+    @FXML private Button downButton;
+    @FXML private Button leftButton;
+    @FXML private Button rightButton;
+    @FXML private Button resetKeys;
+
+    @FXML private Label upKey;
+    @FXML private Label downKey;
+    @FXML private Label leftKey;
+    @FXML private Label rightKey;
+
+    @FXML private void onUpKeyChange() { waitingForKey = KeyBindTarget.UP; rootPane.requestFocus(); }
+    @FXML private void onDownKeyChange() { waitingForKey = KeyBindTarget.DOWN; rootPane.requestFocus(); }
+    @FXML private void onLeftKeyChange() { waitingForKey = KeyBindTarget.LEFT; rootPane.requestFocus(); }
+    @FXML private void onRightKeyChange() { waitingForKey = KeyBindTarget.RIGHT; rootPane.requestFocus(); }
+
+    private enum KeyBindTarget { UP, DOWN, LEFT, RIGHT }
+    private KeyBindTarget waitingForKey = null;
+
     private int audio;
     private GameStateManager gameState = GameStateManager.getInstance();
 
     @FXML
     private void initialize() {
         checkScene(gameState.getCurrentScene());
+        updateKeyLabels();
 
+        rootPane.setOnKeyPressed(event -> {
+            if (waitingForKey != null) {
+                KeyCode code = event.getCode();
+
+                // Manually exclude non-bindable keys
+                if (code == KeyCode.ESCAPE || code == KeyCode.SHIFT || code == KeyCode.CONTROL ||
+                        code == KeyCode.ALT || code == KeyCode.TAB || code == KeyCode.CAPS ||
+                        code == KeyCode.UNDEFINED) {
+                    return;
+                }
+
+                String keyText = event.getText().toUpperCase();
+                if (keyText.isEmpty()) {
+                    keyText = code.toString(); // fallback for non-character keys
+                }
+
+                // Check for conflicts
+                boolean isConflict = switch (waitingForKey) {
+                    case UP -> keyText.equals(gameState.getDownKey()) ||
+                            keyText.equals(gameState.getLeftKey()) ||
+                            keyText.equals(gameState.getRightKey());
+                    case DOWN -> keyText.equals(gameState.getUpKey()) ||
+                            keyText.equals(gameState.getLeftKey()) ||
+                            keyText.equals(gameState.getRightKey());
+                    case LEFT -> keyText.equals(gameState.getUpKey()) ||
+                            keyText.equals(gameState.getDownKey()) ||
+                            keyText.equals(gameState.getRightKey());
+                    case RIGHT -> keyText.equals(gameState.getUpKey()) ||
+                            keyText.equals(gameState.getDownKey()) ||
+                            keyText.equals(gameState.getLeftKey());
+                };
+
+                if (isConflict) {
+                    waitingForKey = null;
+                    return;
+                }
+
+                // Set the key
+                switch (waitingForKey) {
+                    case UP -> gameState.setUpKey(keyText);
+                    case DOWN -> gameState.setDownKey(keyText);
+                    case LEFT -> gameState.setLeftKey(keyText);
+                    case RIGHT -> gameState.setRightKey(keyText);
+                }
+
+                updateKeyLabels();
+                waitingForKey = null;
+            }
+        });
     }
+
     public void checkScene(String scene){
         switch (scene){
             case "Combat":
@@ -82,5 +155,20 @@ public class OptionMenuController extends BaseController implements GameMechanic
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateKeyLabels() {
+        upKey.setText(gameState.getUpKey());
+        downKey.setText(gameState.getDownKey());
+        leftKey.setText(gameState.getLeftKey());
+        rightKey.setText(gameState.getRightKey());
+    }
+    @FXML
+    private void resetToDefaultKeys() {
+        gameState.setUpKey("W");
+        gameState.setDownKey("S");
+        gameState.setLeftKey("A");
+        gameState.setRightKey("D");
+        updateKeyLabels();
     }
 }
