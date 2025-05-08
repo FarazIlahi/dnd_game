@@ -6,6 +6,8 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class ChapterThreeController extends BaseController implements GameMechan
 
     @FXML
     private void goToFinalDefend(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         if (GameStateManager.getInstance().unlockAchievement("You have reached the final defend scene!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have reached the final defend scene!");
         }
@@ -35,9 +38,20 @@ public class ChapterThreeController extends BaseController implements GameMechan
 
     @FXML
     private void goToEnemyLeader(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         if (GameStateManager.getInstance().unlockAchievement("You have reached the final enemy leader scene!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have reached the final enemy leader scene!");
         }
         switchScene(event, "Chapter3/EnemyLeaderScene");
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }

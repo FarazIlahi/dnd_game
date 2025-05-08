@@ -6,7 +6,9 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 
@@ -31,6 +33,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
     @FXML
     private void infiltrate(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Infiltration");
         alert.setHeaderText("You sneak around the army behind enemy lines");
@@ -44,6 +47,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
     @FXML
     private void attackSorcerer(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         GameStateManager gsm = GameStateManager.getInstance();
         if (GameStateManager.getInstance().unlockAchievement("You chose to attack The Sorcerer early!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to attack The Sorcerer early!");
@@ -60,5 +64,15 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
         gsm.setNextScene("Chapter3/GameWinScene");
         switchScene(event, "Combat");
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }

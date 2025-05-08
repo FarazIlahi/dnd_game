@@ -9,6 +9,8 @@ import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
 
     @FXML
     private void holdMainGate(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hold the Main Gate!");
         alert.setHeaderText("The enemy forces storm the gate!");
@@ -65,6 +68,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
 
     @FXML
     private void setTrap(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ambush failed!");
         alert.setHeaderText("Your trap failed!");
@@ -97,5 +101,15 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         gsm.addToEnemys(gob4);
         gsm.setNextScene("Chapter3/GameWinScene");
         switchScene(event, "Combat");
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }

@@ -5,6 +5,8 @@ import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert;
 
@@ -21,6 +23,7 @@ public class ThreatDecisionController extends BaseController implements GameMech
 
     @FXML
     private void exploreRuin(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ancient Ruins");
         alert.setHeaderText("You explore the ruins...");
@@ -34,6 +37,7 @@ public class ThreatDecisionController extends BaseController implements GameMech
 
     @FXML
     private void seekForgottenKingdom(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Forgotten Kingdom");
@@ -63,5 +67,15 @@ public class ThreatDecisionController extends BaseController implements GameMech
             alert.showAndWait();
             switchScene(event, "Chapter3/ChapterThreeHardScene");
         }
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }
