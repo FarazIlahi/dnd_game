@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
@@ -51,9 +44,9 @@
             </Label>
             <ProgressBar fx:id="p1_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
             <ProgressBar fx:id="p1_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
-            <Button fx:id="p1_attack" layoutY="129.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
-            <Button fx:id="p1_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p1_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" styleClass="move-button" text="Move" visible="false" />
+            <Button fx:id="p1_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p1_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p1_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
             <Label fx:id="p1_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
                <font>
                   <Font size="15.0" />
@@ -88,9 +81,9 @@
             </Label>
             <ProgressBar fx:id="p2_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
             <ProgressBar fx:id="p2_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
-            <Button fx:id="p2_attack" layoutY="129.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
-            <Button fx:id="p2_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p2_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" styleClass="move-button" text="Move" visible="false" />
+            <Button fx:id="p2_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p2_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p2_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
             <Label fx:id="p2_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
                <font>
                   <Font size="15.0" />
@@ -125,9 +118,9 @@
             </Label>
             <ProgressBar fx:id="p3_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
             <ProgressBar fx:id="p3_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
-            <Button fx:id="p3_attack" layoutY="129.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
-            <Button fx:id="p3_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p3_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" styleClass="move-button" text="Move" visible="false" />
+            <Button fx:id="p3_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p3_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p3_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
             <Label fx:id="p3_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
                <font>
                   <Font size="15.0" />
@@ -162,9 +155,9 @@
             </Label>
             <ProgressBar fx:id="p4_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
             <ProgressBar fx:id="p4_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
-            <Button fx:id="p4_attack" layoutY="129.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Attack" visible="false" />
-            <Button fx:id="p4_special" layoutX="83.0" layoutY="129.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" text="Special" visible="false" />
-            <Button fx:id="p4_move" layoutX="166.0" layoutY="129.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="70.0" styleClass="move-button" text="Move" visible="false" />
+            <Button fx:id="p4_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p4_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p4_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
             <Label fx:id="p4_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
                <font>
                   <Font size="15.0" />
@@ -305,7 +298,7 @@
             </Label>
          </children>
       </Group>
-      <Group layoutX="1310.0" layoutY="420.0">
+      <Group layoutX="1300.0" layoutY="420.0">
          <children>
             <ImageView fx:id="e6_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="e6_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />

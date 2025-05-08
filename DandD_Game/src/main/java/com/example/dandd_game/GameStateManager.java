@@ -81,7 +81,7 @@ public class GameStateManager {
         rightKey = "D";
     }
 
-    public void resetList(ArrayList<Character> list) {
+    public void resetList(ArrayList<?> list) {
         for (int i = list.size() - 1; i >= 0; i--) {
             list.remove(i);
         }

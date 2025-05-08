@@ -357,6 +357,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p1_special);
                 character.addButton(p1_move);
                 setUniqueStyles(character);
+                p1_specialBar.setProgress((double) character.getSpecial() / character.getMax_special());
+                character.getSpecialInfo().setText(character.specialToSrting());
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
@@ -381,6 +383,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p2_special);
                 character.addButton(p2_move);
                 setUniqueStyles(character);
+                p2_specialBar.setProgress((double) character.getSpecial() / character.getMax_special());
+                character.getSpecialInfo().setText(character.specialToSrting());
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
@@ -405,6 +409,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p3_special);
                 character.addButton(p3_move);
                 setUniqueStyles(character);
+                p3_specialBar.setProgress((double) character.getSpecial() / character.getMax_special());
+                character.getSpecialInfo().setText(character.specialToSrting());
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
@@ -429,6 +435,8 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p4_special);
                 character.addButton(p4_move);
                 setUniqueStyles(character);
+                p4_specialBar.setProgress((double) character.getSpecial() / character.getMax_special());
+                character.getSpecialInfo().setText(character.specialToSrting());
                 break;
         }
     }
@@ -683,6 +691,11 @@ public class CombatController extends BaseController implements GameMechanics, C
             disableNode(gameState.getCurrentCharacter().getButtons().get(1));
         }
     }
+    public void resetPartyButtons(){
+        for(Character character : gameState.getParty()){
+            character.resetButtons();
+        }
+    }
     public void gameOverCheck() throws IOException {
         GameStateManager gameState = GameStateManager.getInstance();
         if (sceneSwitched) return;
@@ -698,6 +711,7 @@ public class CombatController extends BaseController implements GameMechanics, C
             if (gameState.getNextScene() != null) {
                 sceneSwitched = true;
                 super.resumeMusic();
+                resetPartyButtons();
                 switchScene(gameState.getNextScene());
                 gameState.setNextScene(null);
                 gameState.setPreviousScene(null);
@@ -706,6 +720,7 @@ public class CombatController extends BaseController implements GameMechanics, C
             else if (gameState.getPreviousScene() != null) {
                 sceneSwitched = true;
                 super.resumeMusic();
+                resetPartyButtons();
                 switchScene(gameState.getPreviousScene());
                 gameState.setPreviousScene(null);
                 return;
