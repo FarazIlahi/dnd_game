@@ -225,6 +225,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         setKeybinds();
         setParty();
         setEnemies();
+        assignStartingPositions();
         setupGrid(combatGrid);
         Platform.runLater(() -> {
             loadCharacter(combatGrid, () -> {
@@ -525,6 +526,17 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.setHpBar(e6_hpBar);
                 character.setHpInfo(e6_hpInfo);
                 break;
+        }
+    }
+    private void assignStartingPositions() {
+        int partyStartX = 2;
+        int enemyStartX = 14;
+        int startY = 5;
+        for (int i = 0; i < gameState.getParty().size(); i++) {
+            gameState.getParty().get(i).setPosition(new Position(partyStartX, startY + i));
+        }
+        for (int i =0; i < gameState.getEnemies().size(); i++) {
+            gameState.getEnemies().get(i).setPosition(new Position(enemyStartX, startY + i));
         }
     }
 

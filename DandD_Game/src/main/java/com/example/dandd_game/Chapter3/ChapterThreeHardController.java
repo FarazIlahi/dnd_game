@@ -41,6 +41,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         alert.showAndWait();
 
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
         gsm.createSorcerer();
@@ -74,6 +75,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         alert.showAndWait();
 
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
 

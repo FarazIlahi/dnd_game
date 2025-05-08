@@ -35,6 +35,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
     @FXML
     private void holdWalls(ActionEvent event) throws IOException {
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         if(GameStateManager.getInstance().unlockAchievement("You chose to hold the castle walls!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to hold the castle walls!");
         }
@@ -56,6 +57,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
     private void flankEnemy(ActionEvent event) throws IOException {
         int roll = rollDice(20);
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         if (GameStateManager.getInstance().unlockAchievement("You chose to flank the enemy!")) {
             GameStateManager.getInstance().queueAchievementPopup("You chose to flank the enemy!");
         }

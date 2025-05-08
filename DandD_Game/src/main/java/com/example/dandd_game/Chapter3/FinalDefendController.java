@@ -35,6 +35,7 @@ public class FinalDefendController extends BaseController implements GameMechani
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hold Main Gate");
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
 
@@ -79,6 +80,7 @@ public class FinalDefendController extends BaseController implements GameMechani
         alert.setTitle("Set Trap");
 
         GameStateManager gsm = GameStateManager.getInstance();
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
 
