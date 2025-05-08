@@ -42,13 +42,11 @@ public class SiegeSceneController extends BaseController implements GameMechanic
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
         gsm.createOrc();
-        gsm.createOrc();
-
         gsm.getOrc().setName("Numhug the Orc");
-        Orc orcB = new Orc();
-        orcB.setName("Lugdum the Orc");
         gsm.addToEnemys(gsm.getOrc());
-        gsm.addToEnemys(orcB);
+        gsm.createZombie();
+        gsm.getZombie().setName("Larry the Zombie");
+        gsm.addToEnemys(gsm.getZombie());
         gsm.setNextScene("Chapter2/ChapterTwoScene");
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene(event, "Combat");
