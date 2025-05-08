@@ -43,6 +43,8 @@ public class GameLoadsController extends BaseController implements GameMechanics
         super.init(rootPane);
         gameState.resetInstance();
         creatingFile = false;
+        super.stopMusic();
+        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/chapter1.wav");
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);

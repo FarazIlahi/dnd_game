@@ -18,6 +18,8 @@ public class ChapterTwoController extends BaseController implements GameMechanic
     @FXML
     public void initialize() {
         super.init(rootPane);
+        super.stopMusic();
+        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/chapter2.wav");
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);
