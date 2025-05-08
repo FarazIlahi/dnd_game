@@ -168,6 +168,9 @@ public abstract class Character{
     public void addButton(Button button) {
         this.buttons.add(button);
     }
+    public void resetButtons(){
+        gameState.resetList(buttons);
+    }
 
     public void setHighlighted(boolean highlighted) {
         this.highlighted = highlighted;
