@@ -16,7 +16,7 @@ public class SneakAttackController extends BaseController implements GameMechani
     @FXML
     private void attackFromBehind(ActionEvent event) throws IOException {
         GameStateManager gsm = GameStateManager.getInstance();
-
+        GameStateManager.getInstance().resetAllCharacterPositions();
         gsm.resetEnemies();
         gsm.resetList(gsm.getTurnOrder());
         gsm.createOrc();

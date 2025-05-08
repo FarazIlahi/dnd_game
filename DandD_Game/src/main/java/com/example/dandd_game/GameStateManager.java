@@ -345,6 +345,18 @@ public class GameStateManager {
     public String getRightKey() {
         return rightKey;
     }
+    public List<Character> getAllCharacters() {
+        Set<Character> all = new LinkedHashSet<>();
+        all.addAll(party);
+        all.addAll(enemies);
+        all.addAll(turnOrder);
+        return new ArrayList<>(all);
+    }
+    public void resetAllCharacterPositions() {
+        for (Character c : getAllCharacters()) {
+            c.setPosition(null);
+        }
+    }
 
     public Map<String, String> getKeybindsMap() {
         Map<String, String> map = new HashMap<>();
