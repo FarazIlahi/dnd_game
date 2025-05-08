@@ -82,6 +82,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     }
     @FXML
     public void createNewFile(ActionEvent event) throws IOException{
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         rootPane.setEffect(new Glow(.25));
         creatingFile = true;
         nvmButton.setDisable(false);
@@ -89,6 +90,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     }
     @FXML
     public void dontCreateNewFile(ActionEvent event){
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         rootPane.setEffect(null);
         creatingFile = false;
         nvmButton.setDisable(true);
@@ -106,6 +108,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
     }
     @FXML
     private void openAchievements(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene("AchievementsScene");
     }
 
@@ -155,6 +158,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
 
     @FXML
     private void tutorial(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         gameState.resetInstance();
         gameState.setPlayerCount(4);
         gameState.createKing();

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter2.BattleStrategyController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter2.BattleStrategyController">
     <children>
         <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
             <image>
@@ -35,13 +35,13 @@
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <Region prefHeight="100.0" prefWidth="250.0" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#reinforceWalls" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Reinforce Castle Walls" textAlignment="CENTER" wrapText="true">
+                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#reinforceWalls" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="60.0" prefWidth="150.0" styleClass="parchment-button" text="Reinforce Castle Walls" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Button>
                                 <Region prefHeight="100.0" prefWidth="100.0" />
-                                <Button mnemonicParsing="false" onAction="#trainSoldiers" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: ffd007; -fx-border-color: a38a00;" text="Train Party" textAlignment="CENTER" wrapText="true">
+                                <Button mnemonicParsing="false" onAction="#trainSoldiers" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="60.0" prefWidth="150.0" styleClass="parchment-button" text="Train Party" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>

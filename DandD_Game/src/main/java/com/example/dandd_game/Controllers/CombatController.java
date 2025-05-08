@@ -278,10 +278,12 @@ public class CombatController extends BaseController implements GameMechanics, C
     }
     @FXML
     private void passTurn() throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         updateTurn();
     }
     @FXML
     private void showRange(){
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         showingRange = !showingRange;
         gameState.setCurrentCharacter(gameState.getTurnOrder().getFirst());
         ArrayList<Button> list = gameState.getCurrentCharacter().getButtons();
@@ -655,7 +657,7 @@ public class CombatController extends BaseController implements GameMechanics, C
             return;
         }
         if (moving){
-            gameState.getCurrentCharacter().getButtons().getLast().setText("Moves: " + gameState.getMoveCount());
+            gameState.getCurrentCharacter().getButtons().getLast().setText("" + gameState.getMoveCount());
         }
         else{
             gameState.getCurrentCharacter().getButtons().getLast().setText("Move");
@@ -673,12 +675,14 @@ public class CombatController extends BaseController implements GameMechanics, C
         GameStateManager gameState = GameStateManager.getInstance();
         if (sceneSwitched) return;
 
-        Character king = gameState.getKing();
         if (gameState.getKing().getIsDead()) {
+            sceneSwitched = true;
+            playSoundFX("/com/example/dandd_game/soundFX/gameLoss.mp3", 0.25);
             switchScene("Chapter3/GameOverScene");
             return;
         }
         else if (gameState.getEnemies().isEmpty()) {
+            playSoundFX("/com/example/dandd_game/soundFX/combatWin.mp3", 0.25);
             if (gameState.getNextScene() != null) {
                 sceneSwitched = true;
                 super.resumeMusic();

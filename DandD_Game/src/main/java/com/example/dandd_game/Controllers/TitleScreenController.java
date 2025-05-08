@@ -86,11 +86,9 @@ public class TitleScreenController extends BaseController {
         gameState.addToParty(gameState.getMage());
 
         gameState.createGoblin();
-        gameState.createOrc();
-        gameState.createSorcerer();
+
         gameState.addToEnemys(gameState.getGoblin());
-        gameState.addToEnemys(gameState.getOrc());
-        gameState.addToEnemys(gameState.getSorcerer());
+
 
         switchScene(event,"Combat");
     }

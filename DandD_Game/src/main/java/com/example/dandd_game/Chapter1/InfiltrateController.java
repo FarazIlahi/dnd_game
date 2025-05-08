@@ -8,7 +8,9 @@ import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class InfiltrateController extends BaseController implements GameMechanic
 
     @FXML
     private void proceedInfiltration(ActionEvent event) throws IOException, InterruptedException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         Double spinDuration =  spin(dice);
         unhighlight(dice);
         pauseMethodThrowing(spinDuration, this::showAlert);
@@ -63,5 +66,16 @@ public class InfiltrateController extends BaseController implements GameMechanic
             gsm.setNextScene("Chapter2/ChapterTwoScene");
             switchScene("Combat");
         }
+    }
+
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }

@@ -6,6 +6,8 @@ import com.example.dandd_game.GameStateManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class BattleStrategyController extends BaseController implements GameMech
 
     @FXML
     private void reinforceWalls(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Castle Wall Reinforcement");
@@ -43,6 +46,7 @@ public class BattleStrategyController extends BaseController implements GameMech
 
     @FXML
     private void trainSoldiers(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Training Party");
@@ -71,5 +75,15 @@ public class BattleStrategyController extends BaseController implements GameMech
             alert.showAndWait();
             switchScene(event, "Chapter3/ChapterThreeHardScene");
         }
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }

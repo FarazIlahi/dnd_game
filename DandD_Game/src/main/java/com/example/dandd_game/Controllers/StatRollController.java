@@ -61,6 +61,7 @@ public class StatRollController extends BaseController implements GameMechanics 
 
     @FXML
     private void generateRandomName(ActionEvent event){
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         String randomName;
         int safetyCounter = 0;
         do {
@@ -188,12 +189,15 @@ public class StatRollController extends BaseController implements GameMechanics 
         String name = nameField.getText().trim();
         if (name.length() > 12 ) {
             nameErrorLabel.setVisible(true);
+            playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             setNameTooLong();
         } else if ((name.length() == 0) && (intentionallyClicked)) {
             nameErrorLabel.setVisible(true);
+            playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             setNoName();
         } else if (GameStateManager.getInstance().nameExists(name)) {
             nameErrorLabel.setVisible(true);
+            playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             setNameDuplicate();
         } else {
             nameErrorLabel.setVisible(false);
@@ -277,6 +281,7 @@ public class StatRollController extends BaseController implements GameMechanics 
     private void goBack(ActionEvent event) throws IOException{
         nameCheck(true);
         if(nameErrorLabel.isVisible() == false){
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             switchScene(event, "CharacterSelect");
         }
 

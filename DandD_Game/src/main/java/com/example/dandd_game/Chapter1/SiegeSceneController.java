@@ -6,7 +6,9 @@ import com.example.dandd_game.Controllers.BaseController;
 import com.example.dandd_game.GameMechanics;
 import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert;
 import javafx.event.ActionEvent;
@@ -46,6 +48,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
         gsm.getZombie().setName("Larry the Zombie");
         gsm.addToEnemys(gsm.getZombie());
         gsm.setNextScene("Chapter2/ChapterTwoScene");
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene(event, "Combat");
     }
 
@@ -66,6 +69,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
             gsm.createOrc();
             gsm.addToEnemys(gsm.getOrc());
             gsm.setNextScene("Chapter1/SneakAttackScene");
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             switchScene(event, "Combat");
         }
     }
@@ -75,5 +79,15 @@ public class SiegeSceneController extends BaseController implements GameMechanic
         alert.setTitle("Roll Result");
         alert.setHeaderText(action);
         alert.showAndWait();
+    }
+    @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
     }
 }
