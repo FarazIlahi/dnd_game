@@ -187,13 +187,23 @@ public class CharacterSelectController extends BaseController implements GameMec
     }
     @FXML
     public void hovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        highlight(clickedImage);
+        if(event.getSource() instanceof ImageView clickedNode){
+            highlight(clickedNode);
+        }
+        else {
+            Button clickedNode = (Button) event.getSource();
+            highlight(clickedNode);
+        }
     }
     @FXML
     public void unHovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        unhighlight(clickedImage);
+        if(event.getSource() instanceof ImageView clickedNode){
+            unhighlight(clickedNode);
+        }
+        else {
+            Button clickedNode = (Button) event.getSource();
+            unhighlight(clickedNode);
+        }
     }
     @FXML
     public void ready(ActionEvent event) throws IOException {

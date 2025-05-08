@@ -83,17 +83,18 @@ public class GameLoadsController extends BaseController implements GameMechanics
         rootPane.setEffect(new Glow(.25));
         creatingFile = true;
         nvmButton.setDisable(false);
-        nvmButton.setOpacity(1);
+        nvmButton.setVisible(true);
     }
     @FXML
     public void dontCreateNewFile(ActionEvent event){
         rootPane.setEffect(null);
         creatingFile = false;
         nvmButton.setDisable(true);
-        nvmButton.setOpacity(0);
+        nvmButton.setVisible(false);
     }
     @FXML
     public void hovered(MouseEvent event){
+
         Button clickedButton = (Button) event.getSource();
         highlight(clickedButton);
     }
@@ -101,7 +102,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
     public void unHovered(MouseEvent event){
         Button clickedButton = (Button) event.getSource();
         unhighlight(clickedButton);
-
     }
     @FXML
     private void openAchievements(ActionEvent event) throws IOException {
