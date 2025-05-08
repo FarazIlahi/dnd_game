@@ -35,9 +35,11 @@ public class PlayerCountController extends BaseController implements GameMechani
     }
     public void addListener(){
         numPlayers.valueProperty().addListener((observable, oldValue, newValue) -> {
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             canMoveOn();
         });
         difficulty.valueProperty().addListener((observable, oldValue, newValue) -> {
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             canMoveOn();
         });
     }
@@ -53,6 +55,7 @@ public class PlayerCountController extends BaseController implements GameMechani
 
     @FXML
     public void goToCharSelect(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         gameState.setPlayerCount(numPlayers.getValue());
         gameState.setDifficulty(difficulty.getValue());
         switchScene(event, "CharacterSelect");

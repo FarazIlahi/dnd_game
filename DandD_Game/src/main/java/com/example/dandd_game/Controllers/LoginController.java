@@ -67,6 +67,7 @@ public class LoginController extends BaseController {
         String password = passWField.getText();
 
         if (email.isBlank() || password.isBlank()) {
+            playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             loginErrorLabel.setText("Please enter an email and password.");
             return;
         }
@@ -91,6 +92,7 @@ public class LoginController extends BaseController {
                         System.out.println("Loadede: " + achievements);
                     }
                 }
+                playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
                 switchScene(event, "GameLoads");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,6 +131,7 @@ public class LoginController extends BaseController {
 
     @FXML
     public void goToUserRegistration(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene(event, "newUserRegister");
     }
     @FXML

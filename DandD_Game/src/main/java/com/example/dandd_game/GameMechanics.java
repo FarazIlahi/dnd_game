@@ -21,7 +21,7 @@ public interface GameMechanics {
         return (int)(Math.random() * i) + 1;
     }
     default double spin(ImageView image) throws InterruptedException {
-        playSoundFX("/com/example/dandd_game/soundFX/diceRoll.mp3");
+        playSoundFX("/com/example/dandd_game/soundFX/diceRoll.mp3", 0.75);
         RotateTransition rotate = new RotateTransition(Duration.seconds(0.35), image);
         rotate.setFromAngle(0);
         rotate.setToAngle(360);
@@ -41,11 +41,12 @@ public interface GameMechanics {
         highlight(image);
         return rotate.getDuration().toSeconds() * rotate.getCycleCount();
     }
-    default void playSoundFX(String fx) {
+    default void playSoundFX(String fx, double volume) {
         URL soundURL = getClass().getResource(fx);
         if (soundURL != null) {
             Media sound = new Media(soundURL.toExternalForm());
             MediaPlayer player = new MediaPlayer(sound);
+            player.setVolume(volume);
             player.play();
         } else {
             System.err.println("❌ Could not find diceRoll.mp3");
