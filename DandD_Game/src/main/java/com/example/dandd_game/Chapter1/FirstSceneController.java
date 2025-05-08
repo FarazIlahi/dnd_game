@@ -18,6 +18,7 @@ public class FirstSceneController extends BaseController implements GameMechanic
     private Pane rootPane;
     @FXML
     private Button continueButton;
+
     @FXML
     private void initialize() {
         super.init(rootPane);

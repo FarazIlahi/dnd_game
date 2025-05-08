@@ -1,6 +1,7 @@
 package com.example.dandd_game;
 
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.scene.image.ImageView;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -50,16 +51,20 @@ public interface GameMechanics {
         pause.play();
     }
     default void highlight(Node e){
-        if(e.getEffect() == null){
-            Scale scale = new Scale(1.25, 1.25);
-            e.getTransforms().add(scale);
+        if (e.getEffect() == null) {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), e);
+            st.setToX(1.2);
+            st.setToY(1.2);
+            st.play();
             e.setEffect(new DropShadow(30, Color.BLACK));
         }
     }
     default void unhighlight(Node e){
-        if(!(e.getEffect() == null)){
-            Scale scale = new Scale(.8, .8);
-            e.getTransforms().add(scale);
+        if (e.getEffect() != null) {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), e);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
             e.setEffect(null);
         }
     }

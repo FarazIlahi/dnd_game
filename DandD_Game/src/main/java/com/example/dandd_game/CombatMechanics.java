@@ -530,19 +530,27 @@ public interface CombatMechanics extends GameMechanics{
             enableNode(button);
         }
     }
-    default void setSpecialBar(Character character, ProgressBar bar){
+    default void setUniqueStyles(Character character){
         switch (character.getID()){
             case "King":
-                bar.getStyleClass().add("king-progress-bar");
+                character.getSpecialBar().getStyleClass().add("king-progress-bar");
+                character.getButtons().get(0).getStyleClass().add("attack-button");
+                character.getButtons().get(1).getStyleClass().add("attack-button");
                 break;
             case "Knight":
-                bar.getStyleClass().add("knight-progress-bar");
+                character.getSpecialBar().getStyleClass().add("knight-progress-bar");
+                character.getButtons().get(0).getStyleClass().add("attack-button");
+                character.getButtons().get(1).getStyleClass().add("shield-button");
                 break;
             case "Cleric":
-                bar.getStyleClass().add("cleric-progress-bar");
+                character.getSpecialBar().getStyleClass().add("cleric-progress-bar");
+                character.getButtons().get(0).getStyleClass().add("magic-attack-button");
+                character.getButtons().get(1).getStyleClass().add("heal-button");
                 break;
             case "Mage":
-                bar.getStyleClass().add("mage-progress-bar");
+                character.getSpecialBar().getStyleClass().add("mage-progress-bar");
+                character.getButtons().get(0).getStyleClass().add("magic-attack-button");
+                character.getButtons().get(1).getStyleClass().add("magic-attack-button");
                 break;
         }
     }

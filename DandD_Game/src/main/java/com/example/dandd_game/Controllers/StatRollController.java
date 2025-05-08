@@ -91,6 +91,7 @@ public class StatRollController extends BaseController implements GameMechanics 
                 "\nDef: " + def +
                 "\nBasic Attack: " + basic_atk +
                 "\nRange: " + range + "\tWill not change");
+        info_area.setStyle("-fx-font-size: 30px;");
     }
     public void displayRollInfo(){
         rollInfo.setText(
@@ -98,7 +99,7 @@ public class StatRollController extends BaseController implements GameMechanics 
                 "1\t\t\t|\t\t-5\n" +
                 "2-4\t\t\t|\t\t-3\n" +
                 "5-7\t\t\t|\t\t-2\n" +
-                "8-10\t\t\t|\t\t-1\n" +
+                "8-10\t\t|\t\t-1\n" +
                 "11-13\t\t|\t\t+1\n" +
                 "14-16\t\t|\t\t+2\n" +
                 "17-19\t\t|\t\t+3\n" +
@@ -250,7 +251,10 @@ public class StatRollController extends BaseController implements GameMechanics 
     }
     @FXML
     public void hovered(MouseEvent event){
-        if(!isSpinning){
+        if(event.getSource() instanceof Button clickedNode){
+            highlight(clickedNode);
+        }
+        else if (!isSpinning){
             ImageView clickedImage = (ImageView) event.getSource();
             highlight(clickedImage);
             isSpinning = false;
@@ -259,7 +263,10 @@ public class StatRollController extends BaseController implements GameMechanics 
     }
     @FXML
     public void unHovered(MouseEvent event){
-        if(!isSpinning){
+        if(event.getSource() instanceof Button clickedNode){
+            unhighlight(clickedNode);
+        }
+        else if(!isSpinning){
             ImageView clickedImage = (ImageView) event.getSource();
             unhighlight(clickedImage);
             isSpinning = false;

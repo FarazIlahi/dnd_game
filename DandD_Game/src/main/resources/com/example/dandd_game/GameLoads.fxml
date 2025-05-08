@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.GameLoadsController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.GameLoadsController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
@@ -25,7 +25,7 @@
                   <Region prefHeight="100.0" prefWidth="1000.0" />
 
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <Button fx:id="load1" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="1">
+                     <Button fx:id="load1" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" styleClass="fancy-button" text="1">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -35,11 +35,10 @@
                            <Font size="16.0" />
                         </font></Label>
                   </HBox>
-
                   <Region prefHeight="59.0" prefWidth="1000.0" />
 
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <Button fx:id="load2" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="2">
+                     <Button fx:id="load2" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" styleClass="fancy-button" text="2">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -53,7 +52,7 @@
                   <Region prefHeight="60.0" prefWidth="1000.0" />
 
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <Button fx:id="load3" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="3">
+                     <Button fx:id="load3" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" styleClass="fancy-button" text="3">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -67,7 +66,7 @@
                   <Region prefHeight="60.0" prefWidth="1000.0" />
 
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <Button fx:id="load4" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="4">
+                     <Button fx:id="load4" mnemonicParsing="false" onAction="#onLoadClicked" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="150.0" styleClass="fancy-button" text="4">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -80,7 +79,7 @@
 
                   <Region prefHeight="100.0" prefWidth="1000.0" />
 
-                  <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#openAchievements" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="Achievements">
+                  <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#openAchievements" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="53.0" prefWidth="218.0" styleClass="fancy-button" text="Achievements">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -89,17 +88,17 @@
                   <HBox prefHeight="150.0" prefWidth="1000.0">
                      <children>
                         <Region prefHeight="113.0" prefWidth="203.0" />
-                        <Button mnemonicParsing="false" onAction="#tutorial" prefHeight="86.0" prefWidth="155.0" text="Tutorial">
+                        <Button mnemonicParsing="false" onAction="#tutorial" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="86.0" prefWidth="155.0" styleClass="fancy-button" text="Tutorial">
                            <font>
                               <Font size="29.0" />
                            </font>
                         </Button>
-                        <Button fx:id="nvmButton" disable="true" mnemonicParsing="false" onAction="#dontCreateNewFile" opacity="0.0" prefHeight="90.0" prefWidth="168.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="NVM">
+                        <Button fx:id="nvmButton" disable="true" mnemonicParsing="false" onAction="#dontCreateNewFile" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="168.0" styleClass="fancy-button" text="NVM" visible="false">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Button>
-                        <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#createNewFile" prefHeight="90.0" prefWidth="234.0" style="-fx-background-color: ffd700; -fx-border-color: a38a00;" text="New Game">
+                        <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#createNewFile" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="90.0" prefWidth="234.0" styleClass="fancy-button" text="New Game">
                            <font>
                               <Font size="32.0" />
                            </font>
