@@ -94,7 +94,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
     }
     @FXML
     public void hovered(MouseEvent event){
-
         Button clickedButton = (Button) event.getSource();
         highlight(clickedButton);
     }

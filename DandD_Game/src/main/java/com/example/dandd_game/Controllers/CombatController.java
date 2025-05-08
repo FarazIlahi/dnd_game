@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -143,6 +144,24 @@ public class CombatController extends BaseController implements GameMechanics, C
     @FXML
     private ProgressBar e4_hpBar;
 
+    @FXML
+    private ImageView e5_profile;
+    @FXML
+    private Label e5_name;
+    @FXML
+    private Label e5_hpInfo;
+    @FXML
+    private ProgressBar e5_hpBar;
+
+    @FXML
+    private ImageView e6_profile;
+    @FXML
+    private Label e6_name;
+    @FXML
+    private Label e6_hpInfo;
+    @FXML
+    private ProgressBar e6_hpBar;
+
     private boolean moving = false;
     private boolean animationMoving = false;
     private boolean attacking = false;
@@ -245,6 +264,16 @@ public class CombatController extends BaseController implements GameMechanics, C
         updateMoveButton();
     }
     @FXML
+    public void hovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        highlight(clickedButton);
+    }
+    @FXML
+    public void unHovered(MouseEvent event){
+        Button clickedButton = (Button) event.getSource();
+        unhighlight(clickedButton);
+    }
+    @FXML
     private void passTurn() throws IOException {
         updateTurn();
     }
@@ -300,14 +329,16 @@ public class CombatController extends BaseController implements GameMechanics, C
             case "1":
                 p1_profile.setImage(localImages.getImage(character.getID()));
                 p1_name.setText(character.getName());
+                p1_name.setVisible(true);
                 p1_hpBar.setVisible(true);
                 p1_specialBar.setVisible(true);
+                p1_hpInfo.setVisible(true);
+                p1_specialInfo.setVisible(true);
                 p1_attack.setVisible(true);
                 p1_special.setVisible(true);
                 p1_move.setVisible(true);
                 updateHp(character, p1_hpBar, p1_hpInfo);
                 p1_specialInfo.setText(character.specialToSrting());
-                setSpecialBar(character, p1_specialBar);
                 character.setProfile(new ImageView(p1_profile.getImage()));
                 character.setNameLabel(p1_name);
                 character.setHpBar(p1_hpBar);
@@ -317,19 +348,21 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p1_attack);
                 character.addButton(p1_special);
                 character.addButton(p1_move);
-                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
+                setUniqueStyles(character);
                 break;
             case "2":
                 p2_profile.setImage(localImages.getImage(character.getID()));
                 p2_name.setText(character.getName());
+                p2_name.setVisible(true);
                 p2_hpBar.setVisible(true);
                 p2_specialBar.setVisible(true);
+                p2_hpInfo.setVisible(true);
+                p2_specialInfo.setVisible(true);
                 p2_attack.setVisible(true);
                 p2_special.setVisible(true);
                 p2_move.setVisible(true);
                 updateHp(character, p2_hpBar, p2_hpInfo);
                 p2_specialInfo.setText(character.specialToSrting());
-                setSpecialBar(character, p2_specialBar);
                 character.setProfile(new ImageView(p2_profile.getImage()));
                 character.setNameLabel(p2_name);
                 character.setHpBar(p2_hpBar);
@@ -339,19 +372,21 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p2_attack);
                 character.addButton(p2_special);
                 character.addButton(p2_move);
-                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
+                setUniqueStyles(character);
                 break;
             case "3":
                 p3_profile.setImage(localImages.getImage(character.getID()));
                 p3_name.setText(character.getName());
+                p3_name.setVisible(true);
                 p3_hpBar.setVisible(true);
                 p3_specialBar.setVisible(true);
+                p3_hpInfo.setVisible(true);
+                p3_specialInfo.setVisible(true);
                 p3_attack.setVisible(true);
                 p3_special.setVisible(true);
                 p3_move.setVisible(true);
                 updateHp(character, p3_hpBar, p3_hpInfo);
                 p3_specialInfo.setText(character.specialToSrting());
-                setSpecialBar(character, p3_specialBar);
                 character.setProfile(new ImageView(p3_profile.getImage()));
                 character.setNameLabel(p3_name);
                 character.setHpBar(p3_hpBar);
@@ -361,19 +396,21 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p3_attack);
                 character.addButton(p3_special);
                 character.addButton(p3_move);
-                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
+                setUniqueStyles(character);
                 break;
             case "4":
                 p4_profile.setImage(localImages.getImage(character.getID()));
                 p4_name.setText(character.getName());
+                p4_name.setVisible(true);
                 p4_hpBar.setVisible(true);
                 p4_specialBar.setVisible(true);
+                p4_hpInfo.setVisible(true);
+                p4_specialInfo.setVisible(true);
                 p4_attack.setVisible(true);
                 p4_special.setVisible(true);
                 p4_move.setVisible(true);
                 updateHp(character, p4_hpBar, p4_hpInfo);
                 p4_specialInfo.setText(character.specialToSrting());
-                setSpecialBar(character, p4_specialBar);
                 character.setProfile(new ImageView(p4_profile.getImage()));
                 character.setNameLabel(p4_name);
                 character.setHpBar(p4_hpBar);
@@ -383,7 +420,7 @@ public class CombatController extends BaseController implements GameMechanics, C
                 character.addButton(p4_attack);
                 character.addButton(p4_special);
                 character.addButton(p4_move);
-                System.out.println("Setting player: " + character.getName() + ", image = " + character.getProfile());
+                setUniqueStyles(character);
                 break;
         }
     }
@@ -400,6 +437,8 @@ public class CombatController extends BaseController implements GameMechanics, C
             case "1":
                 e1_profile.setImage(localImages.getImage(character.getID()));
                 e1_name.setText(character.getName());
+                e1_name.setVisible(true);
+                e1_hpInfo.setVisible(true);
                 e1_hpBar.setVisible(true);
                 updateHp(character, e1_hpBar, e1_hpInfo);
                 character.setProfile(new ImageView(e1_profile.getImage()));
@@ -410,6 +449,8 @@ public class CombatController extends BaseController implements GameMechanics, C
             case "2":
                 e2_profile.setImage(localImages.getImage(character.getID()));
                 e2_name.setText(character.getName());
+                e2_name.setVisible(true);
+                e2_hpInfo.setVisible(true);
                 e2_hpBar.setVisible(true);
                 updateHp(character, e2_hpBar, e2_hpInfo);
                 character.setProfile(new ImageView(e2_profile.getImage()));
@@ -420,6 +461,8 @@ public class CombatController extends BaseController implements GameMechanics, C
             case "3":
                 e3_profile.setImage(localImages.getImage(character.getID()));
                 e3_name.setText(character.getName());
+                e3_name.setVisible(true);
+                e3_hpInfo.setVisible(true);
                 e3_hpBar.setVisible(true);
                 updateHp(character, e3_hpBar, e3_hpInfo);
                 character.setProfile(new ImageView(e3_profile.getImage()));
@@ -430,12 +473,38 @@ public class CombatController extends BaseController implements GameMechanics, C
             case "4":
                 e4_profile.setImage(localImages.getImage(character.getID()));
                 e4_name.setText(character.getName());
+                e4_name.setVisible(true);
+                e4_hpInfo.setVisible(true);
                 e4_hpBar.setVisible(true);
                 updateHp(character, e4_hpBar, e4_hpInfo);
                 character.setProfile(new ImageView(e4_profile.getImage()));
                 character.setNameLabel(e4_name);
                 character.setHpBar(e4_hpBar);
                 character.setHpInfo(e4_hpInfo);
+                break;
+            case "5":
+                e5_profile.setImage(localImages.getImage(character.getID()));
+                e5_name.setText(character.getName());
+                e5_name.setVisible(true);
+                e5_hpInfo.setVisible(true);
+                e5_hpBar.setVisible(true);
+                updateHp(character, e5_hpBar, e5_hpInfo);
+                character.setProfile(new ImageView(e5_profile.getImage()));
+                character.setNameLabel(e5_name);
+                character.setHpBar(e5_hpBar);
+                character.setHpInfo(e5_hpInfo);
+                break;
+            case "6":
+                e6_profile.setImage(localImages.getImage(character.getID()));
+                e6_name.setText(character.getName());
+                e6_name.setVisible(true);
+                e6_hpInfo.setVisible(true);
+                e6_hpBar.setVisible(true);
+                updateHp(character, e6_hpBar, e6_hpInfo);
+                character.setProfile(new ImageView(e6_profile.getImage()));
+                character.setNameLabel(e5_name);
+                character.setHpBar(e6_hpBar);
+                character.setHpInfo(e6_hpInfo);
                 break;
         }
     }

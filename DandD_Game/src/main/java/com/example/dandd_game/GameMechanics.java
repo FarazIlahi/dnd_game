@@ -53,8 +53,8 @@ public interface GameMechanics {
     default void highlight(Node e){
         if (e.getEffect() == null) {
             ScaleTransition st = new ScaleTransition(Duration.millis(150), e);
-            st.setToX(1.25);
-            st.setToY(1.25);
+            st.setToX(1.2);
+            st.setToY(1.2);
             st.play();
             e.setEffect(new DropShadow(30, Color.BLACK));
         }
