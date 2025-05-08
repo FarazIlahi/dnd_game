@@ -82,6 +82,21 @@
             <Image url="@images/goblin.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="skeleton" fitHeight="80.0" fitWidth="90.0" layoutX="50.0" visible="false">
+         <image>
+            <Image url="@images/skeleton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imp" fitHeight="80.0" fitWidth="90.0" layoutX="50.0" visible="false">
+         <image>
+            <Image url="@images/imp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="zombie" fitHeight="80.0" fitWidth="90.0" layoutX="50.0" visible="false">
+         <image>
+            <Image url="@images/zombie.png" />
+         </image>
+      </ImageView>
       <ImageView fx:id="orc" fitHeight="80.0" fitWidth="90.0" layoutX="150.0" layoutY="50.0" visible="false">
          <image>
             <Image url="@images/orc.png" />

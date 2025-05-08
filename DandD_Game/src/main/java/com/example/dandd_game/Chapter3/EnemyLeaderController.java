@@ -60,18 +60,15 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             alert.showAndWait();
             gsm.createOrc();
             gsm.createGoblin();
-            gsm.createGoblin();
             gsm.createSorcerer();
+            gsm.createSkeleton();
 
             gsm.getOrc().setName("Sorcerer's Orc");
-            Goblin g1 = new Goblin();
-            g1.setName("Sorcerer's Goblin");
-            Goblin g2 = new Goblin();
-            g2.setName("Sorcerer's Goblin");
             gsm.getSorcerer().setName("The Sorcerer");
+            gsm.getSkeleton().setName("Sorcerer's Skeleton");
             gsm.addToEnemys(gsm.getOrc());
-            gsm.addToEnemys(g1);
-            gsm.addToEnemys(g2);
+            gsm.addToEnemys(gsm.getGoblin());
+            gsm.addToEnemys(gsm.getSkeleton());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
             switchScene(event, "Combat");
@@ -115,11 +112,10 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             gsm.createGoblin();
             gsm.createSorcerer();
             gsm.getOrc().setName("Sorcerer's Orc");
-            Goblin g1 = new Goblin();
-            g1.setName("Sorcerer's Goblin");
+            gsm.getGoblin().setName("Sorcerer's Goblin");
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getOrc());
-            gsm.addToEnemys(g1);
+            gsm.addToEnemys(gsm.getGoblin());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
             switchScene(event, "Combat");

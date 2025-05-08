@@ -26,6 +26,12 @@ public class TitleScreenController extends BaseController {
     @FXML
     private ImageView orc;
     @FXML
+    private ImageView imp;
+    @FXML
+    private ImageView zombie;
+    @FXML
+    private ImageView skeleton;
+    @FXML
     private ImageView slash;
     @FXML
     private ImageView explosion;
@@ -49,6 +55,9 @@ public class TitleScreenController extends BaseController {
         localImages.setSorcererURL(sorcerer.getImage().getUrl());
         localImages.setGoblinURL(goblin.getImage().getUrl());
         localImages.setOrcURL(orc.getImage().getUrl());
+        localImages.setImpURL(imp.getImage().getUrl());
+        localImages.setZombieURL(zombie.getImage().getUrl());
+        localImages.setSkeletonURL(skeleton.getImage().getUrl());
         localImages.setSlashURL(slash.getImage().getUrl());
         localImages.setExplosionURL(explosion.getImage().getUrl());
         localImages.setHealURL(heal.getImage().getUrl());

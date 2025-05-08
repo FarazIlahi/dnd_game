@@ -10,6 +10,9 @@ public class LocalImages {
     private String mageURL;
     private String goblinURL;
     private String orcURL;
+    private String zombieURL;
+    private String impURL;
+    private String skeletonURL;
     private String sorcererURL;
     private String slashURL;
     private String explosionURL;
@@ -46,10 +49,18 @@ public class LocalImages {
         this.orcURL = orcURL;
     }
 
+    public void setZombieURL(String zombieURL) {
+        this.zombieURL = zombieURL;
+    }
+    public void setImpURL(String impURL) {
+        this.impURL = impURL;
+    }
+    public void setSkeletonURL(String skeletonURL) {
+        this.skeletonURL = skeletonURL;
+    }
     public void setSorcererURL(String sorcererURL) {
         this.sorcererURL = sorcererURL;
     }
-
     public void setSlashURL(String slashURL) {
         this.slashURL = slashURL;
     }
@@ -59,7 +70,6 @@ public class LocalImages {
     public void setHealURL(String healURL) {
         this.healURL = healURL;
     }
-
     public void setModAttackURL(String modAttackURL) {
         this.modAttackURL = modAttackURL;
     }
@@ -111,6 +121,15 @@ public class LocalImages {
         }
         else if (image.equals("ModAttack")) {
             return new Image(this.modAttackURL);
+        }
+        else if (image.equals("Zombie")) {
+            return new Image(this.zombieURL);
+        }
+        else if (image.equals("Imp")) {
+            return new Image(this.impURL);
+        }
+        else if (image.equals("Skeleton")) {
+            return new Image(this.skeletonURL);
         }
 
         else {

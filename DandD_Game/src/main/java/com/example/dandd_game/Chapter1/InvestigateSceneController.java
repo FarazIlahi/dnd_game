@@ -51,6 +51,8 @@ public class InvestigateSceneController extends BaseController implements GameMe
         gsm.resetEnemies();
         gsm.createOrc();
         gsm.createGoblin();
+        gsm.createImp();
+        gsm.createZombie();
         gsm.createSorcerer();
         gsm.addToEnemys(gsm.getOrc());
         gsm.addToEnemys(gsm.getGoblin());

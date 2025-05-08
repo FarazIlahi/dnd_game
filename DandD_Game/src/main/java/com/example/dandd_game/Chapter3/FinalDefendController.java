@@ -93,15 +93,14 @@ public class FinalDefendController extends BaseController implements GameMechani
             alert.showAndWait();
 
             gsm.createOrc();
-            gsm.createOrc();
+            gsm.createImp();
             gsm.createSorcerer();
 
             gsm.getOrc().setName("Sorcerer's Orc");
-            Orc orcB = new Orc();
-            orcB.setName("Sorcerer's Orc");
+            gsm.getImp().setName("Sorcerer's Imp");
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getOrc());
-            gsm.addToEnemys(orcB);
+            gsm.addToEnemys(gsm.getImp());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
             switchScene(event, "Combat");
