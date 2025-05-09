@@ -168,37 +168,73 @@ public class GameStateManager {
         return this.mage;
     }
     public void createGoblin(){
-        this.goblin = new Goblin();
+        double multi = getDifficultyMultiplier();
+        Goblin base = new Goblin();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.goblin = new Goblin(hp, def, atk, range, "Goblin", new Position(2, 4), 0, 0);
     }
     public Goblin getGoblin(){
         return this.goblin;
     }
     public void createOrc(){
-        this.orc = new Orc();
+        double multi = getDifficultyMultiplier();
+        Orc base = new Orc();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.orc = new Orc(hp, def, atk, range, "Orc", new Position(2, 4), 0, 0);
     }
     public Orc getOrc(){
         return this.orc;
     }
     public void createSorcerer(){
-        this.sorcerer = new Sorcerer();
+        double multi = getDifficultyMultiplier();
+        Sorcerer base = new Sorcerer();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.sorcerer = new Sorcerer(hp, def, atk, range, "Sorcerer", new Position(2, 4), 0, 0);
     }
     public Sorcerer getSorcerer(){
         return this.sorcerer;
     }
     public void createImp(){
-        this.imp = new Imp();
+        double multi = getDifficultyMultiplier();
+        Imp base = new Imp();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.imp = new Imp(hp, def, atk, range, "Imp", new Position(2, 4), 0, 0);
     }
     public Imp getImp(){
         return this.imp;
     }
     public void createSkeleton(){
-        this.skeleton = new Skeleton();
+        double multi = getDifficultyMultiplier();
+        Skeleton base = new Skeleton();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.skeleton = new Skeleton(hp, def, atk, range, "Skeleton", new Position(2, 4), 0, 0);
     }
     public Skeleton getSkeleton(){
         return this.skeleton;
     }
     public void createZombie(){
-        this.zombie = new Zombie();
+        double multi = getDifficultyMultiplier();
+        Zombie base = new Zombie();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.zombie = new Zombie(hp, def, atk, range, "Zombie", new Position(2, 4), 0, 0);
     }
     public Zombie getZombie(){
         return this.zombie;
@@ -256,7 +292,15 @@ public class GameStateManager {
     private Set<String> achievements = new LinkedHashSet<>();
 
     public boolean unlockAchievement(String achievement) {
-        return achievements.add(achievement);
+        boolean newAchievement = achievements.add(achievement);
+        if (newAchievement) {
+            try {
+                GameSaves.saveAchievements();
+            } catch (Exception e) {
+                System.out.println("achievement failed save");
+            }
+        }
+        return newAchievement;
     }
     public void setAchievements(List<String> achievementsList) {
         this.achievements.clear();
@@ -416,6 +460,16 @@ public class GameStateManager {
         if (map.containsKey("down")) setDownKey(map.get("down"));
         if (map.containsKey("left")) setLeftKey(map.get("left"));
         if (map.containsKey("right")) setRightKey(map.get("right"));
+    }
+    public double getDifficultyMultiplier() {
+        switch(difficulty) {
+            case "Easy":
+                return 0.5;
+            case "Hard":
+                return 1.5;
+            default:
+                return 1.0;
+        }
     }
 
 }
