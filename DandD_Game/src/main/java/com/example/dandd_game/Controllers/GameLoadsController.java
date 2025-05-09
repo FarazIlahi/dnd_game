@@ -114,13 +114,14 @@ public class GameLoadsController extends BaseController implements GameMechanics
 
     private void goToPlayerCount() {
         try {
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             switchScene("playerCount");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    @FXML
     public void onLoadClicked(ActionEvent event) throws IOException {
         Button clickedButton = (Button) event.getSource();
         selectedSlot = Integer.parseInt(clickedButton.getText());
@@ -145,7 +146,8 @@ public class GameLoadsController extends BaseController implements GameMechanics
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        else {
             try {
                 GameSaves.loadGame(selectedSlot);
                 String scene = GameStateManager.getInstance().getCurrentScene();
