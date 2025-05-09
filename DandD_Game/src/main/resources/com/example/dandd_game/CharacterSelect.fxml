@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CharacterSelectController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CharacterSelectController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
          <image>
@@ -35,17 +35,18 @@
                   <Region prefHeight="600.0" prefWidth="138.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="king" fitHeight="267.0" fitWidth="273.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="king" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/pixelKing.png" />
                            </image>
                         </ImageView>
+                        <Region prefHeight="70.0" prefWidth="275.0" />
                         <Label fx:id="kingName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The King">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Ruler of the kingdom.  Has balanced stats.  The game ends if he is defeated." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="275.0" text="    Ruler of the kingdom.  Has balanced stats.  The game ends if he is defeated." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -60,17 +61,18 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="knight" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="knight" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelKnight.png" />
                            </image>
                         </ImageView>
+                        <Region prefHeight="70.0" prefWidth="275.0" />
                         <Label fx:id="knightName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Knight">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Loyal night of the king.  Has strong defense, but has low mobility." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="277.0" text="    Loyal night of the king.  Has strong defense, but has low mobility." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -85,17 +87,18 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="cleric" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="cleric" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelCleric.png" />
                            </image>
                         </ImageView>
+                        <Region prefHeight="70.0" prefWidth="275.0" />
                         <Label fx:id="clericName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Cleric">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Priest of the kingdom.  Heals others with divine powers." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="276.0" text="    Priest of the kingdom.  Heals others with divine powers." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -110,17 +113,18 @@
                   <Region prefHeight="600.0" prefWidth="75.0" />
                   <VBox prefHeight="600.0" prefWidth="275.0">
                      <children>
-                        <ImageView fx:id="mage" fitHeight="266.0" fitWidth="275.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
+                        <ImageView fx:id="mage" fitHeight="225.0" fitWidth="245.0" onMouseClicked="#goToStatRoll" onMouseEntered="#hovered" onMouseExited="#unHovered" pickOnBounds="true">
                            <image>
                               <Image url="@images/pixelMage.png" />
                            </image>
                         </ImageView>
+                        <Region prefHeight="70.0" prefWidth="275.0" />
                         <Label fx:id="mageName" alignment="CENTER" prefHeight="50.0" prefWidth="275.0" text="The Mage">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="275.0" text="    Witch from the forest aiding the king.  Powerful magic user, but has poor defense." wrapText="true">
+                        <Label alignment="TOP_LEFT" prefHeight="95.0" prefWidth="286.0" text="    Witch from the forest aiding the king.  Powerful magic user, but has poor defense." wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -137,8 +141,14 @@
             <Region prefHeight="41.0" prefWidth="1600.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Region prefHeight="100.0" prefWidth="725.0" />
-                  <Button fx:id="ready_btn" mnemonicParsing="false" onAction="#ready" prefHeight="50.0" prefWidth="150.0" text="Ready">
+                  <Region prefHeight="90.0" prefWidth="140.0" />
+                  <Label prefHeight="54.0" prefWidth="504.0" text="Note: Every party needs a King!">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="90.0" prefWidth="95.0" />
+                  <Button fx:id="ready_btn" mnemonicParsing="false" onAction="#ready" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="50.0" prefWidth="150.0" styleClass="fancy-button" text="Ready">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

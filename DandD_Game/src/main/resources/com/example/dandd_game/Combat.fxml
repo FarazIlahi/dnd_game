@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.CombatController">
    <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/OldPaper.jpg" />
+         </image>
+      </ImageView>
       <GridPane fx:id="combatGrid" layoutX="400.0" prefHeight="800.0" prefWidth="800.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -22,13 +25,308 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" layoutX="1200.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <TextArea fx:id="turnOrderArea" editable="false" layoutX="39.0" layoutY="49.0" prefHeight="500.0" prefWidth="300.0">
+      <TextArea fx:id="turnOrderArea" editable="false" layoutX="1200.0" layoutY="4.0" prefHeight="264.0" prefWidth="142.0" styleClass="turn-order-box">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </TextArea>
-      <Button layoutX="148.0" layoutY="459.0" mnemonicParsing="false" onAction="#doSmth" text="Button" />
+      <Group layoutX="23.0" layoutY="18.0">
+         <children>
+            <ImageView fx:id="p1_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="p1_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" visible="false">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <ProgressBar fx:id="p1_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
+            <ProgressBar fx:id="p1_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
+            <Button fx:id="p1_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p1_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p1_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
+            <Label fx:id="p1_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="p1_specialInfo" layoutX="250.0" layoutY="97.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="23.0" layoutY="228.0">
+         <children>
+            <ImageView fx:id="p2_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="p2_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" visible="false">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <ProgressBar fx:id="p2_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
+            <ProgressBar fx:id="p2_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
+            <Button fx:id="p2_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p2_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p2_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
+            <Label fx:id="p2_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="p2_specialInfo" layoutX="250.0" layoutY="97.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="23.0" layoutY="421.0">
+         <children>
+            <ImageView fx:id="p3_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="p3_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" visible="false">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <ProgressBar fx:id="p3_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
+            <ProgressBar fx:id="p3_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
+            <Button fx:id="p3_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p3_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p3_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
+            <Label fx:id="p3_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="p3_specialInfo" layoutX="250.0" layoutY="97.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="23.0" layoutY="612.0">
+         <children>
+            <ImageView fx:id="p4_profile" fitHeight="57.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="p4_name" layoutX="66.0" prefHeight="25.0" prefWidth="276.0" visible="false">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <ProgressBar fx:id="p4_hpBar" layoutY="66.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" styleClass="health-progress-bar" visible="false" />
+            <ProgressBar fx:id="p4_specialBar" layoutY="97.0" prefHeight="20.0" prefWidth="236.0" progress="1.0" visible="false" />
+            <Button fx:id="p4_attack" layoutY="130.0" mnemonicParsing="false" onAction="#attack" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Attack" visible="false" />
+            <Button fx:id="p4_special" layoutX="124.0" layoutY="130.0" mnemonicParsing="false" onAction="#special" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" text="Special" visible="false" />
+            <Button fx:id="p4_move" layoutX="250.0" layoutY="130.0" mnemonicParsing="false" onAction="#move" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="75.0" styleClass="move-button" text="Move" visible="false" />
+            <Label fx:id="p4_hpInfo" layoutX="250.0" layoutY="66.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="p4_specialInfo" layoutX="250.0" layoutY="97.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="character-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="20.0">
+         <children>
+            <ImageView fx:id="e1_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e1_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e1_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e1_name" layoutX="49.0" layoutY="3.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="100.0">
+         <children>
+            <ImageView fx:id="e2_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e2_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e2_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e2_name" layoutX="49.0" layoutY="3.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="180.0">
+         <children>
+            <ImageView fx:id="e3_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e3_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e3_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e3_name" layoutX="49.0" layoutY="3.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="260.0">
+         <children>
+            <ImageView fx:id="e4_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e4_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e4_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e4_name" layoutX="49.0" layoutY="3.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="340.0">
+         <children>
+            <ImageView fx:id="e5_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e5_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e5_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="10.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e5_name" layoutX="49.0" layoutY="3.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="1300.0" layoutY="420.0">
+         <children>
+            <ImageView fx:id="e6_profile" fitHeight="50.0" fitWidth="50.0" layoutX="238.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="e6_hpBar" layoutX="107.0" layoutY="39.0" prefHeight="20.0" prefWidth="181.0" progress="1.0" rotate="180.0" styleClass="health-progress-bar" visible="false" />
+            <Label fx:id="e6_hpInfo" layoutX="49.0" layoutY="40.0" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+            <Label fx:id="e6_name" layoutX="40.0" layoutY="-4.0" prefHeight="36.0" prefWidth="190.0" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="bold-label" />
+                  <String fx:value="enemy-name" />
+               </styleClass>
+            </Label>
+         </children>
+      </Group>
+      <Button fx:id="end_btn" layoutX="1231.0" layoutY="416.0" mnemonicParsing="false" onAction="#passTurn" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="80.0" styleClass="menu-button" text="End Turn" />
+      <Button fx:id="show_btn" layoutX="1200.0" layoutY="322.0" mnemonicParsing="false" onAction="#showRange" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="36.0" prefWidth="142.0" styleClass="menu-button" text="Show Character Range">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

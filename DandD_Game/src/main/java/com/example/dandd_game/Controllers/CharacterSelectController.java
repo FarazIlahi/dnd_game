@@ -61,7 +61,7 @@ public class CharacterSelectController extends BaseController implements GameMec
         int num = gameState.getParty().size();
         if(num == gameState.getPlayerCount()){
             infoLabel.setText("Ready Up!");
-            unDisableNode(ready_btn);
+            enableNode(ready_btn);
             disableAllNodes();
         }
         else {
@@ -187,16 +187,27 @@ public class CharacterSelectController extends BaseController implements GameMec
     }
     @FXML
     public void hovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        highlight(clickedImage);
+        if(event.getSource() instanceof ImageView clickedNode){
+            highlight(clickedNode);
+        }
+        else {
+            Button clickedNode = (Button) event.getSource();
+            highlight(clickedNode);
+        }
     }
     @FXML
     public void unHovered(MouseEvent event){
-        ImageView clickedImage = (ImageView) event.getSource();
-        unhighlight(clickedImage);
+        if(event.getSource() instanceof ImageView clickedNode){
+            unhighlight(clickedNode);
+        }
+        else {
+            Button clickedNode = (Button) event.getSource();
+            unhighlight(clickedNode);
+        }
     }
     @FXML
     public void ready(ActionEvent event) throws IOException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene(event, "Chapter1/FirstScene");
     }
 

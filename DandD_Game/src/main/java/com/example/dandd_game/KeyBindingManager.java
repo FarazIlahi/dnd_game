@@ -25,6 +25,9 @@ public class KeyBindingManager {
         KeyCode keyCode = KeyCode.valueOf(key.toUpperCase());
         keyBindings.remove(keyCode);
     }
+    public ThrowingRunnable getActionForKey(KeyCode key) {
+        return keyBindings.get(key);
+    }
 
     public void clearAllBindings() {
         keyBindings.clear();

@@ -1,6 +1,7 @@
 package com.example.dandd_game.Controllers;
 
 import com.example.dandd_game.GameMechanics;
+import com.example.dandd_game.GameStateManager;
 import com.example.dandd_game.KeyBindingManager;
 import com.example.dandd_game.MainApplication;
 import javafx.event.Event;
@@ -14,7 +15,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import javax.sound.sampled.*;
+import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class BaseController implements GameMechanics {
     private static Pane currentroot;
@@ -34,9 +39,22 @@ public class BaseController implements GameMechanics {
     public Pane getCurrentroot(){
         return currentroot;
     }
-    KeyBindingManager keyManager;
+    protected KeyBindingManager keyManager;
+
+    private static AudioInputStream musicInput;
+    private static Clip music;
+    private static Clip prevMusic;
+    private float prevVolume = 0;
+    private float currentVolume = 1.0f;
+    private FloatControl volumeControl;
+
+    public void setIs_on_settings(boolean b){
+        is_on_settings = b;
+    }
 
     public void createStackPane() throws IOException {
+        stackPane.getChildren().clear();
+
         ImageView snapshot = new ImageView(getCurrentroot().snapshot(null, null));
         BoxBlur blur = new BoxBlur(10,10,3);
 
@@ -57,29 +75,74 @@ public class BaseController implements GameMechanics {
             setCurrentroot(root);
             keyManager = new KeyBindingManager(getCurrentroot());
         }
+        root.setFocusTraversable(true);
+        root.requestFocus();
+
+        setCurrentroot(root);
         keyManager = new KeyBindingManager(root);
         keyManager.addKeyBinding("ESCAPE", this::handleKeyPress);
+
+    }
+
+    public void setMusic(String musicFile){
+        try {
+            musicInput = AudioSystem.getAudioInputStream(new File(musicFile));
+            music = AudioSystem.getClip();
+            music.open(musicInput);
+            volumeControl = (FloatControl)music.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(currentVolume);
+            music.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException e){
+            System.out.println("Error: This file format is not supported.");
+        } catch (LineUnavailableException e){
+            System.out.println("Error: This file is unavailable.");
+        } catch (IOException e){
+            System.out.println("Error: File not found.");
+        }
+    }
+
+    public void stopMusic(){
+        try {
+            music.stop();
+            prevMusic = music;
+            musicInput.reset();
+        } catch (IOException e) {
+            System.out.println("Error: File not found.");
+        }
+    }
+
+    public void resumeMusic(){
+        music.stop();
+        music = prevMusic;
+        music.start();
     }
     private void handleKeyPress() throws IOException {
         if(is_on_settings){
             is_on_settings = false;
+            System.out.println("ESC pressed: is_on_settings = " + is_on_settings);
             closePopupScene();
         }
         else {
             is_on_settings = true;
+            System.out.println("ESC pressed: is_on_settings = " + is_on_settings);
             openPopupScene();
         }
     }
     private void openPopupScene() throws IOException {
+        getCurrentroot().getChildren().remove(stackPane);
+        stackPane.getChildren().clear();
         createStackPane();
-        getCurrentroot().getChildren().add(getStackPane());
+        getCurrentroot().getChildren().add(stackPane);
 
     }
     private void closePopupScene(){
-        getCurrentroot().getChildren().remove(getStackPane());
+        if (getCurrentroot().getChildren().contains(stackPane)) {
+            getCurrentroot().getChildren().remove(stackPane);
+        }
 
     }
     public void switchScene(Event event, String new_scene) throws IOException {
+        GameStateManager.getInstance().setCurrentScene(new_scene);
         Node source = (Node) event.getSource();
         Scene scene = source.getScene();
         Stage primaryStage = (Stage) scene.getWindow();
@@ -88,6 +151,16 @@ public class BaseController implements GameMechanics {
         Parent root = loader.load();
         Scene newscene = new Scene(root);
         primaryStage.setScene(newscene);
+    }
+
+    public void switchScene(String new_scene) throws IOException {
+        GameStateManager.getInstance().setCurrentScene(new_scene);
+        Stage stage = (Stage) currentroot.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(new_scene + ".fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
 }

@@ -2,12 +2,17 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
-import com.google.cloud.firestore.Firestore;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameStateManager {
     private static GameStateManager instance;
@@ -21,12 +26,26 @@ public class GameStateManager {
     private Mage mage;
     private Goblin goblin;
     private Orc orc;
+    private Imp imp;
+    private Skeleton skeleton;
+    private Zombie zombie;
     private Sorcerer sorcerer;
     private Character currentCharacter;
     private int moveCount = 5;
+    private String currentScene;
+    private String currentUserEmail;
+    private int currentSlot;
+    private String previousScene;
+    private String nextScene;
     private ArrayList<Character> party = new ArrayList<Character>();
     private ArrayList<Character> enemies = new ArrayList<Character>();
     private ArrayList<Character> turnOrder = new ArrayList<Character>();
+    private String upKey = "W";
+    private String downKey = "S";
+    private String leftKey = "A";
+    private String rightKey = "D";
+
+    private AudioInputStream soundFXInput;
 
     private int totalDamageDone = 0;
     private int enemiesKilled = 0;
@@ -52,11 +71,18 @@ public class GameStateManager {
         goblin = null;
         orc = null;
         sorcerer = null;
+        imp = null;
+        skeleton = null;
+        zombie = null;
         currentCharacter = null;
         moveCount = 5;
         resetList(party);
         resetList(enemies);
         resetList(turnOrder);
+        upKey = "W";
+        downKey = "S";
+        leftKey = "A";
+        rightKey = "D";
 
         totalDamageDone = 0;
         enemiesKilled = 0;
@@ -64,8 +90,9 @@ public class GameStateManager {
         randomEventTriggered = 0;
         gameCompleted = false;
     }
-    public void resetList(ArrayList<Character> list){
-        for(int i = list.size() - 1; i >= 0; i--){
+
+    public void resetList(ArrayList<?> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             list.remove(i);
         }
     }
@@ -96,6 +123,24 @@ public class GameStateManager {
     }
     public Character getCurrentCharacter() {
         return currentCharacter;
+    }
+    public void setCurrentScene(String scene) {
+        this.currentScene = scene;
+    }
+    public String getCurrentScene() {
+        return this.currentScene;
+    }
+    public void setCurrentUserEmail(String email) {
+        this.currentUserEmail = email;
+    }
+    public String getCurrentUserEmail() {
+        return this.currentUserEmail;
+    }
+    public void setCurrentSlot(int slot) {
+        this.currentSlot = slot;
+    }
+    public int getCurrentSlot() {
+        return currentSlot;
     }
     public void createKing(){
         this.king = new King();
@@ -139,6 +184,24 @@ public class GameStateManager {
     public Sorcerer getSorcerer(){
         return this.sorcerer;
     }
+    public void createImp(){
+        this.imp = new Imp();
+    }
+    public Imp getImp(){
+        return this.imp;
+    }
+    public void createSkeleton(){
+        this.skeleton = new Skeleton();
+    }
+    public Skeleton getSkeleton(){
+        return this.skeleton;
+    }
+    public void createZombie(){
+        this.zombie = new Zombie();
+    }
+    public Zombie getZombie(){
+        return this.zombie;
+    }
     public void addToParty(Character character){
         this.party.add(character);
     }
@@ -174,15 +237,41 @@ public class GameStateManager {
         this.turnOrder.remove(0);
         setCurrentCharacter(this.turnOrder.get(0));
         resetMoveCount();
-
     }
+    public void playSoundFX(String sfxFile) {
+        try {
+            soundFXInput = AudioSystem.getAudioInputStream(new File(sfxFile));
+            Clip soundFX = AudioSystem.getClip();
+            soundFX.open(soundFXInput);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Error: File not supported");
+        } catch (LineUnavailableException e) {
+            System.out.println("Error: File unavailable");
+        } catch (IOException e) {
+            System.out.println("Error: File not found");
+        }
+    }
+
     private Set<String> achievements = new LinkedHashSet<>();
 
-    public void unlockAchievement(String achievement) {
-        achievements.add(achievement);
+    public boolean unlockAchievement(String achievement) {
+        return achievements.add(achievement);
+    }
+    public void setAchievements(List<String> achievementsList) {
+        this.achievements.clear();
+        this.achievements.addAll(achievementsList);
     }
     public List<String> getAchievements() {
         return new ArrayList<>(achievements);
+    }
+    private String pendingAchievement = null;
+    public void queueAchievementPopup(String achievement) {
+        pendingAchievement = achievement;
+    }
+    public String getPendingAchievement() {
+        String temp = pendingAchievement;
+        pendingAchievement = null;
+        return temp;
     }
     public int getMoveCount() {
         return this.moveCount;
@@ -224,6 +313,108 @@ public class GameStateManager {
         db.collection("GameReport")
                 .add(report)
                 .addListener(() -> System.out.println("Report uploaded"), Runnable::run);
+    }
+
+    public boolean nameExists(String name) {
+        for (Character c : party) {
+            if (c == getCurrentCharacter()) continue;
+            if (c.getName() != null && c.getName().equalsIgnoreCase(name.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getPreviousScene() {
+        return previousScene;
+    }
+
+    public void setPreviousScene(String previousScene) {
+        this.previousScene = previousScene;
+    }
+
+    public void resetEnemies() {
+        resetList(enemies);
+    }
+
+    public void setNextScene(String nextScene) {
+        this.nextScene = nextScene;
+    }
+
+    public String getNextScene() {
+        return nextScene;
+    }
+
+    public void setKing(King king) {
+        this.king = king;
+    }
+
+    public void setKnight(Knight knight) {
+        this.knight = knight;
+    }
+
+    public void setCleric(Cleric cleric) {
+        this.cleric = cleric;
+    }
+
+    public void setMage(Mage mage) {
+        this.mage = mage;
+    }
+
+    public void setUpKey(String upKey) {
+        this.upKey = upKey;
+    }
+    public String getUpKey() {
+        return upKey;
+    }
+
+    public void setDownKey(String downKey) {
+        this.downKey = downKey;
+    }
+    public String getDownKey() {
+        return downKey;
+    }
+
+    public void setLeftKey(String leftKey) {
+        this.leftKey = leftKey;
+    }
+    public String getLeftKey() {
+        return leftKey;
+    }
+
+    public void setRightKey(String rightKey) {
+        this.rightKey = rightKey;
+    }
+    public String getRightKey() {
+        return rightKey;
+    }
+    public List<Character> getAllCharacters() {
+        Set<Character> all = new LinkedHashSet<>();
+        all.addAll(party);
+        all.addAll(enemies);
+        all.addAll(turnOrder);
+        return new ArrayList<>(all);
+    }
+    public void resetAllCharacterPositions() {
+        for (Character c : getAllCharacters()) {
+            c.setPosition(null);
+        }
+    }
+
+    public Map<String, String> getKeybindsMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("up", upKey);
+        map.put("down", downKey);
+        map.put("left", leftKey);
+        map.put("right", rightKey);
+        return map;
+    }
+
+    public void setKeybindsFromMap(Map<String, String> map) {
+        if (map.containsKey("up")) setUpKey(map.get("up"));
+        if (map.containsKey("down")) setDownKey(map.get("down"));
+        if (map.containsKey("left")) setLeftKey(map.get("left"));
+        if (map.containsKey("right")) setRightKey(map.get("right"));
     }
 
 }

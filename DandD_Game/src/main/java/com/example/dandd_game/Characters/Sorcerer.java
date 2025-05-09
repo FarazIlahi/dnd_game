@@ -4,11 +4,20 @@ import com.example.dandd_game.Position;
 
 public class Sorcerer extends Character {
     public Sorcerer(){
-        super(35,10, 18, 13, "Sorcerer", new Position(13,10));
+        super(35,10, 9, 6, "Sorcerer", new Position(16,3), 0, 0);
+    }
+
+    public Sorcerer(int hp, int def, int atk, int range, String name, Position position, int special, int cost) {
+        super(hp, def, atk, range, name, position,special, cost);
     }
 
     @Override
-    public void specialMove() {
+    public int specialMove() {
+        return 0;
+    }
 
+    @Override
+    public int typeMatchup(Character Target) {
+        return 0;
     }
 }

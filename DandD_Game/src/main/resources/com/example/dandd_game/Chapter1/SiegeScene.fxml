@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.SiegeSceneController">
-
-    <Label fx:id="siegeText" layoutX="100" layoutY="100" prefHeight="800.0" prefWidth="1600.0" style="-fx-font-size: 18px; -fx-text-fill: black;" text="The enemy arrives at dawn. What should the first move of defense be?" wrapText="true" />
-
-    <Button fx:id="holdButton" layoutX="190.0" layoutY="188.0" onAction="#holdWalls" text="Hold Castle Walls" />
-
-    <Button fx:id="flankButton" layoutX="379.0" layoutY="188.0" onAction="#flankEnemy" text="Sneak Out and Flank" />
-
-</AnchorPane>
+<Pane fx:id="rootPane" prefHeight="800.0" prefWidth="1600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter1.SiegeSceneController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/OldPaper.jpg" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="800.0" prefWidth="1600.0">
+         <children>
+            <Region prefHeight="800.0" prefWidth="350.0" />
+            <VBox prefHeight="800.0" prefWidth="900.0">
+               <children>
+                  <ImageView fitHeight="400.0" fitWidth="900.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/enemyCastle.png" />
+                     </image>
+                  </ImageView>
+                  <Region prefHeight="50.0" prefWidth="900.0" />
+                  <Label fx:id="siegeText" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="900.0" text="The enemy is breaching the castle walls. Will you hold or flank them?" wrapText="true">
+                     <font>
+                        <Font name="URWGothic-Book" size="34.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#holdWalls" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="50.0" prefWidth="200.0" styleClass="parchment-button" text="Hold the Walls">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Region prefHeight="50.0" prefWidth="11.0" />
+                        <Button mnemonicParsing="false" onAction="#flankEnemy" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="50.0" prefWidth="200.0" styleClass="parchment-button" text="Flank the Enemy">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</Pane>

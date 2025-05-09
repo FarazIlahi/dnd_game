@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="800" prefWidth="1600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter3.EnemyLeaderController">
-
-    <Label layoutX="300" layoutY="200" maxWidth="1000" style="-fx-font-size: 26px;" text="You and your party infiltrate the enemy’s war camp. What will you do?" wrapText="true" />
-
-    <Button layoutX="300.0" layoutY="370.0" onAction="#duelLeader" prefHeight="60" prefWidth="300" style="-fx-font-size: 18px; -fx-background-color: #ffd700;" text="Duel the Enemy Leader" />
-
-    <Button layoutX="803.0" layoutY="370.0" onAction="#destroySupplies" prefHeight="60" prefWidth="300" style="-fx-font-size: 18px; -fx-background-color: #ffd700;" text="Destroy War Supplies" />
-</AnchorPane>
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Chapter3.EnemyLeaderController">
+    <children>
+        <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+            <image>
+                <Image url="@../images/OldPaper.jpg" />
+            </image>
+        </ImageView>
+        <HBox prefHeight="800.0" prefWidth="1600.0">
+            <children>
+                <Region prefHeight="800.0" prefWidth="350.0" />
+                <VBox prefHeight="800.0" prefWidth="900.0">
+                    <children>
+                        <ImageView fitHeight="400.0" fitWidth="900.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/evilEyes.png" />
+                            </image>
+                            <effect>
+                                <InnerShadow choke="0.5" />
+                            </effect>
+                        </ImageView>
+                        <Region prefHeight="50.0" prefWidth="900.0" />
+                        <Label fx:id="siegeText" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="900.0" text="You and your party infiltrate the enemy’s war camp. What will you do?" wrapText="true">
+                            <font>
+                                <Font name="URWGothic-Book" size="34.0" />
+                            </font>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Region prefHeight="100.0" prefWidth="250.0" />
+                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#duelLeader" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="60.0" prefWidth="161.0" styleClass="parchment-button" text="Duel the Enemy Leader" textAlignment="CENTER" wrapText="true">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Button>
+                                <Region prefHeight="100.0" prefWidth="100.0" />
+                                <Button mnemonicParsing="false" onAction="#destroySupplies" onMouseEntered="#hovered" onMouseExited="#unHovered" prefHeight="60.0" prefWidth="163.0" styleClass="parchment-button" text="Destroy War Supplies" textAlignment="CENTER" wrapText="true">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</Pane>

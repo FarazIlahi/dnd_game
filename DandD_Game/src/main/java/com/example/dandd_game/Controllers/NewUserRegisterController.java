@@ -10,13 +10,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewUserRegisterController extends BaseController {
     @FXML
-    private TextField elEmailTextField;
+    private Pane root;
+    @FXML
+    private TextField elUNTextField;
     @FXML
     private PasswordField elPWPasswordField;
     @FXML
@@ -25,12 +29,17 @@ public class NewUserRegisterController extends BaseController {
     private Button CSbutton;
 
     @FXML
+    private void initialize() {
+        super.init(root);
+    }
+    @FXML
     public void createUser(ActionEvent event) throws IOException {
-        String email = elEmailTextField.getText();
+        String email = elUNTextField.getText();
         String password = elPWPasswordField.getText();
         String password2 = elPWPasswordFieldTwo.getText();
 
         if(!password.equals(password2)){
+            playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             System.out.println("Passwords do not match");
         }
         try{
@@ -49,6 +58,7 @@ public class NewUserRegisterController extends BaseController {
 
             db.collection("users").document(userRecord.getUid()).set(userData);
             System.out.println("User info saved to database");
+            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
             switchScene(event, "login");
         }catch(Exception e){
             e.printStackTrace();
@@ -58,6 +68,7 @@ public class NewUserRegisterController extends BaseController {
 
     @FXML
     private void goBack(ActionEvent event) throws IOException{
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         switchScene(event,"Login");
     }
 }
