@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="root" prefHeight="800.0" prefWidth="1600.0"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.dandd_game.Controllers.TutorialController"
+      stylesheets="@style.css">
+    <children>
+        <ImageView fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/OldPaper.jpg" />
+            </image>
+        </ImageView>
+        <GridPane fx:id="combatGrid" layoutX="400.0" layoutY="100.0" prefHeight="600.0" prefWidth="800.0">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="100.0"/>
+                <ColumnConstraints prefWidth="100.0"/>
+                <ColumnConstraints prefWidth="100.0"/>
+                <ColumnConstraints prefWidth="100.0"/>
+                <ColumnConstraints prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="100.0"/>
+                <RowConstraints prefHeight="100.0"/>
+                <RowConstraints prefHeight="100.0"/>
+                <RowConstraints prefHeight="100.0"/>
+                <RowConstraints prefHeight="100.0"/>
+            </rowConstraints>
+        </GridPane>
+        <Label fx:id="tutorialText" layoutX="100.0" layoutY="40.0" prefWidth="1400.0" alignment="CENTER" text="Welcome to the tutorial!" wrapText="true">
+            <font>
+                <Font name="URWGothic-Book" size="32.0" />
+            </font>
+            <styleClass>
+                bold-label
+            </styleClass>
+        </Label>
+        <HBox layoutX="550.0" layoutY="730.0" spacing="20.0">
+            <children>
+                <Button fx:id="attackButton" text="Attack" onAction="#onNextPressed" prefWidth="120.0" styleClass="parchment-button"/>
+                <Button fx:id="specialMoveButton" text="Special" onAction="#onNextPressed" prefWidth="120.0" styleClass="parchment-button"/>
+                <Button fx:id="nextButton" text="Next" onAction="#onNextPressed" prefWidth="120.0" styleClass="parchment-button"/>
+            </children>
+        </HBox>
+    </children>
+</Pane>
