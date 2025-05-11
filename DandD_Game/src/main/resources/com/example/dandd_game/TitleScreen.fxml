@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.TitleScreenController">
    <children>
 
       <ImageView fitHeight="800.0" fitWidth="1600.0" onMouseClicked="#goNext" pickOnBounds="true" preserveRatio="true">
@@ -37,7 +35,7 @@
       </ImageView>
       <ImageView id="sorcerer" fx:id="sorcerer" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-109.0" layoutY="481.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@images/evilEyes.png" />
+            <Image url="@images/sorcerer.jpg" />
          </image>
       </ImageView>
       <ImageView id="goblin" fx:id="goblin" disable="true" fitHeight="80.0" fitWidth="90.0" layoutX="-119.0" layoutY="471.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -102,17 +100,17 @@
             <Image url="@images/orc.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="slash" fitHeight="80.0" fitWidth="90.0" layoutX="250.0" layoutY="50.0" visible="false" opacity="0.0">
+      <ImageView fx:id="slash" fitHeight="80.0" fitWidth="90.0" layoutX="250.0" layoutY="50.0" opacity="0.0" visible="false">
       <image>
             <Image url="@images/slash.gif" />
          </image>
       </ImageView>
-      <ImageView fx:id="explosion" fitHeight="80.0" fitWidth="90.0" layoutX="350.0" layoutY="50.0" visible="false" opacity="0.0">
+      <ImageView fx:id="explosion" fitHeight="80.0" fitWidth="90.0" layoutX="350.0" layoutY="50.0" opacity="0.0" visible="false">
          <image>
             <Image url="@images/explode.gif" />
          </image>
       </ImageView>
-      <ImageView fx:id="heal" fitHeight="80.0" fitWidth="90.0" layoutX="450.0" layoutY="50.0" visible="false" opacity="0.0">
+      <ImageView fx:id="heal" fitHeight="80.0" fitWidth="90.0" layoutX="450.0" layoutY="50.0" opacity="0.0" visible="false">
          <image>
             <Image url="@images/heal.gif" />
          </image>
