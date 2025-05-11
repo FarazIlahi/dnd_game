@@ -38,11 +38,11 @@ public class InvestigateSceneController extends BaseController implements GameMe
         alert.setTitle("Infiltration");
         alert.setHeaderText("You sneak around the army behind enemy lines");
         alert.setContentText("You gather intel and prepare your next move");
-        alert.showAndWait();
+        alert.show();
         if (GameStateManager.getInstance().unlockAchievement("You infiltrated the enemy lines!")) {
             GameStateManager.getInstance().queueAchievementPopup("You infiltrated the enemy lines!");
         }
-        switchScene(event, "Chapter1/InfiltrateScene");
+        switchScene("Chapter1/InfiltrateScene");
     }
 
     @FXML
@@ -66,7 +66,7 @@ public class InvestigateSceneController extends BaseController implements GameMe
 
 
         gsm.setNextScene("Chapter3/GameWinScene");
-        switchScene(event, "Combat");
+        switchScene("Combat");
     }
     @FXML
     public void hovered(MouseEvent event){

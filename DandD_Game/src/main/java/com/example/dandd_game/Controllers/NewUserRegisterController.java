@@ -40,6 +40,7 @@ public class NewUserRegisterController extends BaseController {
         if(!password.equals(password2)){
             playSoundFX("/com/example/dandd_game/soundFX/error.mp3", 1);
             System.out.println("Passwords do not match");
+            return;
         }
         try{
             UserRecord.CreateRequest request = new UserRecord.CreateRequest()
@@ -58,7 +59,7 @@ public class NewUserRegisterController extends BaseController {
             db.collection("users").document(userRecord.getUid()).set(userData);
             System.out.println("User info saved to database");
             playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-            switchScene(event, "login");
+            switchScene("login");
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Firebase user creation failed");

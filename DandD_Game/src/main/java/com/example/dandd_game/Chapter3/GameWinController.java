@@ -37,7 +37,7 @@ public class GameWinController extends BaseController implements GameMechanics {
         if (GameStateManager.getInstance().unlockAchievement("You have won!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have won!");
         }
-        switchScene(event, "GameLoads"); // returns to game load scene
+        switchScene("GameLoads"); // returns to game load scene
     }
     @FXML
     public void hovered(MouseEvent event){

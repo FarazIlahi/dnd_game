@@ -93,7 +93,7 @@ public class LoginController extends BaseController {
                     }
                 }
                 playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-                switchScene(event, "GameLoads");
+                switchScene("GameLoads");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,7 +132,7 @@ public class LoginController extends BaseController {
     @FXML
     public void goToUserRegistration(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "newUserRegister");
+        switchScene("newUserRegister");
     }
     @FXML
     public void leaveButtonOnAction(ActionEvent event) {

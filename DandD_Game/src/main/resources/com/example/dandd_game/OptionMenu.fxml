@@ -45,7 +45,7 @@
                      </children>
                   </HBox>
                   <Button fx:id="save_btn" onAction="#saveGame" prefHeight="26.0" prefWidth="80.0" text="Save Game" />
-                  <Button fx:id="load_btn" onAction="#loadGame" prefHeight="26.0" prefWidth="80.0" text="Load Game" />
+
                   <Button fx:id="menu_btn" onAction="#goToMenu" prefHeight="26.0" prefWidth="80.0" text="Main Menu" />
                   <Pane prefHeight="122.0" prefWidth="290.0">
                      <children>

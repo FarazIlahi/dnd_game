@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -19,7 +20,8 @@ import java.io.IOException;
 public class EnemyLeaderController extends BaseController implements GameMechanics {
     @FXML
     private Pane rootPane;
-
+    @FXML
+    private ImageView dice;
     @FXML
     private void initialize() {
         super.init(rootPane);
@@ -31,8 +33,13 @@ public class EnemyLeaderController extends BaseController implements GameMechani
     }
 
     @FXML
-    private void duelLeader(ActionEvent event) throws IOException {
+    private void duelLeader() throws InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::duelLeaderLogic);
+    }
+    public void duelLeaderLogic() throws IOException{
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Duel With Enemy Leader");
@@ -48,20 +55,20 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             if (GameStateManager.getInstance().unlockAchievement("You defeated the enemy leader in a duel!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You defeated the enemy leader in a duel!");
             }
-            alert.showAndWait();
+            alert.show();
 
             gsm.createSorcerer();
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         } else {
             alert.setHeaderText("Defeat!");
             alert.setContentText("You were defeated by the enemy leader.");
             if (GameStateManager.getInstance().unlockAchievement("You were defeated by the enemy leader in a duel!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You were defeated by the enemy leader in a duel!");
             }
-            alert.showAndWait();
+            alert.show();
             gsm.createOrc();
             gsm.createGoblin();
             gsm.createSorcerer();
@@ -75,13 +82,18 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             gsm.addToEnemys(gsm.getSkeleton());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
 
     @FXML
-    private void destroySupplies(ActionEvent event) throws IOException {
+    private void destroySupplies() throws InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::destroySuppliesLogic);
+    }
+    public void destroySuppliesLogic() throws IOException{
         Alert sabotageAlert = new Alert(Alert.AlertType.INFORMATION);
         sabotageAlert.setTitle("Sabotage");
         sabotageAlert.setHeaderText("You destroy the enemy's supplies!");
@@ -89,9 +101,8 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         if (GameStateManager.getInstance().unlockAchievement("You sabotaged the enemy's supplies!")) {
             GameStateManager.getInstance().queueAchievementPopup("You sabotaged the enemy's supplies!");
         }
-        sabotageAlert.showAndWait();
-
         int roll1 = rollDice(20);
+        sabotageAlert.show();
         Alert battleAlert = new Alert(Alert.AlertType.INFORMATION);
         battleAlert.setTitle("Final Battle");
         GameStateManager gsm = GameStateManager.getInstance();
@@ -102,17 +113,17 @@ public class EnemyLeaderController extends BaseController implements GameMechani
         if (roll1 >= 12) {
             battleAlert.setHeaderText("Success!");
             battleAlert.setContentText("Only the Sorcerer survived. It's time to end the war!");
-            battleAlert.showAndWait();
+            battleAlert.show();
 
             gsm.createSorcerer();
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         } else {
             battleAlert.setHeaderText("Failure!");
             battleAlert.setContentText("The enemy is too strong. You must fight them now!");
-            battleAlert.showAndWait();
+            battleAlert.show();
 
             gsm.createOrc();
             gsm.createGoblin();
@@ -124,7 +135,7 @@ public class EnemyLeaderController extends BaseController implements GameMechani
             gsm.addToEnemys(gsm.getGoblin());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
     @FXML

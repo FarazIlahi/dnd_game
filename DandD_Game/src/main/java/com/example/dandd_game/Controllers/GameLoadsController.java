@@ -149,7 +149,7 @@ public class GameLoadsController extends BaseController implements GameMechanics
             try {
                 GameSaves.loadGame(selectedSlot);
                 String scene = GameStateManager.getInstance().getCurrentScene();
-                switchScene(event, scene);
+                switchScene(scene);
             } catch (Exception e) {
                 e.printStackTrace();
             }

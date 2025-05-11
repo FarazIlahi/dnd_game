@@ -14,7 +14,13 @@
       </ImageView>
       <HBox prefHeight="800.0" prefWidth="1600.0">
          <children>
-            <Region prefHeight="800.0" prefWidth="350.0" />
+            <Region layoutX="73.0" layoutY="10.0" prefHeight="800.0" prefWidth="12.0" />
+            <ImageView fx:id="dice" fitHeight="68.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/dice.png" />
+               </image>
+            </ImageView>
+            <Region prefHeight="800.0" prefWidth="278.0" />
             <VBox prefHeight="800.0" prefWidth="900.0">
                <children>
                   <ImageView fitHeight="400.0" fitWidth="900.0" pickOnBounds="true">

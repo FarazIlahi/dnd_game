@@ -23,7 +23,7 @@ public class SneakAttackController extends BaseController implements GameMechani
         gsm.addToEnemys(gsm.getOrc());
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         gsm.setNextScene("Chapter2/ChapterTwoScene");
-        switchScene(event, "Combat");
+        switchScene("Combat");
 
     }
     @FXML

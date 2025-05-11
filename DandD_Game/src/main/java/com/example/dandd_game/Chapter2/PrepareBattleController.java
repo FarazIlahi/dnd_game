@@ -23,7 +23,7 @@ public class PrepareBattleController extends BaseController implements GameMecha
     @FXML
     private void goToStrategy(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter2/BattleStrategyScene");
+        switchScene("Chapter2/BattleStrategyScene");
     }
     @FXML
     public void hovered(MouseEvent event){

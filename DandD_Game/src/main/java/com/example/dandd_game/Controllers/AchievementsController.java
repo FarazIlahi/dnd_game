@@ -30,6 +30,6 @@ public class AchievementsController extends BaseController{
     }
     @FXML
     public void backToGameLoads (ActionEvent event) throws IOException {
-        switchScene(event, "GameLoads");
+        switchScene("GameLoads");
     }
 }

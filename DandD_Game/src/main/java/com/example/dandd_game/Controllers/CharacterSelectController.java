@@ -208,7 +208,7 @@ public class CharacterSelectController extends BaseController implements GameMec
     @FXML
     public void ready(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter1/FirstScene");
+        switchScene("Chapter1/FirstScene");
     }
 
 }
