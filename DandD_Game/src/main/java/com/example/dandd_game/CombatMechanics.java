@@ -434,11 +434,13 @@ public interface CombatMechanics extends GameMechanics{
             case "Orc":
             case "King":
             case "Knight":
+                playSoundFX("/com/example/dandd_game/soundFX/slash.mp3", 0.75);
                 effect.setImage(localImages.getImage("Slash"));
                 break;
             case "Cleric":
             case "Mage":
             case "Sorcerer":
+                playSoundFX("/com/example/dandd_game/soundFX/explosion.mp3", 0.55);
                 effect.setImage(localImages.getImage("Explosion"));
         }
         updateEffect(effect, target, combatGrid);
@@ -448,15 +450,19 @@ public interface CombatMechanics extends GameMechanics{
         ImageView effect = new ImageView();
         switch (gameState.getCurrentCharacter().getID()){
             case "King":
+                playSoundFX("/com/example/dandd_game/soundFX/kingSpecial.mp3", 0.75);
                 effect.setImage(localImages.getImage("XAttack"));
                 break;
             case "Knight":
+                playSoundFX("/com/example/dandd_game/soundFX/knightSpecial.mp3", 0.50);
                 effect.setImage(localImages.getImage("Shield"));
                 break;
             case "Cleric":
+                playSoundFX("/com/example/dandd_game/soundFX/clericSpecial.mp3", 0.60);
                 effect.setImage(localImages.getImage("Heal"));
                 break;
             case "Mage":
+                playSoundFX("/com/example/dandd_game/soundFX/mageSpecial.mp3", 1.15);
                 effect.setImage(localImages.getImage("ModAttack"));
                 break;
         }

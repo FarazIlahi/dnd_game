@@ -64,11 +64,35 @@ public class TitleScreenController extends BaseController {
         localImages.setxAttackURL(xAttack.getImage().getUrl());
         localImages.setShieldURL(shield.getImage().getUrl());
         localImages.setModAttackURL(modAttack.getImage().getUrl());
-        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/introMusic.wav");
+        super.setMusic("/com/example/dandd_game/sounds/introMusic.wav");
     }
 
     @FXML
     private void goNext(MouseEvent event) throws IOException {
         switchScene(event,"login");
+    }
+    @FXML
+    private void tutorial(ActionEvent event) throws IOException {
+        super.init(root);
+        gameState.resetInstance();
+        gameState.setPlayerCount(4);
+        gameState.createKing();
+        gameState.createKnight();
+        gameState.createCleric();
+        gameState.createMage();
+        gameState.addToParty(gameState.getKing());
+        gameState.addToParty(gameState.getKnight());
+        gameState.addToParty(gameState.getCleric());
+        gameState.addToParty(gameState.getMage());
+
+        gameState.setDifficulty("Easy");
+        gameState.createGoblin();
+        gameState.createSorcerer();
+
+        gameState.addToEnemys(gameState.getGoblin());
+        gameState.addToEnemys(gameState.getSorcerer());
+
+
+        switchScene(event,"Combat");
     }
 }

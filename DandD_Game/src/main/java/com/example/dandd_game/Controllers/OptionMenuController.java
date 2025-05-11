@@ -106,6 +106,18 @@ public class OptionMenuController extends BaseController implements GameMechanic
                 waitingForKey = null;
             }
         });
+
+        audioSlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> ov,
+                                        Number oldValue, Number newValue) {
+                        double volume = newValue.intValue() / 100.0;
+                        setVolume(volume);
+                        audioNum.setText(String.valueOf(volume));
+                    }
+                }
+        );
     }
 
     public void checkScene(String scene){
