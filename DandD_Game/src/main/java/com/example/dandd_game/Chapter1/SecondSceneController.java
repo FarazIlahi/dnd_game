@@ -38,7 +38,7 @@ public class SecondSceneController extends BaseController implements GameMechani
             GameStateManager.getInstance().queueAchievementPopup("You decided to prepare a siege!");
         }
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter1/SiegeScene"); // defend siege
+        switchScene("Chapter1/SiegeScene"); // defend siege
     }
 
 
@@ -48,7 +48,7 @@ public class SecondSceneController extends BaseController implements GameMechani
             GameStateManager.getInstance().queueAchievementPopup("You decided to investigate!");
         }
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter1/InvestigateScene"); // investigate
+        switchScene("Chapter1/InvestigateScene"); // investigate
     }
     @FXML
     public void hovered(MouseEvent event){

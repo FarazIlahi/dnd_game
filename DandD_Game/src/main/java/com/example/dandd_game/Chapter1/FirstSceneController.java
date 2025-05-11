@@ -29,7 +29,7 @@ public class FirstSceneController extends BaseController implements GameMechanic
         if (GameStateManager.getInstance().unlockAchievement("You have started the game!")) {;
             GameStateManager.getInstance().queueAchievementPopup("You have started the game!");
         }playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter1/SecondScene");
+        switchScene("Chapter1/SecondScene");
     }
     @FXML
     public void hovered(MouseEvent event){

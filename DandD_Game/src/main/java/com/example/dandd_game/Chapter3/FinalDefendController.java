@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -18,7 +19,8 @@ import java.io.IOException;
 public class FinalDefendController extends BaseController implements GameMechanics {
     @FXML
     public Pane rootPane;
-
+    @FXML
+    private ImageView dice;
     @FXML
     private void initialize() {
         super.init(rootPane);
@@ -29,8 +31,14 @@ public class FinalDefendController extends BaseController implements GameMechani
     }
 
     @FXML
-    private void holdMainGate(ActionEvent event) throws IOException {
+    private void holdMainGate() throws InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::holdMainGateLogic);
+    }
+
+    public void holdMainGateLogic() throws IOException{
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hold Main Gate");
@@ -42,17 +50,17 @@ public class FinalDefendController extends BaseController implements GameMechani
         if (roll >= 10) {
             alert.setHeaderText("Success!");
             alert.setContentText("You held off the enemy It's just the Sorcerer now!");
-            alert.showAndWait();
+            alert.show();
 
             gsm.createSorcerer();
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         } else {
             alert.setHeaderText("Partial Failure!");
             alert.setContentText("The enemy broke through. You must have one final fight!");
-            alert.showAndWait();
+            alert.show();
 
             gsm.createOrc();
             gsm.createGoblin();
@@ -68,13 +76,17 @@ public class FinalDefendController extends BaseController implements GameMechani
             gsm.addToEnemys(g1);
             gsm.addToEnemys(g2);
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
-
     @FXML
-    private void setTrap(ActionEvent event) throws IOException {
+    private void setTrap() throws InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::setTrapLogic);
+    }
+    public void setTrapLogic() throws IOException{
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Set Trap");
@@ -87,16 +99,16 @@ public class FinalDefendController extends BaseController implements GameMechani
         if (roll >= 8) {
             alert.setHeaderText("Perfect Ambush!");
             alert.setContentText("The trap destroys the enemy forces. You are victorious!");
-            alert.showAndWait();
+            alert.show();
             gsm.createSorcerer();
             gsm.getSorcerer().setName("The Sorcerer");
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         } else {
             alert.setHeaderText("Trap Failed!");
             alert.setContentText("You were caught. You must fight them now!");
-            alert.showAndWait();
+            alert.show();
 
             gsm.createOrc();
             gsm.createImp();
@@ -109,7 +121,7 @@ public class FinalDefendController extends BaseController implements GameMechani
             gsm.addToEnemys(gsm.getImp());
             gsm.addToEnemys(gsm.getSorcerer());
             gsm.setNextScene("Chapter3/GameWinScene");
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
     @FXML

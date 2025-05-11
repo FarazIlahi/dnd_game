@@ -31,13 +31,13 @@ public class ChapterTwoController extends BaseController implements GameMechanic
     @FXML
     private void goToPrepareBattle(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter2/PrepareBattleScene");
+        switchScene("Chapter2/PrepareBattleScene");
     }
 
     @FXML
     private void goToUncoverThreat(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter2/UncoverThreatScene");
+        switchScene("Chapter2/UncoverThreatScene");
     }
     @FXML
     public void hovered(MouseEvent event){

@@ -58,7 +58,7 @@ public class PlayerCountController extends BaseController implements GameMechani
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
         gameState.setPlayerCount(numPlayers.getValue());
         gameState.setDifficulty(difficulty.getValue());
-        switchScene(event, "CharacterSelect");
+        switchScene("CharacterSelect");
     }
     @FXML
     public void hovered(MouseEvent event){
