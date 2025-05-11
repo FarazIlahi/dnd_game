@@ -161,25 +161,6 @@ public class GameLoadsController extends BaseController implements GameMechanics
     @FXML
     private void tutorial(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        gameState.resetInstance();
-        gameState.setPlayerCount(4);
-        gameState.createKing();
-        gameState.createKnight();
-        gameState.createCleric();
-        gameState.createMage();
-        gameState.addToParty(gameState.getKing());
-        gameState.addToParty(gameState.getKnight());
-        gameState.addToParty(gameState.getCleric());
-        gameState.addToParty(gameState.getMage());
-
-        //gameState.createGoblin();
-        //gameState.createOrc();
-        gameState.createSorcerer();
-        //gameState.addToEnemys(gameState.getGoblin());
-        //gameState.addToEnemys(gameState.getOrc());
-        gameState.addToEnemys(gameState.getSorcerer());
-
-
-        switchScene(event,"Combat");
+        switchScene(event, "TutorialScene");
     }
 }
