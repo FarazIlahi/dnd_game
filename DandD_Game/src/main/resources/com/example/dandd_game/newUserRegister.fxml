@@ -43,7 +43,7 @@
                      </effect>
                   </Label>
                   <Region prefHeight="200.0" prefWidth="787.0" />
-                  <TextField fx:id="elEmailTextField" prefHeight="39.0" prefWidth="800.0" promptText="Enter Username" />
+                  <TextField fx:id="elUNTextField" prefHeight="39.0" prefWidth="800.0" promptText="Enter Username" />
                   <Region prefHeight="20.0" prefWidth="800.0" />
                   <PasswordField fx:id="elPWPasswordField" prefHeight="40.0" prefWidth="800.0" promptText="Enter Password" />
                   <Region prefHeight="20.0" prefWidth="800.0" />
