@@ -20,7 +20,7 @@ public class ChapterThreeController extends BaseController implements GameMechan
     private void initialize() {
         super.init(rootPane);
         super.stopMusic();
-        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/chapter3.wav");
+        super.setMusic("/com/example/dandd_game/sounds/chapter3.wav");
         String achievement = GameStateManager.getInstance().getPendingAchievement();
         if (achievement != null) {
             AchievementPopup.show(rootPane, "Achievement unlocked: " + achievement);

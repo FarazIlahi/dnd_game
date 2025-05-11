@@ -221,7 +221,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         });
         super.init(root);
         super.stopMusic();
-        super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/combat.wav");
+        super.setMusic("/com/example/dandd_game/sounds/combat.wav");
         setKeybinds();
         setParty();
         setEnemies();
@@ -445,7 +445,7 @@ public class CombatController extends BaseController implements GameMechanics, C
         for(Character character : gameState.getEnemies()){
             if(character.getName().equals("Sorcerer")){
                 super.stopMusic();
-                super.setMusic("DandD_Game/src/main/resources/com/example/dandd_game/sounds/sorcererBattle.wav");
+                super.setMusic("/com/example/dandd_game/sounds/sorcererBattle.wav");
             }
             setEnemy(character, count);
             count++;

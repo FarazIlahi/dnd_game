@@ -14,11 +14,14 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 public class BaseController implements GameMechanics {
@@ -41,12 +44,10 @@ public class BaseController implements GameMechanics {
     }
     protected KeyBindingManager keyManager;
 
-    private static AudioInputStream musicInput;
-    private static Clip music;
-    private static Clip prevMusic;
-    private float prevVolume = 0;
-    private float currentVolume = 1.0f;
-    private FloatControl volumeControl;
+    private static MediaPlayer musicPlayer;
+    private static Media currentMusic;
+    private static Media previousMusic;
+    private static double volume = 1.0;
 
     public void setIs_on_settings(boolean b){
         is_on_settings = b;
@@ -85,37 +86,34 @@ public class BaseController implements GameMechanics {
     }
 
     public void setMusic(String musicFile){
-        try {
-            musicInput = AudioSystem.getAudioInputStream(new File(musicFile));
-            music = AudioSystem.getClip();
-            music.open(musicInput);
-            volumeControl = (FloatControl)music.getControl(FloatControl.Type.MASTER_GAIN);
-            volumeControl.setValue(currentVolume);
-            music.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (UnsupportedAudioFileException e){
-            System.out.println("Error: This file format is not supported.");
-        } catch (LineUnavailableException e){
-            System.out.println("Error: This file is unavailable.");
-        } catch (IOException e){
-            System.out.println("Error: File not found.");
-        }
+
+        URL soundURL = getClass().getResource(musicFile);
+        currentMusic = new Media(soundURL.toExternalForm());
+        musicPlayer = new MediaPlayer(currentMusic);
+        musicPlayer.setVolume(volume);
+        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        musicPlayer.play();
     }
 
     public void stopMusic(){
-        try {
-            music.stop();
-            prevMusic = music;
-            musicInput.reset();
-        } catch (IOException e) {
-            System.out.println("Error: File not found.");
-        }
+        musicPlayer.stop();
+        previousMusic = currentMusic;
     }
 
     public void resumeMusic(){
-        music.stop();
-        music = prevMusic;
-        music.start();
+        musicPlayer.stop();
+        currentMusic = previousMusic;
+        musicPlayer = new MediaPlayer(currentMusic);
+        musicPlayer.setVolume(volume);
+        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        musicPlayer.play();
     }
+
+    public void setVolume(double newVolume){
+        volume = newVolume;
+        musicPlayer.setVolume(volume);
+    }
+
     private void handleKeyPress() throws IOException {
         if(is_on_settings){
             is_on_settings = false;
