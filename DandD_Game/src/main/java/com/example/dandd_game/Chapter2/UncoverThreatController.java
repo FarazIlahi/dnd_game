@@ -23,7 +23,7 @@ public class UncoverThreatController extends BaseController implements GameMecha
     @FXML
     private void continueToThreatChoice(ActionEvent event) throws IOException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Chapter2/ThreatDecisionScene");
+        switchScene("Chapter2/ThreatDecisionScene");
     }
     @FXML
     public void hovered(MouseEvent event){

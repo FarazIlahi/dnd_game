@@ -36,7 +36,7 @@ public class GameOverController extends BaseController implements GameMechanics{
         if (GameStateManager.getInstance().unlockAchievement("You have Lost!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have Lost!");
         }
-        switchScene(event, "GameLoads"); // returns to game laod scene
+        switchScene("GameLoads"); // returns to game laod scene
     }
     @FXML
     public void hovered(MouseEvent event){

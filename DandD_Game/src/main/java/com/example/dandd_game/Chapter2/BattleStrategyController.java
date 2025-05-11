@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -16,15 +17,22 @@ public class BattleStrategyController extends BaseController implements GameMech
 
     @FXML
     private Pane rootPane;
-
     @FXML
-    private void initalize() {
+    private ImageView dice;
+    @FXML
+    private void initialize() {
         super.init(rootPane);
     }
 
     @FXML
-    private void reinforceWalls(ActionEvent event) throws IOException {
+    private void reinforceWalls() throws IOException, InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::reinforceWallsLogic);
+
+    }
+    public void reinforceWallsLogic() throws IOException {
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Castle Wall Reinforcement");
@@ -34,19 +42,24 @@ public class BattleStrategyController extends BaseController implements GameMech
         if (roll >= 7) {
             alert.setHeaderText("Successfully reinforced the castle walls!");
             alert.setContentText("You rolled a " + roll + "\nSuccess! You reinforce the castle walls!");
-            alert.showAndWait();
-            switchScene(event, "Chapter3/ChapterThreeScene");
+            alert.show();
+            switchScene("Chapter3/ChapterThreeScene");
         } else {
             alert.setHeaderText("Failed to reinforce the castle walls!");
             alert.setContentText("You rolled a " + roll + "\nFailed! You are caught!");
-            alert.showAndWait();
-            switchScene(event, "Chapter3/ChapterThreeHardScene");
+            alert.show();
+            switchScene("Chapter3/ChapterThreeHardScene");
         }
     }
 
     @FXML
-    private void trainSoldiers(ActionEvent event) throws IOException {
+    private void trainSoldiers() throws IOException, InterruptedException {
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::trainSoldiersLogic);
+    }
+    public void trainSoldiersLogic() throws IOException {
         int roll = rollDice(20);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Training Party");
@@ -65,18 +78,19 @@ public class BattleStrategyController extends BaseController implements GameMech
             if (GameStateManager.getInstance().unlockAchievement("You trained the party!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You trained the party!");
             }
-            alert.showAndWait();
-            switchScene(event, "Chapter3/ChapterThreeScene"); // add a boost to player stats here
+            alert.show();
+            switchScene("Chapter3/ChapterThreeScene"); // add a boost to player stats here
         } else {
             alert.setHeaderText("Failed to train the party!");
             alert.setContentText("Training failed. Morale is low. The kingdom will struggle.");
             if (GameStateManager.getInstance().unlockAchievement("You failed to train the party!")) {
                 GameStateManager.getInstance().queueAchievementPopup("You failed to train the party!");
             }
-            alert.showAndWait();
-            switchScene(event, "Chapter3/ChapterThreeHardScene");
+            alert.show();
+            switchScene("Chapter3/ChapterThreeHardScene");
         }
     }
+
     @FXML
     public void hovered(MouseEvent event){
         Button clickedButton = (Button) event.getSource();

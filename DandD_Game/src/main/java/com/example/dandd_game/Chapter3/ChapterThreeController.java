@@ -33,7 +33,7 @@ public class ChapterThreeController extends BaseController implements GameMechan
         if (GameStateManager.getInstance().unlockAchievement("You have reached the final defend scene!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have reached the final defend scene!");
         }
-        switchScene(event, "Chapter3/FinalDefendScene");
+        switchScene("Chapter3/FinalDefendScene");
     }
 
     @FXML
@@ -42,7 +42,7 @@ public class ChapterThreeController extends BaseController implements GameMechan
         if (GameStateManager.getInstance().unlockAchievement("You have reached the final enemy leader scene!")) {
             GameStateManager.getInstance().queueAchievementPopup("You have reached the final enemy leader scene!");
         }
-        switchScene(event, "Chapter3/EnemyLeaderScene");
+        switchScene("Chapter3/EnemyLeaderScene");
     }
     @FXML
     public void hovered(MouseEvent event){

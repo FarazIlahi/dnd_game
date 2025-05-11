@@ -45,7 +45,7 @@
                      </children>
                   </HBox>
                   <Button fx:id="save_btn" onAction="#saveGame" prefHeight="26.0" prefWidth="80.0" text="Save Game" />
-                  <Button fx:id="load_btn" onAction="#loadGame" prefHeight="26.0" prefWidth="80.0" text="Load Game" />
+
                   <Button fx:id="menu_btn" onAction="#goToMenu" prefHeight="26.0" prefWidth="80.0" text="Main Menu" />
                   <Pane prefHeight="122.0" prefWidth="290.0">
                      <children>
@@ -54,11 +54,6 @@
                         <Button fx:id="upButton" layoutX="113.0" layoutY="14.0" mnemonicParsing="false" onAction="#onUpKeyChange" text="Move Up" />
                         <Button fx:id="downButton" layoutX="102.0" layoutY="73.0" mnemonicParsing="false" onAction="#onDownKeyChange" prefHeight="25.0" prefWidth="86.0" text="Move Down" />
                         <Button fx:id="resetKeys" layoutY="97.0" mnemonicParsing="false" onAction="#resetToDefaultKeys" prefHeight="22.0" prefWidth="86.0" text="Reset to Default">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="saveChanges" layoutX="204.0" layoutY="97.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="86.0" text="Save Changes">
                            <font>
                               <Font size="10.0" />
                            </font>

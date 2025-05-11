@@ -282,7 +282,7 @@ public class StatRollController extends BaseController implements GameMechanics 
         nameCheck(true);
         if(nameErrorLabel.isVisible() == false){
             playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-            switchScene(event, "CharacterSelect");
+            switchScene("CharacterSelect");
         }
 
     }

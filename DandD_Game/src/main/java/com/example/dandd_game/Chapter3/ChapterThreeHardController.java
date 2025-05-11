@@ -38,7 +38,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         alert.setTitle("Hold the Main Gate!");
         alert.setHeaderText("The enemy forces storm the gate!");
         alert.setContentText("You must hold the main gate to stop the enemy.");
-        alert.showAndWait();
+        alert.show();
 
         GameStateManager gsm = GameStateManager.getInstance();
         GameStateManager.getInstance().resetAllCharacterPositions();
@@ -62,7 +62,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         gsm.addToEnemys(gsm.getImp());
 
         gsm.setNextScene("Chapter3/GameWinScene");
-        switchScene(event, "Combat");
+        switchScene("Combat");
     }
 
     @FXML
@@ -72,7 +72,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         alert.setTitle("Ambush failed!");
         alert.setHeaderText("Your trap failed!");
         alert.setContentText("You were caught. You must fight them now!");
-        alert.showAndWait();
+        alert.show();
 
         GameStateManager gsm = GameStateManager.getInstance();
         GameStateManager.getInstance().resetAllCharacterPositions();
@@ -92,7 +92,7 @@ public class ChapterThreeHardController extends BaseController implements GameMe
         gsm.addToEnemys(gsm.getSorcerer());
         gsm.addToEnemys(gsm.getOrc());
         gsm.setNextScene("Chapter3/GameWinScene");
-        switchScene(event, "Combat");
+        switchScene("Combat");
     }
     @FXML
     public void hovered(MouseEvent event){

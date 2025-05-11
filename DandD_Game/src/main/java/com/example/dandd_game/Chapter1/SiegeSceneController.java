@@ -8,6 +8,7 @@ import com.example.dandd_game.GameStateManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert;
@@ -19,7 +20,8 @@ public class SiegeSceneController extends BaseController implements GameMechanic
 
     @FXML
     private Pane rootPane;
-
+    @FXML
+    private ImageView dice;
     @FXML
     private Label siegeText;
 
@@ -50,11 +52,17 @@ public class SiegeSceneController extends BaseController implements GameMechanic
         gsm.addToEnemys(gsm.getZombie());
         gsm.setNextScene("Chapter2/ChapterTwoScene");
         playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-        switchScene(event, "Combat");
+        switchScene("Combat");
     }
 
     @FXML
-    private void flankEnemy(ActionEvent event) throws IOException {
+    private void flankEnemy() throws InterruptedException {
+        playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
+        Double spinDuration = spin(dice);
+        unhighlight(dice);
+        pauseMethodThrowing(spinDuration, this::flankLogic);
+    }
+    public void flankLogic() throws IOException {
         int roll = rollDice(20);
         GameStateManager gsm = GameStateManager.getInstance();
         GameStateManager.getInstance().resetAllCharacterPositions();
@@ -62,7 +70,7 @@ public class SiegeSceneController extends BaseController implements GameMechanic
             GameStateManager.getInstance().queueAchievementPopup("You chose to flank the enemy!");
         }
         if (roll >= 5) {
-            switchScene(event, "Chapter1/SneakAttackScene");
+            switchScene("Chapter1/SneakAttackScene");
         } else {
             gsm.resetEnemies();
             gsm.resetList(gsm.getTurnOrder());
@@ -71,16 +79,16 @@ public class SiegeSceneController extends BaseController implements GameMechanic
             gsm.createOrc();
             gsm.addToEnemys(gsm.getOrc());
             gsm.setNextScene("Chapter1/SneakAttackScene");
-            playSoundFX("/com/example/dandd_game/soundFX/buttonClick.mp3", .75);
-            switchScene(event, "Combat");
+            switchScene("Combat");
         }
     }
+
 
     private void showRollResult(int roll, String action) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Roll Result");
         alert.setHeaderText(action);
-        alert.showAndWait();
+        alert.show();
     }
     @FXML
     public void hovered(MouseEvent event){

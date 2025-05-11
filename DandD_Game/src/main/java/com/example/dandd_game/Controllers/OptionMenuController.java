@@ -128,7 +128,6 @@ public class OptionMenuController extends BaseController implements GameMechanic
             case "newUserRegister":
             case "login":
                 disableNode(save_btn);
-                disableNode(load_btn);
                 disableNode(menu_btn);
                 break;
         }
@@ -146,19 +145,6 @@ public class OptionMenuController extends BaseController implements GameMechanic
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void loadGame() {
-        try {
-            GameSaves.loadGame();
-            String scene = GameStateManager.getInstance().getCurrentScene();
-            setIs_on_settings(false);
-            switchScene(scene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void goToMenu() {
         try {
