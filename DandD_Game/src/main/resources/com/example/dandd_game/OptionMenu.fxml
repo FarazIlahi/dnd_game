@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane id="rootPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.OptionMenuController">
+<Pane id="rootPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dandd_game.Controllers.OptionMenuController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
@@ -36,8 +36,8 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Slider fx:id="audioSlider" prefHeight="40.0" prefWidth="200.0" />
-                        <Label fx:id="audioNum" alignment="CENTER" prefHeight="40.0" prefWidth="60.0" textAlignment="CENTER">
+                        <Slider fx:id="audioSlider" prefHeight="40.0" prefWidth="104.0" />
+                        <Label fx:id="audioNum" alignment="CENTER" prefHeight="40.0" prefWidth="60.0" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
