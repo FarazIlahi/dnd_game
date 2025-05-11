@@ -2,6 +2,7 @@ package com.example.dandd_game;
 
 import com.example.dandd_game.Characters.*;
 import com.example.dandd_game.Characters.Character;
+import com.google.cloud.firestore.Firestore;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -16,10 +17,7 @@ import java.util.Map;
 
 public class GameStateManager {
     private static GameStateManager instance;
-
-    private GameStateManager() {
-    }
-
+    private GameStateManager() {}
     private Integer playerCount;
     private String difficulty;
     private String campaignName;
@@ -50,6 +48,13 @@ public class GameStateManager {
 
     private AudioInputStream soundFXInput;
 
+    private int totalDamageDone = 0;
+    private int enemiesKilled = 0;
+    private int rollCompleted = 0;
+    private int randomEventTriggered = 0;
+    private boolean gameCompleted = false;
+
+
     public static GameStateManager getInstance() {
         if (instance == null) {
             instance = new GameStateManager();
@@ -79,6 +84,12 @@ public class GameStateManager {
         downKey = "S";
         leftKey = "A";
         rightKey = "D";
+
+        totalDamageDone = 0;
+        enemiesKilled = 0;
+        rollCompleted = 0;
+        randomEventTriggered = 0;
+        gameCompleted = false;
     }
 
     public void resetList(ArrayList<?> list) {
@@ -157,37 +168,73 @@ public class GameStateManager {
         return this.mage;
     }
     public void createGoblin(){
-        this.goblin = new Goblin();
+        double multi = getDifficultyMultiplier();
+        Goblin base = new Goblin();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.goblin = new Goblin(hp, def, atk, range, "Goblin", new Position(2, 4), 0, 0);
     }
     public Goblin getGoblin(){
         return this.goblin;
     }
     public void createOrc(){
-        this.orc = new Orc();
+        double multi = getDifficultyMultiplier();
+        Orc base = new Orc();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.orc = new Orc(hp, def, atk, range, "Orc", new Position(2, 4), 0, 0);
     }
     public Orc getOrc(){
         return this.orc;
     }
     public void createSorcerer(){
-        this.sorcerer = new Sorcerer();
+        double multi = getDifficultyMultiplier();
+        Sorcerer base = new Sorcerer();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.sorcerer = new Sorcerer(hp, def, atk, range, "Sorcerer", new Position(2, 4), 0, 0);
     }
     public Sorcerer getSorcerer(){
         return this.sorcerer;
     }
     public void createImp(){
-        this.imp = new Imp();
+        double multi = getDifficultyMultiplier();
+        Imp base = new Imp();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.imp = new Imp(hp, def, atk, range, "Imp", new Position(2, 4), 0, 0);
     }
     public Imp getImp(){
         return this.imp;
     }
     public void createSkeleton(){
-        this.skeleton = new Skeleton();
+        double multi = getDifficultyMultiplier();
+        Skeleton base = new Skeleton();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.skeleton = new Skeleton(hp, def, atk, range, "Skeleton", new Position(2, 4), 0, 0);
     }
     public Skeleton getSkeleton(){
         return this.skeleton;
     }
     public void createZombie(){
-        this.zombie = new Zombie();
+        double multi = getDifficultyMultiplier();
+        Zombie base = new Zombie();
+        int hp = (int)(base.getHp() * multi);
+        int def = (int)(base.getDef() * multi);
+        int atk = (int)(base.getBasic_attack() * multi);
+        int range = base.getRange();
+        this.zombie = new Zombie(hp, def, atk, range, "Zombie", new Position(2, 4), 0, 0);
     }
     public Zombie getZombie(){
         return this.zombie;
@@ -245,7 +292,15 @@ public class GameStateManager {
     private Set<String> achievements = new LinkedHashSet<>();
 
     public boolean unlockAchievement(String achievement) {
-        return achievements.add(achievement);
+        boolean newAchievement = achievements.add(achievement);
+        if (newAchievement) {
+            try {
+                GameSaves.saveAchievements();
+            } catch (Exception e) {
+                System.out.println("achievement failed save");
+            }
+        }
+        return newAchievement;
     }
     public void setAchievements(List<String> achievementsList) {
         this.achievements.clear();
@@ -272,6 +327,39 @@ public class GameStateManager {
     public void resetMoveCount(){
         this.moveCount = 5;
     }
+
+
+    // Game Report Stat Tracking
+    public void addDamage(int damage) {totalDamageDone += damage; }
+    public void incrementEnemiesKilled() {enemiesKilled ++; }
+    public void incrementRollsCompleted(){rollCompleted++; }
+    public void incrementRandomEventsTriggered(){randomEventTriggered++; }
+    public void setGameMechanics(boolean completed) {this.gameCompleted = completed; }
+
+    public int getPlayerSurvived(){
+        int count = 0;
+        for (Character c : this.party) {
+            if(c.getHp() > 0) count++;
+        }
+        return count;
+    }
+
+    public void EndGameReport(){
+        Firestore db = FirebaseConfig.initialize();
+        GameReport report = new GameReport(
+          getPlayerSurvived(),
+          enemiesKilled,
+          totalDamageDone,
+          rollCompleted,
+          gameCompleted,
+          randomEventTriggered
+        );
+
+        db.collection("GameReport")
+                .add(report)
+                .addListener(() -> System.out.println("Report uploaded"), Runnable::run);
+    }
+
     public boolean nameExists(String name) {
         for (Character c : party) {
             if (c == getCurrentCharacter()) continue;
@@ -372,6 +460,16 @@ public class GameStateManager {
         if (map.containsKey("down")) setDownKey(map.get("down"));
         if (map.containsKey("left")) setLeftKey(map.get("left"));
         if (map.containsKey("right")) setRightKey(map.get("right"));
+    }
+    public double getDifficultyMultiplier() {
+        switch(difficulty) {
+            case "Easy":
+                return 0.5;
+            case "Hard":
+                return 1.5;
+            default:
+                return 1.0;
+        }
     }
 
 }

@@ -16,6 +16,7 @@ module com.example.dandd_game {
     // Firebase serialization
     opens com.example.dandd_game to javafx.fxml, google.cloud.firestore;
     opens com.example.dandd_game.Characters to google.cloud.firestore;
+    requires javafx.web;
 
     // FXML
     opens com.example.dandd_game.Controllers to javafx.fxml;

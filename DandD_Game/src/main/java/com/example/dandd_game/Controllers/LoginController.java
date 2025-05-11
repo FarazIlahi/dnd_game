@@ -1,5 +1,6 @@
 package com.example.dandd_game.Controllers;
 
+import com.example.dandd_game.FirebaseConfig;
 import com.example.dandd_game.GameStateManager;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.gson.JsonObject;
@@ -8,6 +9,8 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -127,6 +130,7 @@ public class LoginController extends BaseController {
             e.printStackTrace();
             return false;
         }
+
     }
 
     @FXML
@@ -139,4 +143,5 @@ public class LoginController extends BaseController {
         Stage stage = (Stage) leaveButton.getScene().getWindow();
         stage.close();
     }
+
 }
